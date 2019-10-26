@@ -2,6 +2,12 @@ package io.github.fromsource.kiwi.core.collection
 
 open class CollectionShould<T, R : CollectionShould<T, R>>(open val actual: Collection<T>) {
 
+    open fun beEmpty(): R {
+        val message = "$actual should be empty"
+        assert(actual.isEmpty()) { message }
+        return this as R
+    }
+
     open infix fun haveSize(size: Int): R {
         val hasSize = actual.size == size
         val message = "Expected size: $size, actual: ${actual.size}"
@@ -24,12 +30,6 @@ open class CollectionShould<T, R : CollectionShould<T, R>>(open val actual: Coll
         return this as R
     }
 
-    open fun beEmpty(): R {
-        val message = "$actual should be empty"
-        assert(actual.isEmpty()) { message }
-        return this as R
-    }
-
     open infix fun matchAny(predicate: (T) -> Boolean): R {
         val matchAny = actual.any(predicate)
         val message = "$actual should match any predicate"
@@ -47,6 +47,12 @@ open class CollectionShould<T, R : CollectionShould<T, R>>(open val actual: Coll
 
 
 open class ListShould<T>(override val actual: List<T>) : CollectionShould<T, ListShould<T>>(actual) {
+
+    infix fun beEqual(list: List<T>): ListShould<T> {
+        val message = "$actual should == $list"
+        assert(actual == list) { message }
+        return this
+    }
 
     open infix fun have1st(element: T): ListShould<T> {
         val message = "$actual should have first element to be $element"

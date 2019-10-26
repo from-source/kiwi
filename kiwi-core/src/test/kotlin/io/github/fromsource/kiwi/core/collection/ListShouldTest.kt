@@ -119,7 +119,7 @@ class ListShouldTest {
     }
 
     @Test
-    fun `should guarantee that list contains have element to be equal at second position`() {
+    fun `should guarantee that list have element to be equal at second position`() {
         val numbers = listOf(1, 2, 3)
 
         numbers.should() have2nd 2
@@ -148,7 +148,7 @@ class ListShouldTest {
     }
 
     @Test
-    fun `should list match any predicate`() {
+    fun `should guarantee that list match any predicate`() {
         val numbers = listOf(1, 2, 3)
 
         numbers.should() matchAny { it == 2 }
@@ -166,12 +166,29 @@ class ListShouldTest {
     }
 
     @Test
-    fun `should list match all predicate`() {
+    fun `should guarantee list match all predicate`() {
         val numbers = listOf(1, 2, 3)
 
         numbers.should() matchAny { it < 4 }
     }
-}
 
+    @Test
+    fun `should fail when list does not equal other list`() {
+        val numbers = listOf(1, 2, 3)
+
+        runCatching {
+            numbers.should() beEqual listOf(1, 2, 4)
+        }.should()
+                .beFailure(AssertionError::class)
+                .haveFailureMessage("[1, 2, 3] should == [1, 2, 4]")
+    }
+
+    @Test
+    fun `should guarantee list is equal other list`() {
+        val numbers = listOf(1, 2, 3)
+
+        numbers.should() beEqual listOf(1, 2, 3)
+    }
+}
 
 
