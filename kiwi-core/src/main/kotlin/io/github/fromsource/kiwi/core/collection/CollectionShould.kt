@@ -68,7 +68,9 @@ open class ListShould<T>(override val actual: List<T>) : CollectionShould<T, Lis
         return this
     }
 
-//    open fun first(): T {
-//        return actual.first()
-//    }
+    open fun first(): T {
+        val message = "$actual should have first element"
+        assert(actual.isNotEmpty()) { message }
+        return actual.first()
+    }
 }

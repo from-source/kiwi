@@ -189,6 +189,27 @@ class ListShouldTest {
 
         numbers.should() beEqual listOf(1, 2, 3)
     }
+
+    @Test
+    fun `should fail when extracting 1st element`() {
+        val numbers = emptyList<Number>()
+
+        runCatching {
+            numbers.should().first()
+        }.should()
+                .beFailure(AssertionError::class)
+                .haveFailureMessage("[] should have first element")
+    }
+
+    @Test
+    fun `should extract first element`() {
+        val numbers = listOf(1, 2, 3)
+
+        runCatching {
+            numbers.should().first()
+        }.should()
+                .beSuccess(1)
+    }
 }
 
 
