@@ -135,6 +135,42 @@ class ListShouldTest {
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("[] should have second element to be 2")
     }
+
+    @Test
+    fun `should fail when list does not match any predicate`() {
+        val numbers = listOf(1, 2, 3)
+
+        runCatching {
+            numbers.should() matchAny { it == 4 }
+        }.should()
+                .beFailure(AssertionError::class)
+                .haveFailureMessage("[1, 2, 3] should match any predicate")
+    }
+
+    @Test
+    fun `should list match any predicate`() {
+        val numbers = listOf(1, 2, 3)
+
+        numbers.should() matchAny { it == 2 }
+    }
+
+    @Test
+    fun `should fail when list does not match all predicate`() {
+        val numbers = listOf(1, 2, 3)
+
+        runCatching {
+            numbers.should() matchAll { it == 4 }
+        }.should()
+                .beFailure(AssertionError::class)
+                .haveFailureMessage("[1, 2, 3] should match all predicate")
+    }
+
+    @Test
+    fun `should list match all predicate`() {
+        val numbers = listOf(1, 2, 3)
+
+        numbers.should() matchAny { it < 4 }
+    }
 }
 
 
