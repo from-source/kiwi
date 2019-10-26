@@ -1,0 +1,51 @@
+buildscript {
+    ext {
+        kotlinVersion = '1.2.71'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-noarg:${kotlinVersion}")
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'kotlin'
+
+    dependencies {
+        implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+        implementation 'org.jetbrains.kotlin:kotlin-reflect'
+
+        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.2'
+        testImplementation 'org.junit.vintage:junit-vintage-engine:5.3.2'
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.2'
+
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+
+    sourceCompatibility = 1.8
+    compileKotlin {
+        kotlinOptions {
+            freeCompilerArgs = ['-Xjsr305=strict']
+            jvmTarget = '1.8'
+        }
+    }
+    compileTestKotlin {
+        kotlinOptions {
+            freeCompilerArgs = ['-Xjsr305=strict']
+            jvmTarget = '1.8'
+        }
+    }
+}

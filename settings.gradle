@@ -1,0 +1,4 @@
+rootProject.name = 'kiwi'
+
+include 'kiwi-test'
+include 'kiwi-core'
