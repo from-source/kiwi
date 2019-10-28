@@ -21,6 +21,20 @@ class StringShouldTest {
     }
 
     @Test
+    fun `should fail when string is empty`() {
+        runCatching {
+            "".should().notBeEmpty()
+        }.should()
+                .beFailure(AssertionError::class)
+                .haveFailureMessage("'' should not be empty")
+    }
+
+    @Test
+    fun `should guarantee string is not empty`() {
+        "kiwi!".should().notBeEmpty()
+    }
+
+    @Test
     fun `should fail when string is not blank`() {
         runCatching {
             "hello kiwi".should().beBlank()
