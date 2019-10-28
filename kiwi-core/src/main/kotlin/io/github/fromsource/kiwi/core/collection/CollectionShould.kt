@@ -43,6 +43,10 @@ open class CollectionShould<T, R : CollectionShould<T, R>>(open val actual: Coll
         assert(matchAll) { message }
         return this as R
     }
+
+    infix fun filtered(predicate: (T) -> Boolean): R {
+        return CollectionShould<T, R>(actual.filter(predicate)) as R
+    }
 }
 
 
