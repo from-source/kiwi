@@ -44,11 +44,7 @@ open class CollectionShould<T, R : CollectionShould<T, R>>(open val actual: Coll
         return this as R
     }
 
-    infix fun filtered(predicate: (T) -> Boolean): R {
-        return CollectionShould<T, R>(actual.filter(predicate)) as R
-    }
 }
-
 
 open class ListShould<T>(override val actual: List<T>) : CollectionShould<T, ListShould<T>>(actual) {
 
@@ -82,5 +78,9 @@ open class ListShould<T>(override val actual: List<T>) : CollectionShould<T, Lis
         val message = "$actual should have last element"
         assert(actual.isNotEmpty()) { message }
         return actual.last()
+    }
+
+    infix fun filtered(predicate: (T) -> Boolean): ListShould<T> {
+        return ListShould(actual.filter(predicate))
     }
 }
