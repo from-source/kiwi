@@ -210,6 +210,27 @@ class ListShouldTest {
         }.should()
                 .beSuccess(1)
     }
+
+    @Test
+    fun `should fail when extracting last element`() {
+        val numbers = emptyList<Number>()
+
+        runCatching {
+            numbers.should().last()
+        }.should()
+                .beFailure(AssertionError::class)
+                .haveFailureMessage("[] should have last element")
+    }
+
+    @Test
+    fun `should extract last element`() {
+        val numbers = listOf(1, 2, 3)
+
+        runCatching {
+            numbers.should().last()
+        }.should()
+                .beSuccess(3)
+    }
 }
 
 

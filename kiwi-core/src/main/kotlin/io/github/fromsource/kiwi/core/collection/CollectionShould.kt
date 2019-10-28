@@ -73,4 +73,10 @@ open class ListShould<T>(override val actual: List<T>) : CollectionShould<T, Lis
         assert(actual.isNotEmpty()) { message }
         return actual.first()
     }
+
+    fun last(): T {
+        val message = "$actual should have last element"
+        assert(actual.isNotEmpty()) { message }
+        return actual.last()
+    }
 }
