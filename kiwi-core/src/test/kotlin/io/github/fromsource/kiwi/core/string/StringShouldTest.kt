@@ -65,14 +65,70 @@ class StringShouldTest {
     @Test
     fun `should fail when string does not contain`() {
         runCatching {
-            "hello kiwi".should() contain "kiwi!"
+            "hello kiwi".should() contain "loki"
         }.should()
                 .beFailure(AssertionError::class)
-                .haveFailureMessage("'hello kiwi' should contain 'kiwi!'")
+                .haveFailureMessage("'hello kiwi' should contain 'loki'")
     }
 
     @Test
     fun `should guarantee string contains`() {
-        "hello kiwi".should() contain "kiwi"
+        "hello kiwi".should() contain "lo ki"
+    }
+
+    @Test
+    fun `should fail when string does not start with`() {
+        runCatching {
+            "hello kiwi".should() startWith "ello"
+        }.should()
+                .beFailure(AssertionError::class)
+                .haveFailureMessage("'hello kiwi' should start with 'ello'")
+    }
+
+    @Test
+    fun `should guarantee string starts with`() {
+        "hello kiwi".should() startWith  "hello"
+    }
+
+    @Test
+    fun `should fail when string does not end with`() {
+        runCatching {
+            "hello kiwi".should() endWith  "kiw"
+        }.should()
+                .beFailure(AssertionError::class)
+                .haveFailureMessage("'hello kiwi' should end with 'kiw'")
+    }
+
+    @Test
+    fun `should guarantee string ends with`() {
+        "hello kiwi".should() endWith  "kiwi"
+    }
+
+    @Test
+    fun `should fail when string does not have proper length`() {
+        runCatching {
+            "hello kiwi".should() haveLength 9
+        }.should()
+                .beFailure(AssertionError::class)
+                .haveFailureMessage("'hello kiwi' should have length 9")
+    }
+
+    @Test
+    fun `should guarantee string has proper length`() {
+        "hello kiwi".should() haveLength 10
+    }
+
+    @Test
+    fun `should fail when string does is not capitalised`() {
+        runCatching {
+            "kIWI".should().beCapitalised()
+        }.should()
+                .beFailure(AssertionError::class)
+                .haveFailureMessage("'kIWI' should be capitalised")
+    }
+
+    @Test
+    fun `should guarantee string is capitalised`() {
+        "Kiwi".should().beCapitalised()
     }
 }

@@ -31,4 +31,28 @@ class StringShould(private val actual: String) {
         assert(actual.contains(expected, false)) { message }
         return this
     }
+
+    infix fun startWith(expected: String): StringShould {
+        val message = "'$actual' should start with '$expected'"
+        assert(actual.startsWith(expected, false)) { message }
+        return this
+    }
+
+    infix fun endWith(expected: String): StringShould {
+        val message = "'$actual' should end with '$expected'"
+        assert(actual.endsWith(expected, false)) { message }
+        return this
+    }
+
+    infix fun haveLength(expected: Int): StringShould {
+        val message = "'$actual' should have length $expected"
+        assert(actual.length == expected) { message }
+        return this
+    }
+
+    fun beCapitalised(): StringShould {
+        val message = "'$actual' should be capitalised"
+        assert(actual.capitalize() == actual) { message }
+        return this
+    }
 }
