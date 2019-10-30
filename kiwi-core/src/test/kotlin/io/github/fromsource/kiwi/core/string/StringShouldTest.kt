@@ -131,4 +131,60 @@ class StringShouldTest {
     fun `should guarantee string is capitalised`() {
         "Kiwi".should().beCapitalised()
     }
+
+    @Test
+    fun `should fail when string does is not decapitalized`() {
+        runCatching {
+            "Kiwi".should().beDecapitalized()
+        }.should()
+                .beFailure(AssertionError::class)
+                .haveFailureMessage("'Kiwi' should be decapitalised")
+    }
+
+    @Test
+    fun `should guarantee string is decapitalized`() {
+        "kiwi".should().beDecapitalized()
+    }
+
+    @Test
+    fun `should fail when string does not mach regex`() {
+        runCatching {
+            "hello kiwi 101".should() match Regex("[a-z]+")
+        }.should()
+                .beFailure(AssertionError::class)
+                .haveFailureMessage("'hello kiwi 101' should match '[a-z]+'")
+    }
+
+    @Test
+    fun `should guarantee string match regex`() {
+        "hello kiwi 101".should() match Regex("\\w+\\s\\w+\\s[0-1]{3}")
+    }
+
+    @Test
+    fun `should fail when string is not lowercase`() {
+        runCatching {
+            "hello Kiwi".should().beLowercase()
+        }.should()
+                .beFailure(AssertionError::class)
+                .haveFailureMessage("'hello Kiwi' should be lowercase")
+    }
+
+    @Test
+    fun `should guarantee string is lowercase`() {
+        "hello kiwi 101".should().beLowercase()
+    }
+
+    @Test
+    fun `should fail when string is not uppercase`() {
+        runCatching {
+            "HELLO k !".should().beUppercase()
+        }.should()
+                .beFailure(AssertionError::class)
+                .haveFailureMessage("'HELLO k !' should be uppercase")
+    }
+
+    @Test
+    fun `should guarantee string is uppercase`() {
+        "HELLO KIWI 101".should().beUppercase()
+    }
 }

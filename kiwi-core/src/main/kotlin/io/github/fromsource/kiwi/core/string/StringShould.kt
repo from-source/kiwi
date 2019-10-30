@@ -55,4 +55,28 @@ class StringShould(private val actual: String) {
         assert(actual.capitalize() == actual) { message }
         return this
     }
+
+    fun beDecapitalized(): StringShould {
+        val message = "'$actual' should be decapitalised"
+        assert(actual.decapitalize() == actual) { message }
+        return this
+    }
+
+    infix fun match(regex: Regex): StringShould {
+        val message = "'$actual' should match '$regex'"
+        assert(actual.matches(regex)) { message }
+        return this
+    }
+
+    fun beLowercase(): StringShould {
+        val message = "'$actual' should be lowercase"
+        assert(actual.toLowerCase() == actual) { message }
+        return this
+    }
+
+    fun beUppercase(): StringShould {
+        val message = "'$actual' should be uppercase"
+        assert(actual.toUpperCase() == actual) { message }
+        return this
+    }
 }
