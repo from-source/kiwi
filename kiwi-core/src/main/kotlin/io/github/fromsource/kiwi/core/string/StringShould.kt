@@ -1,5 +1,7 @@
 package io.github.fromsource.kiwi.core.string
 
+import io.github.fromsource.kiwi.core.util.runCatching
+
 class StringShould(private val actual: String) {
 
     infix fun beEqual(expected: String): StringShould {
@@ -77,6 +79,27 @@ class StringShould(private val actual: String) {
     fun beUppercase(): StringShould {
         val message = "'$actual' should be uppercase"
         assert(actual.toUpperCase() == actual) { message }
+        return this
+    }
+
+    fun beLong(): StringShould {
+        val result = runCatching { actual.toLong() }
+        val message = "'$actual' should be Long"
+        assert(result.isSuccess()) { message }
+        return this
+    }
+
+    fun beInt(): StringShould {
+        val result = runCatching { actual.toInt() }
+        val message = "'$actual' should be Int"
+        assert(result.isSuccess()) { message }
+        return this
+    }
+
+    fun beShort(): StringShould {
+        val result = runCatching { actual.toShort() }
+        val message = "'$actual' should be Short"
+        assert(result.isSuccess()) { message }
         return this
     }
 }

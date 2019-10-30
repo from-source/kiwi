@@ -1,8 +1,9 @@
 package io.github.fromsource.kiwi.core.string
 
-import io.github.fromsource.kiwi.core.should
 import io.github.fromsource.kiwi.core.util.runCatching
+import io.github.fromsource.kiwi.core.should
 import org.junit.jupiter.api.Test
+import java.math.BigInteger
 
 class StringShouldTest {
 
@@ -87,13 +88,13 @@ class StringShouldTest {
 
     @Test
     fun `should guarantee string starts with`() {
-        "hello kiwi".should() startWith  "hello"
+        "hello kiwi".should() startWith "hello"
     }
 
     @Test
     fun `should fail when string does not end with`() {
         runCatching {
-            "hello kiwi".should() endWith  "kiw"
+            "hello kiwi".should() endWith "kiw"
         }.should()
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("'hello kiwi' should end with 'kiw'")
@@ -101,7 +102,7 @@ class StringShouldTest {
 
     @Test
     fun `should guarantee string ends with`() {
-        "hello kiwi".should() endWith  "kiwi"
+        "hello kiwi".should() endWith "kiwi"
     }
 
     @Test
@@ -186,5 +187,50 @@ class StringShouldTest {
     @Test
     fun `should guarantee string is uppercase`() {
         "HELLO KIWI 101".should().beUppercase()
+    }
+
+    @Test
+    fun `should fail when string is not Long`() {
+        val aboveLong = BigInteger.valueOf(Long.MAX_VALUE).plus(BigInteger.ONE)
+        runCatching {
+            "$aboveLong".should().beLong()
+        }.should()
+                .beFailure(AssertionError::class)
+                .haveFailureMessage("'$aboveLong' should be Long")
+    }
+
+    @Test
+    fun `should guarantee string is Long`() {
+        "${Long.MAX_VALUE}".should().beLong()
+    }
+
+    @Test
+    fun `should fail when string is not Int`() {
+        val aboveInt: Long = Int.MAX_VALUE + 1L
+        runCatching {
+            "$aboveInt".should().beInt()
+        }.should()
+                .beFailure(AssertionError::class)
+                .haveFailureMessage("'$aboveInt' should be Int")
+    }
+
+    @Test
+    fun `should guarantee string is Int`() {
+        "${Int.MAX_VALUE}".should().beInt()
+    }
+
+    @Test
+    fun `should fail when string is not Short`() {
+        val aboveShort = Short.MAX_VALUE + 1
+        runCatching {
+            "$aboveShort".should().beShort()
+        }.should()
+                .beFailure(AssertionError::class)
+                .haveFailureMessage("'$aboveShort' should be Short")
+    }
+
+    @Test
+    fun `should guarantee string is Short`() {
+        "${Short.MAX_VALUE}".should().beInt()
     }
 }
