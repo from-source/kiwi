@@ -1,10 +1,12 @@
 package io.github.fromsource.kiwi.core
 
 import io.github.fromsource.kiwi.core.collection.ListShould
+import io.github.fromsource.kiwi.core.collection.SetShould
 import io.github.fromsource.kiwi.core.number.*
 import io.github.fromsource.kiwi.core.string.StringShould
 
 fun <T> List<T>.should() = ListShould(this)
+fun <T> Set<T>.should() = SetShould(this)
 
 fun Int.should() = IntShould(this)
 fun Short.should() = ShortShould(this)

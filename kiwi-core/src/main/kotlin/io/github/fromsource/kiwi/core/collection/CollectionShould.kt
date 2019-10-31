@@ -51,12 +51,6 @@ open class CollectionShould<T, R : CollectionShould<T, R>>(open val actual: Coll
 
 open class ListShould<T>(override val actual: List<T>) : CollectionShould<T, ListShould<T>>(actual) {
 
-    infix fun beEqual(list: List<T>): ListShould<T> {
-        val message = "$actual should == $list"
-        assert(actual == list) { message }
-        return this
-    }
-
     open infix fun have1st(element: T): ListShould<T> {
         val message = "$actual should have first element to be $element"
         assert(actual.isNotEmpty()) { message }
@@ -87,3 +81,5 @@ open class ListShould<T>(override val actual: List<T>) : CollectionShould<T, Lis
         return ListShould(actual.filter(predicate))
     }
 }
+
+open class SetShould<T>(override val actual: Set<T>): CollectionShould<T, SetShould<T>>(actual)
