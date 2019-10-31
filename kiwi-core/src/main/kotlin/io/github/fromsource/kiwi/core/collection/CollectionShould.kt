@@ -82,4 +82,8 @@ open class ListShould<T>(override val actual: List<T>) : CollectionShould<T, Lis
     }
 }
 
-open class SetShould<T>(override val actual: Set<T>): CollectionShould<T, SetShould<T>>(actual)
+open class SetShould<T>(override val actual: Set<T>) : CollectionShould<T, SetShould<T>>(actual)
+
+open class MapShould<K, V>(private val actual: Map<K, V>) : BeEqual<Map<K, V>, MapShould<K, V>> {
+    override fun actual(): Map<K, V> = actual
+}
