@@ -1,6 +1,9 @@
 package io.github.fromsource.kiwi.core.collection
 
-open class CollectionShould<T, R : CollectionShould<T, R>>(open val actual: Collection<T>) {
+import io.github.fromsource.kiwi.core.BeEqual
+
+open class CollectionShould<T, R : CollectionShould<T, R>>(open val actual: Collection<T>) : BeEqual<Collection<T>, CollectionShould<T, R>> {
+    override fun actual(): Collection<T> = actual
 
     open fun beEmpty(): R {
         val message = "$actual should be empty"

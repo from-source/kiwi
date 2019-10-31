@@ -7,6 +7,24 @@ import org.junit.jupiter.api.Test
 class ListShouldTest {
 
     @Test
+    fun `should fail when lists are not equaled`() {
+        val numbers = listOf(1, 2, 3)
+
+        runCatching {
+            numbers.should() beEqual listOf(1, 2, 1)
+        }.should()
+                .beFailure(AssertionError::class)
+                .haveFailureMessage("[1, 2, 3] should == [1, 2, 1]")
+    }
+
+    @Test
+    fun `should guarantee list are equaled`() {
+        val numbers = listOf(1, 2, 3)
+
+        numbers.should() beEqual listOf(1, 2, 3)
+    }
+
+    @Test
     fun `should fail when list does not have expected size`() {
         val numbers = listOf(1, 2, 3)
 

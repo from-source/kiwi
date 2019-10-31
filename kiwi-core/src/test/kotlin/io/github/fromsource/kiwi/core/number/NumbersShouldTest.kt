@@ -12,7 +12,7 @@ class NumbersShouldTest {
             10.should() beEqual 9
         }.should()
                 .beFailure(AssertionError::class)
-                .haveFailureMessage("10 should be == 9")
+                .haveFailureMessage("10 should == 9")
     }
 
     @Test
