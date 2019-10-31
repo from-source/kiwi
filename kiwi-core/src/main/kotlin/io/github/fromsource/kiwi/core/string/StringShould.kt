@@ -1,14 +1,11 @@
 package io.github.fromsource.kiwi.core.string
 
+import io.github.fromsource.kiwi.core.BeComparable
+import io.github.fromsource.kiwi.core.BeEqual
 import io.github.fromsource.kiwi.core.util.runCatching
 
-class StringShould(private val actual: String) {
-
-    infix fun beEqual(expected: String): StringShould {
-        val message = "'$actual' should == '$expected'"
-        assert(actual == expected) { message }
-        return this
-    }
+class StringShould(private val actual: String) :BeEqual<String, StringShould>, BeComparable<String, StringShould> {
+    override fun actual(): String = actual
 
     fun beEmpty(): StringShould {
         val message = "'$actual' should be empty"

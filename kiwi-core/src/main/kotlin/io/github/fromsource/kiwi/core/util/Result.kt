@@ -30,5 +30,5 @@ class Failure<T>(private val throwable: Throwable) : Result<T>() {
 inline fun <R> runCatching(block: () -> R): Result<R> = try {
     success(block.invoke())
 } catch (throwable: Throwable) {
-    failure<R>(throwable)
+    failure(throwable)
 }

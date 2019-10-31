@@ -4,7 +4,7 @@ import io.github.fromsource.kiwi.core.should
 import io.github.fromsource.kiwi.core.util.runCatching
 import org.junit.jupiter.api.Test
 
-class IntShouldTest {
+class NumbersShouldTest {
 
     @Test
     fun `should fail when numbers are not equaled`() {
