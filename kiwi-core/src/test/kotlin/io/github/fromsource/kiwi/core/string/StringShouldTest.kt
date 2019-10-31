@@ -1,7 +1,7 @@
 package io.github.fromsource.kiwi.core.string
 
-import io.github.fromsource.kiwi.core.util.runCatching
 import io.github.fromsource.kiwi.core.should
+import io.github.fromsource.kiwi.core.util.runCatching
 import org.junit.jupiter.api.Test
 import java.math.BigInteger
 
@@ -55,7 +55,7 @@ class StringShouldTest {
             "hello kiwi".should() beEqual "hello kiwi!"
         }.should()
                 .beFailure(AssertionError::class)
-                .haveFailureMessage("'hello kiwi' should == 'hello kiwi!'")
+                .haveFailureMessage("hello kiwi should == hello kiwi!")
     }
 
     @Test
@@ -232,5 +232,33 @@ class StringShouldTest {
     @Test
     fun `should guarantee string is Short`() {
         "${Short.MAX_VALUE}".should().beInt()
+    }
+
+    @Test
+    fun `should fail when string is less than other`() {
+        runCatching {
+            "kiwi".should() beLessThan "civi"
+        }.should()
+                .beFailure(AssertionError::class)
+                .haveFailureMessage("kiwi should be < civi")
+    }
+
+    @Test
+    fun `should guarantee string is less than other`() {
+        "civi".should() beLessThan "kiwi"
+    }
+
+    @Test
+    fun `should fail when string is greater than other`() {
+        runCatching {
+            "KIWI".should() beGreaterThan  "kiwi"
+        }.should()
+                .beFailure(AssertionError::class)
+                .haveFailureMessage("KIWI should be > kiwi")
+    }
+
+    @Test
+    fun `should guarantee string is greater than other`() {
+        "kiwi".should() beGreaterThan  "KIWI"
     }
 }
