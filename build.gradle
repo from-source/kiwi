@@ -50,22 +50,27 @@ allprojects {
         }
     }
 
-    task codeCoverageReport(type: JacocoReport) {
-        executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
-
-        subprojects.each {
-            sourceSets it.sourceSets.main
-        }
-
+    jacocoTestReport {
+        additionalSourceDirs = files(sourceSets.main.allSource.srcDirs)
+        sourceDirectories = files(sourceSets.main.allSource.srcDirs)
+        classDirectories = files(sourceSets.main.output)
         reports {
-            xml.enabled true
-            xml.destination "${buildDir}/reports/jacoco/report.xml"
-            html.enabled false
-            csv.enabled false
+            html.enabled = true
+            xml.enabled = true
+            csv.enabled = false
         }
     }
+}
 
-    codeCoverageReport.dependsOn {
-        subprojects*.test
+task jacocoCoverage(type: org.gradle.testing.jacoco.tasks.JacocoReport) {
+    dependsOn = subprojects.test
+    additionalSourceDirs = files(subprojects.sourceSets.main.allSource.srcDirs)
+    sourceDirectories = files(subprojects.sourceSets.main.allSource.srcDirs)
+    classDirectories = files(subprojects.sourceSets.main.output)
+    executionData = files(subprojects.jacocoTestReport.executionData)
+    reports {
+        html.enabled = true
+        xml.enabled = true
+        csv.enabled = false
     }
 }
