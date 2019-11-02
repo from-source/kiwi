@@ -5,13 +5,13 @@ import kotlin.reflect.KClass
 open class ResultShould<T>(private val actual: Result<T>) {
 
     infix fun beFailure(assertionError: KClass<AssertionError>): ResultShould<T> {
-        if(!actual.isFailure()) {
+        if(!actual.isFailure) {
             val message = "Expected $assertionError to be thrown"
             assert(false) { message }
         }
 
-        val theSameFailure = assertionError.java == actual.throwableOrNull()?.javaClass
-        val message = "expected: $assertionError != ${actual.throwableOrNull()} actual"
+        val theSameFailure = assertionError.java == actual.exceptionOrNull()?.javaClass
+        val message = "expected: $assertionError != ${actual.exceptionOrNull()} actual"
         assert(theSameFailure) { message }
         return this
     }
@@ -24,7 +24,7 @@ open class ResultShould<T>(private val actual: Result<T>) {
     }
 
     infix fun haveFailureMessage(failureMessage: String): ResultShould<T> {
-        val actualMessage = actual.throwableOrNull()?.message
+        val actualMessage = actual.exceptionOrNull()?.message
         val message = "expected: '$failureMessage' != '$actualMessage' actual"
         assert(actualMessage == failureMessage) { message }
         return this

@@ -1,7 +1,6 @@
 package io.github.fromsource.kiwi.core.number
 
 import io.github.fromsource.kiwi.core.should
-import io.github.fromsource.kiwi.core.util.runCatching
 import org.junit.jupiter.api.Test
 
 class NumbersShouldTest {
