@@ -17,7 +17,7 @@ Below snippet demonstrates usage of Kiwi assertions for standard type like Strin
 ```
 
 Kiwi supports collections
-```
+```kotlin
     @Test
     fun `should combine operator in infix chain`() {
         val animals = listOf("kiwi", "hedgehog", "flamingo", "humpback")
@@ -27,7 +27,7 @@ Kiwi supports collections
 ```
 
 as well collections with custom types
-```
+```kotlin
     data class Animal(val name: String, val weight: Int, val mammal: Boolean) {
        fun heavy(): Boolean = weight > 10
     }
@@ -50,4 +50,12 @@ as well collections with custom types
                 .last().name.should()
                 .match(Regex("[a-z]+"))
     }
+```
+
+## Build
+Run command below
+```bash
+$ git clone git@github.com/from-source/kiwi.git
+$ cd kiwi/
+$ ./gradlew clean build
 ```
