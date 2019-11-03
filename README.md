@@ -1,4 +1,4 @@
-<img src="https://github.com/from-source/kiwi/blob/master/img/logo_kiwi.png" weight=800>
+<img src="https://github.com/from-source/kiwi/blob/master/img/logo_kiwi.png">
 
 # Kiwi: Fluent assertions for Kotlin projects
 
@@ -6,4 +6,48 @@
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/from-source/kiwi/blob/master/LICENSE.md)
 
 
+## Kiwi, Hello World!
 
+Below snippet demonstrates usage of Kiwi assertions for standard type like String
+```kotlin
+    @Test
+    fun `should say hallo to kiwi()` {
+        "Kiwi, Hello World!".should() startWith "Kiwi" contain "Hello" endWith "!"
+    }
+```
+
+Kiwi supports collections
+```
+    @Test
+    fun `should combine operator in infix chain`() {
+        val animals = listOf("kiwi", "hedgehog", "flamingo", "humpback")
+
+        animals.should() haveSize 4 contain "humpback" have1st "kiwi"
+    }
+```
+
+as well collections with custom types
+```
+    data class Animal(val name: String, val weight: Int, val mammal: Boolean) {
+       fun heavy(): Boolean = weight > 10
+    }
+
+    @Test
+    fun `should apply collection & string operators for list of custom object`() {
+        val kiwi = Animal(name = "kiwi", weight = 1, mammal = true)
+        val hedgehog = Animal(name = "hedgehog", weight = 2, mammal = true)
+        val flamingo = Animal(name = "flamingo", weight = 5, mammal = false)
+        val humpback = Animal(name = "humpback", weight = 5000, mammal = true)
+
+        val animals = listOf(kiwi, hedgehog, flamingo, humpback)
+
+        animals.should()
+                .haveSize(4)
+                .contain(flamingo)
+                .have2nd(hedgehog)
+                .filtered { animal -> animal.mammal }
+                .matchAny { animal -> animal.heavy() }
+                .last().name.should()
+                .match(Regex("[a-z]+"))
+    }
+```

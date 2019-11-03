@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 class KiwiExtensionTest {
 
     @Test
-    fun `should apply collections operators for list of custom data class`() {
+    fun `should apply collections & string operators for list of custom data class`() {
         val kiwi = Animal(name = "kiwi", weight = 1, mammal = true)
         val hedgehog = Animal(name = "hedgehog", weight = 2, mammal = true)
         val flamingo = Animal(name = "flamingo", weight = 5, mammal = false)
@@ -21,5 +21,7 @@ class KiwiExtensionTest {
                 .have2nd(hedgehog)
                 .filtered { animal -> animal.mammal }
                 .matchAny { animal -> animal.heavy() }
+                .last().name.should()
+                .match(Regex("[a-z]+"))
     }
 }
