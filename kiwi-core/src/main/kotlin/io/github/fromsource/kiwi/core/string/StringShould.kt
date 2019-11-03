@@ -2,7 +2,6 @@ package io.github.fromsource.kiwi.core.string
 
 import io.github.fromsource.kiwi.core.BeComparable
 import io.github.fromsource.kiwi.core.BeEqual
-import io.github.fromsource.kiwi.core.util.runCatching
 
 class StringShould(private val actual: String) :BeEqual<String, StringShould>, BeComparable<String, StringShould> {
     override fun actual(): String = actual
@@ -82,21 +81,21 @@ class StringShould(private val actual: String) :BeEqual<String, StringShould>, B
     fun beLong(): StringShould {
         val result = runCatching { actual.toLong() }
         val message = "'$actual' should be Long"
-        assert(result.isSuccess()) { message }
+        assert(result.isSuccess) { message }
         return this
     }
 
     fun beInt(): StringShould {
         val result = runCatching { actual.toInt() }
         val message = "'$actual' should be Int"
-        assert(result.isSuccess()) { message }
+        assert(result.isSuccess) { message }
         return this
     }
 
     fun beShort(): StringShould {
         val result = runCatching { actual.toShort() }
         val message = "'$actual' should be Short"
-        assert(result.isSuccess()) { message }
+        assert(result.isSuccess) { message }
         return this
     }
 }
