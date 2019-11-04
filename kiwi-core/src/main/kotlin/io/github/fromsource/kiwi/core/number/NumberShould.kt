@@ -37,6 +37,36 @@ class ByteShould(private val actual: Byte) : NumberShould<Byte> {
         assert(actual() < expected) { message }
         return this
     }
+
+    infix fun beGreaterThan(expected: Short): NumberShould<Byte> {
+        val message = "${actual()} should be > $expected"
+        assert(actual() > expected) { message }
+        return this
+    }
+
+    infix fun beGreaterThan(expected: Int): NumberShould<Byte> {
+        val message = "${actual()} should be > $expected"
+        assert(actual() > expected) { message }
+        return this
+    }
+
+    infix fun beGreaterThan(expected: Long): NumberShould<Byte> {
+        val message = "${actual()} should be > $expected"
+        assert(actual() > expected) { message }
+        return this
+    }
+
+    infix fun beGreaterThan(expected: Float): NumberShould<Byte> {
+        val message = "${actual()} should be > $expected"
+        assert(actual() > expected) { message }
+        return this
+    }
+
+    infix fun beGreaterThan(expected: Double): NumberShould<Byte> {
+        val message = "${actual()} should be > $expected"
+        assert(actual() > expected) { message }
+        return this
+    }
 }
 
 class ShortShould(private val actual: Short) : NumberShould<Short> {
