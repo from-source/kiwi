@@ -1,4 +1,4 @@
-<img src="https://github.com/from-source/kiwi/blob/master/img/logo_kiwi.png">
+<img src="https://github.com/from-source/kiwi/blob/master/img/850x350_kiwi_small2.jpg">
 
 # Kiwi: Fluent assertions for Kotlin projects
 
