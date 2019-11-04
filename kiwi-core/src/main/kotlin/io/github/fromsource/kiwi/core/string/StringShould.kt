@@ -24,9 +24,21 @@ class StringShould(private val actual: String) :BeEqual<String, StringShould>, B
         return this
     }
 
+    fun notBeBlank(): StringShould {
+        val message = "'$actual' should not be blank"
+        assert(actual.isNotBlank()) { message }
+        return this
+    }
+
     infix fun contain(expected: String): StringShould {
         val message = "'$actual' should contain '$expected'"
         assert(actual.contains(expected, false)) { message }
+        return this
+    }
+
+    infix fun containIgnoringCase(expected: String): StringShould {
+        val message = "'$actual' should contain ignoring case '$expected'"
+        assert(actual.contains(expected, true)) { message }
         return this
     }
 
@@ -96,6 +108,12 @@ class StringShould(private val actual: String) :BeEqual<String, StringShould>, B
         val result = runCatching { actual.toShort() }
         val message = "'$actual' should be Short"
         assert(result.isSuccess) { message }
+        return this
+    }
+
+    infix fun beEqualIgnoringCase(expected: String): StringShould {
+        val message = "'$actual' should be equal ignoring case to '$expected'"
+        assert(actual.equals(expected, true)) { message }
         return this
     }
 }

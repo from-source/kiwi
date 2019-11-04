@@ -31,7 +31,7 @@ class StringShouldTest {
 
     @Test
     fun `should guarantee string is not empty`() {
-        "kiwi!".should().notBeEmpty()
+        " ".should().notBeEmpty()
     }
 
     @Test
@@ -46,6 +46,20 @@ class StringShouldTest {
     @Test
     fun `should guarantee string is blank`() {
         " ".should().beBlank()
+    }
+
+    @Test
+    fun `should fail when string is blank`() {
+        runCatching {
+            " ".should().notBeBlank()
+        }.should()
+                .beFailure(AssertionError::class)
+                .haveFailureMessage("' ' should not be blank")
+    }
+
+    @Test
+    fun `should guarantee string is not blank`() {
+        "k".should().notBeBlank()
     }
 
     @Test
@@ -74,6 +88,22 @@ class StringShouldTest {
     @Test
     fun `should guarantee string contains`() {
         "hello kiwi".should() contain "lo ki"
+    }
+
+    @Test
+    fun `should fail when string does not contain ignoring case`() {
+        runCatching {
+            "hello kiwi".should() containIgnoringCase "LoKi"
+        }.should()
+                .beFailure(java.lang.AssertionError::class)
+                .haveFailureMessage("'hello kiwi' should contain ignoring case 'LoKi'")
+    }
+
+    @Test
+    fun `should guarantee string contains ignoring case`() {
+        runCatching {
+            "hello kiwi".should() containIgnoringCase "Lo Ki"
+        }
     }
 
     @Test
@@ -250,7 +280,7 @@ class StringShouldTest {
     @Test
     fun `should fail when string is greater than other`() {
         runCatching {
-            "KIWI".should() beGreaterThan  "kiwi"
+            "KIWI".should() beGreaterThan "kiwi"
         }.should()
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("KIWI should be > kiwi")
@@ -258,6 +288,20 @@ class StringShouldTest {
 
     @Test
     fun `should guarantee string is greater than other`() {
-        "kiwi".should() beGreaterThan  "KIWI"
+        "kiwi".should() beGreaterThan "KIWI"
+    }
+
+    @Test
+    fun `should fail when string is not equal ignoring case`() {
+        runCatching {
+            "kiwi".should() beEqualIgnoringCase "NOT KIWI"
+        }.should()
+                .beFailure(java.lang.AssertionError::class)
+                .haveFailureMessage("'kiwi' should be equal ignoring case to 'NOT KIWI'")
+    }
+
+    @Test
+    fun `should guarantee string is equal ignoring case`() {
+        "kiwi".should() beEqualIgnoringCase "KIWI"
     }
 }
