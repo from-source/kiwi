@@ -105,7 +105,6 @@ class DoubleShouldTest {
         less.should() beLessThan more.toFloat()
     }
 
-
     @Test
     fun `should fail when number is not greater than`() {
         runCatching {
@@ -119,5 +118,74 @@ class DoubleShouldTest {
     fun `should guarantee than number is greater than`() {
         more.should() beGreaterThan less
     }
-}
 
+    @Test
+    fun `should fail when number is not greater than byte`() {
+        runCatching {
+            less.should() beGreaterThan more.toByte()
+        }.should()
+                .beFailure(AssertionError::class)
+                .haveFailureMessage("$less should be > ${more.toByte()}")
+    }
+
+    @Test
+    fun `should guarantee than number is greater than byte`() {
+        more.should() beGreaterThan less.toByte()
+    }
+
+    @Test
+    fun `should fail when number is not greater than short`() {
+        runCatching {
+            less.should() beGreaterThan more.toShort()
+        }.should()
+                .beFailure(AssertionError::class)
+                .haveFailureMessage("$less should be > ${more.toShort()}")
+    }
+
+    @Test
+    fun `should guarantee than number is greater than short`() {
+        more.should() beGreaterThan less.toShort()
+    }
+
+    @Test
+    fun `should fail when number is not greater than int`() {
+        runCatching {
+            less.should() beGreaterThan more.toInt()
+        }.should()
+                .beFailure(AssertionError::class)
+                .haveFailureMessage("$less should be > ${more.toInt()}")
+    }
+
+    @Test
+    fun `should guarantee than number is greater than int`() {
+        more.should() beGreaterThan less.toInt()
+    }
+
+    @Test
+    fun `should fail when number is not greater than long`() {
+        runCatching {
+            less.should() beGreaterThan more.toLong()
+        }.should()
+                .beFailure(AssertionError::class)
+                .haveFailureMessage("$less should be > ${more.toLong()}")
+    }
+
+    @Test
+    fun `should guarantee than number is greater than long`() {
+        more.should() beGreaterThan less.toLong()
+    }
+
+    @Test
+    fun `should fail when number is not greater than float`() {
+        runCatching {
+            less.should() beGreaterThan more.toFloat()
+        }.should()
+                .beFailure(AssertionError::class)
+                .haveFailureMessage("$less should be > ${more.toFloat()}")
+    }
+
+    @Test
+    fun `should guarantee than number is greater than float`() {
+        more.should() beGreaterThan less.toFloat()
+    }
+}

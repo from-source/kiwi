@@ -264,33 +264,63 @@ class LongShould(private val actual: Long) : NumberShould<Long> {
 class DoubleShould(private val actual: Double) : NumberShould<Double> {
     override fun actual(): Double = actual
 
-    infix fun beLessThan(expected: Byte): NumberShould<Double> {
+    infix fun beLessThan(expected: Byte): DoubleShould {
         val message = "${actual()} should be < $expected"
         assert(actual() < expected) { message }
         return this
     }
 
-    infix fun beLessThan(expected: Short): NumberShould<Double> {
+    infix fun beLessThan(expected: Short): DoubleShould {
         val message = "${actual()} should be < $expected"
         assert(actual() < expected) { message }
         return this
     }
 
-    infix fun beLessThan(expected: Int): NumberShould<Double> {
+    infix fun beLessThan(expected: Int): DoubleShould {
         val message = "${actual()} should be < $expected"
         assert(actual() < expected) { message }
         return this
     }
 
-    infix fun beLessThan(expected: Long): NumberShould<Double> {
+    infix fun beLessThan(expected: Long): DoubleShould {
         val message = "${actual()} should be < $expected"
         assert(actual() < expected) { message }
         return this
     }
 
-    infix fun beLessThan(expected: Float): NumberShould<Double> {
+    infix fun beLessThan(expected: Float): DoubleShould {
         val message = "${actual()} should be < $expected"
         assert(actual() < expected) { message }
+        return this
+    }
+
+    infix fun beGreaterThan(expected: Byte): DoubleShould {
+        val message = "${actual()} should be > $expected"
+        assert(actual() > expected) { message }
+        return this
+    }
+
+    infix fun beGreaterThan(expected: Short): DoubleShould {
+        val message = "${actual()} should be > $expected"
+        assert(actual() > expected) { message }
+        return this
+    }
+
+    infix fun beGreaterThan(expected: Int): DoubleShould {
+        val message = "${actual()} should be > $expected"
+        assert(actual() > expected) { message }
+        return this
+    }
+
+    infix fun beGreaterThan(expected: Long): DoubleShould {
+        val message = "${actual()} should be > $expected"
+        assert(actual() > expected) { message }
+        return this
+    }
+
+    infix fun beGreaterThan(expected: Float): DoubleShould {
+        val message = "${actual()} should be > $expected"
+        assert(actual() > expected) { message }
         return this
     }
 }
