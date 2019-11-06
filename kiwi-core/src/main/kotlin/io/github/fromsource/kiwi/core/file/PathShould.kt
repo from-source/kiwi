@@ -32,4 +32,10 @@ class PathShould(private val actual: Path) : BeEqual<Path, PathShould> {
         assert(userAssertedDirectoryPath == actualParentDirectory) { message }
         return this
     }
+
+    fun beAbsolute(): PathShould {
+        val message = "Path '$actual' is not absolute"
+        assert(File(actual.toString()).isAbsolute) { message }
+        return this
+    }
 }

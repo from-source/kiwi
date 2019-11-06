@@ -55,6 +55,22 @@ class PathShouldTest {
     }
 
     @Test
+    internal fun `should be able to verify that path is absolute`() {
+        val path = File("src/test/resources").toPath().toAbsolutePath()
+        path.should().beAbsolute()
+    }
+
+    @Test
+    fun `should fail if path is not absolute`() {
+        val path = File("./src/test/resources").toPath()
+        runCatching {
+            path.should().beAbsolute()
+        }.should()
+                .beFailure(AssertionError::class)
+                .haveFailureMessage("Path './src/test/resources' is not absolute")
+    }
+
+    @Test
     fun `should be able to verify parent directory`() {
         val path = File("src/test/resources/sample.txt").toPath()
 
