@@ -24,4 +24,12 @@ class PathShould(private val actual: Path) : BeEqual<Path, PathShould> {
         assert(File(actual.toUri()).isFile) { message }
         return this
     }
+
+    fun haveParentDirectory(userAssertedDirectory: String): PathShould {
+        val userAssertedDirectoryPath = File(userAssertedDirectory).absolutePath
+        val actualParentDirectory = File(actual.toUri()).parent
+        val message = "Parent directory '$actualParentDirectory' does not match value '$userAssertedDirectoryPath'"
+        assert(userAssertedDirectoryPath == actualParentDirectory) { message }
+        return this
+    }
 }

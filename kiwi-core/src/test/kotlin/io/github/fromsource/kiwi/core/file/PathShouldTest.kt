@@ -53,4 +53,22 @@ class PathShouldTest {
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("Path './src/test/resources' is not a file")
     }
+
+    @Test
+    fun `should be able to verify parent directory`() {
+        val path = File("src/test/resources/sample.txt").toPath()
+
+        path.should().haveParentDirectory("src/test/resources")
+    }
+
+    @Test
+    fun `should fail if parent directory does not match`() {
+        val path = File("src").toPath()
+        val actualParentPath = File(path.toUri()).parent
+        runCatching {
+            path.should().haveParentDirectory("src/failure")
+        }.should()
+                .beFailure(AssertionError::class)
+                .haveFailureMessage("Parent directory '$actualParentPath' does not match value '$actualParentPath/src/failure'")
+    }
 }
