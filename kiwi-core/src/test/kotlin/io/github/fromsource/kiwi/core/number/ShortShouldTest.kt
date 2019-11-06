@@ -2,11 +2,13 @@ package io.github.fromsource.kiwi.core.number
 
 import io.github.fromsource.kiwi.core.should
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 
 class ShortShouldTest {
 
-    private val more :Short = 10
-    private val less :Short = 1
+    private val more: Short = 10
+    private val less: Short = 1
 
     @Test
     fun `should fail when numbers are not equaled`() {
@@ -20,6 +22,36 @@ class ShortShouldTest {
     @Test
     fun `should guarantee numbers are equaled`() {
         more.should() beEqual more
+    }
+
+    @ParameterizedTest
+    @ValueSource(shorts = [negative, zero])
+    fun `should fail when number is not positive`(nonPositive: Short) {
+        runCatching {
+            nonPositive.should().bePositive()
+        }.should()
+                .beFailure(AssertionError::class)
+                .haveFailureMessage("$nonPositive should be > 0")
+    }
+
+    @Test
+    fun `should guarantee number is positive`() {
+        positive.should().bePositive()
+    }
+
+    @ParameterizedTest
+    @ValueSource(shorts = [positive, zero])
+    fun `should fail when number is not negatives`(notNegative: Short) {
+        runCatching {
+            notNegative.should().beNegative()
+        }.should()
+                .beFailure(AssertionError::class)
+                .haveFailureMessage("$notNegative should be < 0")
+    }
+
+    @Test
+    fun `should guarantee number is negative`() {
+        negative.should().beNegative()
     }
 
     @Test
@@ -188,5 +220,11 @@ class ShortShouldTest {
     @Test
     fun `should guarantee than number is greater than double`() {
         more.should() beGreaterThan less.toDouble()
+    }
+
+    companion object {
+        private const val zero: Short = 0
+        private const val negative: Short = -20
+        private const val positive: Short = 20
     }
 }

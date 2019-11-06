@@ -26,6 +26,7 @@ allprojects {
         implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
         implementation 'org.jetbrains.kotlin:kotlin-reflect'
 
+        testImplementation 'org.junit.jupiter:junit-jupiter-params:5.3.2'
         testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.2'
         testImplementation 'org.junit.vintage:junit-vintage-engine:5.3.2'
         testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.2'

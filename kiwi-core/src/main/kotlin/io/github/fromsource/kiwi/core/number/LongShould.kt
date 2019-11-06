@@ -3,6 +3,11 @@ package io.github.fromsource.kiwi.core.number
 class LongShould(private val actual: Long) : NumberShould<Long> {
     override fun actual(): Long = actual
 
+    override fun bePositive(): LongShould = beGreaterThan(0)
+
+    override fun beNegative(): LongShould = beLessThan(0)
+
+
     infix fun beLessThan(expected: Byte): LongShould {
         val message = "${actual()} should be < $expected"
         assert(actual() < expected) { message }

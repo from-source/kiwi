@@ -2,6 +2,8 @@ package io.github.fromsource.kiwi.core.number
 
 import io.github.fromsource.kiwi.core.should
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 
 class ByteShouldTest {
 
@@ -20,6 +22,36 @@ class ByteShouldTest {
     @Test
     fun `should guarantee numbers are equaled`() {
         more.should() beEqual more
+    }
+
+    @ParameterizedTest
+    @ValueSource(bytes = [negative, zero])
+    fun `should fail when number is not positive`(nonPositive: Double) {
+        runCatching {
+            nonPositive.should().bePositive()
+        }.should()
+                .beFailure(AssertionError::class)
+                .haveFailureMessage("$nonPositive should be > 0")
+    }
+
+    @Test
+    fun `should guarantee number is positive`() {
+        positive.should().bePositive()
+    }
+
+    @ParameterizedTest
+    @ValueSource(bytes = [positive, zero])
+    fun `should fail when number is not negatives`(notNegative: Double) {
+        runCatching {
+            notNegative.should().beNegative()
+        }.should()
+                .beFailure(AssertionError::class)
+                .haveFailureMessage("$notNegative should be < 0")
+    }
+
+    @Test
+    fun `should guarantee number is negative`() {
+        negative.should().beNegative()
     }
 
     @Test
@@ -189,6 +221,12 @@ class ByteShouldTest {
     @Test
     fun `should guarantee than number is greater than double`() {
         more.should() beGreaterThan less.toDouble()
+    }
+
+    companion object {
+        private const val zero: Byte = 0
+        private const val negative: Byte = -20
+        private const val positive: Byte = 20
     }
 }
 

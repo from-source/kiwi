@@ -3,6 +3,11 @@ package io.github.fromsource.kiwi.core.number
 class DoubleShould(private val actual: Double) : NumberShould<Double> {
     override fun actual(): Double = actual
 
+    override fun bePositive(): DoubleShould = beGreaterThan(0)
+
+    override fun beNegative(): DoubleShould = beLessThan(0)
+
+
     infix fun beLessThan(expected: Byte): DoubleShould {
         val message = "${actual()} should be < $expected"
         assert(actual() < expected) { message }

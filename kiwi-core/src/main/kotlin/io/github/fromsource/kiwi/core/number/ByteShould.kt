@@ -3,6 +3,10 @@ package io.github.fromsource.kiwi.core.number
 class ByteShould(private val actual: Byte) : NumberShould<Byte> {
     override fun actual(): Byte = actual
 
+    override fun bePositive(): ByteShould = beGreaterThan(0)
+
+    override fun beNegative(): ByteShould = beLessThan(0)
+
     infix fun beLessThan(expected: Short): ByteShould {
         val message = "${actual()} should be < $expected"
         assert(actual() < expected) { message }

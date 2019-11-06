@@ -3,6 +3,10 @@ package io.github.fromsource.kiwi.core.number
 class FloatShould(private val actual: Float) : NumberShould<Float> {
     override fun actual(): Float = actual
 
+    override fun bePositive(): FloatShould = beGreaterThan(0)
+
+    override fun beNegative(): FloatShould = beLessThan(0)
+
     infix fun beLessThan(expected: Byte): FloatShould {
         val message = "${actual()} should be < $expected"
         assert(actual() < expected) { message }
