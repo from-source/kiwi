@@ -9,6 +9,12 @@ interface BeComparable<T : Comparable<T>, R : BeComparable<T, R>> {
         return this as R
     }
 
+    infix fun beLessOrEqualThan(expected: T): R {
+        val message = "${actual()} should be <= $expected"
+        assert(actual() <= expected) { message }
+        return this as R
+    }
+
     infix fun beGreaterThan(expected: T): R {
         val message = "${actual()} should be > $expected"
         assert(actual() > expected) { message }

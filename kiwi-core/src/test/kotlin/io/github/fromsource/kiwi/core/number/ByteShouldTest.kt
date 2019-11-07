@@ -72,6 +72,20 @@ class ByteShouldTest {
     }
 
     @Test
+    fun `should fail when number is not less or equal than`() {
+        runCatching {
+            more.should() beLessOrEqualThan less
+        }.should()
+                .beFailure(AssertionError::class)
+                .haveFailureMessage("$more should be <= $less")
+    }
+
+    @Test
+    fun `should guarantee than number is less or equal than`() {
+        less.should() beLessOrEqualThan less beLessOrEqualThan more
+    }
+
+    @Test
     fun `should fail when number is not less than short`() {
         runCatching {
             more.should() beLessThan less.toShort()
