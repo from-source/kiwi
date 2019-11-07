@@ -3,7 +3,10 @@ package io.github.fromsource.kiwi.core.number
 import io.github.fromsource.kiwi.core.should
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
 import org.junit.jupiter.params.provider.ValueSource
+import java.util.stream.Stream
 
 class IntShouldTest {
 
@@ -222,10 +225,32 @@ class IntShouldTest {
         more.should() beGreaterThan less.toDouble()
     }
 
+    @ParameterizedTest
+    @MethodSource(value = ["notBetween"])
+    fun `should fail when number is not between`(number: Int, lower: Int, higher: Int) {
+        runCatching {
+            number.should().beBetween(lower, higher)
+        }.should()
+                .beFailure(AssertionError::class)
+                .haveFailureMessage("$number should be between ($lower .. $higher)")
+    }
+
+    @Test
+    fun `should guarantee than number is between`() {
+        zero.should().beBetween(negative, positive)
+    }
+
     companion object {
         private const val zero = 0
         private const val negative = -20
         private const val positive = 20
+
+        @JvmStatic
+        fun notBetween(): Stream<Arguments> = Stream.of(
+                Arguments.of(negative, zero, positive),
+                Arguments.of(zero, zero, positive),
+                Arguments.of(positive, negative, positive)
+        )
     }
 }
 
