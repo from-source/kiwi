@@ -20,7 +20,6 @@ allprojects {
     apply plugin: 'java'
     apply plugin: 'idea'
     apply plugin: 'kotlin'
-    apply plugin: 'jacoco'
 
     dependencies {
         implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
@@ -49,29 +48,5 @@ allprojects {
             freeCompilerArgs = ['-Xjsr305=strict']
             jvmTarget = '1.8'
         }
-    }
-
-    jacocoTestReport {
-        additionalSourceDirs = files(sourceSets.main.allSource.srcDirs)
-        sourceDirectories = files(sourceSets.main.allSource.srcDirs)
-        classDirectories = files(sourceSets.main.output)
-        reports {
-            html.enabled = true
-            xml.enabled = true
-            csv.enabled = false
-        }
-    }
-}
-
-task jacocoCoverage(type: org.gradle.testing.jacoco.tasks.JacocoReport) {
-    dependsOn = subprojects.test
-    additionalSourceDirs = files(subprojects.sourceSets.main.allSource.srcDirs)
-    sourceDirectories = files(subprojects.sourceSets.main.allSource.srcDirs)
-    classDirectories = files(subprojects.sourceSets.main.output)
-    executionData = files(subprojects.jacocoTestReport.executionData)
-    reports {
-        html.enabled = true
-        xml.enabled = true
-        csv.enabled = false
     }
 }
