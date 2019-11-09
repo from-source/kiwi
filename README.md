@@ -32,23 +32,39 @@ as well collections with custom types
        fun heavy(): Boolean = weight > 10
     }
 
+    val kiwi     = Animal(name = "kiwi", weight = 1, mammal = true)
+    val hedgehog = Animal(name = "hedgehog", weight = 2, mammal = true)
+    val flamingo = Animal(name = "flamingo", weight = 5, mammal = false)
+    val humpback = Animal(name = "humpback", weight = 5000, mammal = true)
+
+
     @Test
-    fun `should apply collection & string operators for list of custom object`() {
-        val kiwi = Animal(name = "kiwi", weight = 1, mammal = true)
-        val hedgehog = Animal(name = "hedgehog", weight = 2, mammal = true)
-        val flamingo = Animal(name = "flamingo", weight = 5, mammal = false)
-        val humpback = Animal(name = "humpback", weight = 5000, mammal = true)
+    fun `should apply collection operators for list of custom object`() {
 
         val animals = listOf(kiwi, hedgehog, flamingo, humpback)
 
         animals.should()
                 .haveSize(4)
                 .contain(flamingo)
-                .have2nd(hedgehog)
+                .beSorted { it.weight }
                 .filtered { animal -> animal.mammal }
                 .matchAny { animal -> animal.heavy() }
-                .last().name.should()
-                .match(Regex("[a-z]+"))
+
+    }
+```
+
+Different types of operators e.g. `Collection`, `String`, `Numbers` can be used fluently
+
+```kotlin
+    @Test
+    fun `should apply mix different types of operators`() {
+
+        val animals = listOf(kiwi, hedgehog, flamingo, humpback)
+
+        animals.should()
+                .contain(hedgehog)                             // Collection operator
+                .last().name.should()                          // extract
+                .match(Regex("[a-z]+"))                        // String operator
     }
 ```
 
