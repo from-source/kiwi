@@ -57,7 +57,7 @@ Different types of operators e.g. `Collection`, `String`, `Numbers` can be used 
 
 ```kotlin
     @Test
-    fun `should apply mix different types of operators`() {
+    fun `should mix different types of operators`() {
 
         val animals = listOf(kiwi, hedgehog, flamingo, humpback)
 
