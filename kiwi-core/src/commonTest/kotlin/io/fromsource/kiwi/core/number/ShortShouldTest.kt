@@ -22,30 +22,46 @@ class ShortShouldTest {
         more.should() beEqual more
     }
 
-//    @ParameterizedTest
-//    @ValueSource(shorts = [negative, zero])
-//    fun `should fail when number is not positive`(nonPositive: Short) {
-//        runCatching {
-//            nonPositive.should().bePositive()
-//        }.should()
-//                .beFailure(AssertionError::class)
-//                .haveFailureMessage("$nonPositive should be > 0")
-//    }
+    @Test
+    fun `should fail because netagive is not positive`() {
+        runCatching {
+            negative.should().bePositive()
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("${negative} should be > 0")
+    }
+
+    @Test
+    fun `should fail because zero is not positive`() {
+        runCatching {
+            zero.should().bePositive()
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("${zero} should be > 0")
+    }
 
     @Test
     fun `should guarantee number is positive`() {
         positive.should().bePositive()
     }
 
-//    @ParameterizedTest
-//    @ValueSource(shorts = [positive, zero])
-//    fun `should fail when number is not negatives`(notNegative: Short) {
-//        runCatching {
-//            notNegative.should().beNegative()
-//        }.should()
-//                .beFailure(AssertionError::class)
-//                .haveFailureMessage("$notNegative should be < 0")
-//    }
+    @Test
+    fun `should fail because positive number is not negatives`() {
+        runCatching {
+            positive.should().beNegative()
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$positive should be < 0")
+    }
+
+    @Test
+    fun `should fail because zero number is not negatives`() {
+        runCatching {
+            zero.should().beNegative()
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$zero should be < 0")
+    }
 
     @Test
     fun `should guarantee number is negative`() {

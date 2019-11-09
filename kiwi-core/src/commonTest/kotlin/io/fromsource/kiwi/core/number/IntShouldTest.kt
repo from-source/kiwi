@@ -13,8 +13,8 @@ class IntShouldTest {
         runCatching {
             more.should() beEqual less
         }.should()
-                .beFailure(AssertionError::class)
-                .haveFailureMessage("$more should == $less")
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$more should == $less")
     }
 
     @Test
@@ -22,30 +22,46 @@ class IntShouldTest {
         more.should() beEqual more
     }
 
-//    @ParameterizedTest
-//    @ValueSource(ints = [negative, zero])
-//    fun `should fail when number is not positive`(nonPositive: Int) {
-//        runCatching {
-//            nonPositive.should().bePositive()
-//        }.should()
-//                .beFailure(AssertionError::class)
-//                .haveFailureMessage("$nonPositive should be > 0")
-//    }
+    @Test
+    fun `should fail because netagive is not positive`() {
+        runCatching {
+            negative.should().bePositive()
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("${negative} should be > 0")
+    }
+
+    @Test
+    fun `should fail because zero is not positive`() {
+        runCatching {
+            zero.should().bePositive()
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("${zero} should be > 0")
+    }
 
     @Test
     fun `should guarantee number is positive`() {
         positive.should().bePositive()
     }
 
-//    @ParameterizedTest
-//    @ValueSource(ints = [positive, zero])
-//    fun `should fail when number is not negatives`(notNegative: Int) {
-//        runCatching {
-//            notNegative.should().beNegative()
-//        }.should()
-//                .beFailure(AssertionError::class)
-//                .haveFailureMessage("$notNegative should be < 0")
-//    }
+    @Test
+    fun `should fail because positive number is not negatives`() {
+        runCatching {
+            positive.should().beNegative()
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$positive should be < 0")
+    }
+
+    @Test
+    fun `should fail because zero number is not negatives`() {
+        runCatching {
+            zero.should().beNegative()
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$zero should be < 0")
+    }
 
     @Test
     fun `should guarantee number is negative`() {
@@ -57,8 +73,8 @@ class IntShouldTest {
         runCatching {
             more.should() beLessThan less
         }.should()
-                .beFailure(AssertionError::class)
-                .haveFailureMessage("$more should be < $less")
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$more should be < $less")
     }
 
     @Test
@@ -71,8 +87,8 @@ class IntShouldTest {
         runCatching {
             more.should() beLessOrEqualThan less
         }.should()
-                .beFailure(AssertionError::class)
-                .haveFailureMessage("$more should be <= $less")
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$more should be <= $less")
     }
 
     @Test
@@ -85,8 +101,8 @@ class IntShouldTest {
         runCatching {
             more.should() beLessThan less.toByte()
         }.should()
-                .beFailure(AssertionError::class)
-                .haveFailureMessage("$more should be < ${less.toByte()}")
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$more should be < ${less.toByte()}")
     }
 
     @Test
@@ -99,8 +115,8 @@ class IntShouldTest {
         runCatching {
             more.should() beLessThan less.toShort()
         }.should()
-                .beFailure(AssertionError::class)
-                .haveFailureMessage("$more should be < ${less.toShort()}")
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$more should be < ${less.toShort()}")
     }
 
     @Test
@@ -113,8 +129,8 @@ class IntShouldTest {
         runCatching {
             more.should() beLessThan less.toLong()
         }.should()
-                .beFailure(AssertionError::class)
-                .haveFailureMessage("$more should be < ${less.toLong()}")
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$more should be < ${less.toLong()}")
     }
 
     @Test
@@ -127,8 +143,8 @@ class IntShouldTest {
         runCatching {
             more.should() beLessThan less.toFloat()
         }.should()
-                .beFailure(AssertionError::class)
-                .haveFailureMessage("$more should be < ${less.toFloat()}")
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$more should be < ${less.toFloat()}")
     }
 
     @Test
@@ -141,8 +157,8 @@ class IntShouldTest {
         runCatching {
             more.should() beLessThan less.toDouble()
         }.should()
-                .beFailure(AssertionError::class)
-                .haveFailureMessage("$more should be < ${less.toDouble()}")
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$more should be < ${less.toDouble()}")
     }
 
     @Test
@@ -155,8 +171,8 @@ class IntShouldTest {
         runCatching {
             less.should() beGreaterThan more
         }.should()
-                .beFailure(AssertionError::class)
-                .haveFailureMessage("$less should be > $more")
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$less should be > $more")
     }
 
     @Test
@@ -169,8 +185,8 @@ class IntShouldTest {
         runCatching {
             less.should() beGreaterThan more.toByte()
         }.should()
-                .beFailure(AssertionError::class)
-                .haveFailureMessage("$less should be > ${more.toByte()}")
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$less should be > ${more.toByte()}")
     }
 
     @Test
@@ -183,8 +199,8 @@ class IntShouldTest {
         runCatching {
             less.should() beGreaterThan more.toShort()
         }.should()
-                .beFailure(AssertionError::class)
-                .haveFailureMessage("$less should be > ${more.toShort()}")
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$less should be > ${more.toShort()}")
     }
 
     @Test
@@ -197,8 +213,8 @@ class IntShouldTest {
         runCatching {
             less.should() beGreaterThan more.toLong()
         }.should()
-                .beFailure(AssertionError::class)
-                .haveFailureMessage("$less should be > ${more.toLong()}")
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$less should be > ${more.toLong()}")
     }
 
     @Test
@@ -211,8 +227,8 @@ class IntShouldTest {
         runCatching {
             less.should() beGreaterThan more.toFloat()
         }.should()
-                .beFailure(AssertionError::class)
-                .haveFailureMessage("$less should be > ${more.toFloat()}")
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$less should be > ${more.toFloat()}")
     }
 
     @Test
@@ -225,8 +241,8 @@ class IntShouldTest {
         runCatching {
             less.should() beGreaterThan more.toDouble()
         }.should()
-                .beFailure(AssertionError::class)
-                .haveFailureMessage("$less should be > ${more.toDouble()}")
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$less should be > ${more.toDouble()}")
     }
 
     @Test
