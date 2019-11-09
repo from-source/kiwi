@@ -19,8 +19,6 @@ fun Double.should() = DoubleShould(this)
 
 fun String.should() = StringShould(this)
 
-//fun Path.should() = PathShould(this)
-
 fun assert(condition: Boolean, lazyMessage: () -> String) {
     if(!condition) throw AssertionError(lazyMessage())
 }

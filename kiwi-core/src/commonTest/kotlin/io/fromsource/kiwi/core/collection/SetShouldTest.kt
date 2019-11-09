@@ -132,23 +132,40 @@ class SetShouldTest {
     }
 
     @Test
-    fun `should fail when set does not equal other set`() {
-        val numbers = setOf(1, 2, 3)
+    fun `should fail when set is not sorted by provided selector`() {
+        val words = setOf("kiwi", "anaconda", "crocodile", "emu")
 
         runCatching {
-            numbers.should() beEqual setOf(1, 2, 4)
+            words.should().beSorted { it.length }
         }.should()
-                .beFailure(AssertionError::class)
-                .haveFailureMessage("[1, 2, 3] should == [1, 2, 4]")
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$words should be sorted: [emu, kiwi, anaconda, crocodile]")
     }
 
     @Test
-    fun `should guarantee set is equal other set`() {
-        val numbers = setOf(1, 2, 3)
+    fun `should guarantee list is sorted by provided selector`() {
+        val words = setOf("emu", "kiwi", "anaconda", "crocodile")
 
-        numbers.should() beEqual setOf(1, 2, 3)
+        words.should().beSorted { it.length }
     }
 
+    @Test
+    fun `should fail when list is not sorted by its natural order`() {
+        val words = setOf("anaconda", "crocodile", "kiwi", "emu")
+
+        runCatching {
+            words.should().beSorted()
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$words should be sorted: [anaconda, crocodile, emu, kiwi]")
+    }
+
+    @Test
+    fun `should guarantee list is sorted by its natural order`() {
+        val words = setOf("anaconda", "crocodile", "emu", "kiwi")
+
+        words.should().beSorted()
+    }
 }
 
 

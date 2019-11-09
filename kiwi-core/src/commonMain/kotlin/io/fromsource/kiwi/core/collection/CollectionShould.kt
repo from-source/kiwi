@@ -1,8 +1,10 @@
 package io.fromsource.kiwi.core.collection
 
+import io.fromsource.kiwi.core.BeEqual
 import io.fromsource.kiwi.core.assert
 
-open class CollectionShould<T, R : CollectionShould<T, R>>(open val actual: Collection<T>) : io.fromsource.kiwi.core.BeEqual<Collection<T>, CollectionShould<T, R>> {
+open class CollectionShould<T, R : CollectionShould<T, R>>(open val actual: Collection<T>) :
+    BeEqual<Collection<T>, CollectionShould<T, R>> {
     override fun actual(): Collection<T> = actual
 
     open fun beEmpty(): R {
@@ -47,4 +49,17 @@ open class CollectionShould<T, R : CollectionShould<T, R>>(open val actual: Coll
         return this as R
     }
 
+    open infix fun <S : Comparable<S>> beSorted(selector: (T) -> S?): R {
+        val sorted = actual().sortedBy(selector)
+        val message = "$actual should be sorted: $sorted"
+        assert(actual.toList() == sorted) { message }
+        return this as R
+    }
+}
+
+fun <T : Comparable<T>, R : CollectionShould<T, R>> CollectionShould<T, R>.beSorted(): R {
+    val sorted = actual().sorted()
+    val message = "$actual should be sorted: $sorted"
+    assert(actual.toList() == sorted) { message }
+    return this as R
 }

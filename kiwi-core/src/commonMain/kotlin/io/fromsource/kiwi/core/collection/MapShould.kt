@@ -3,7 +3,7 @@ package io.fromsource.kiwi.core.collection
 import io.fromsource.kiwi.core.BeEqual
 import io.fromsource.kiwi.core.assert
 
-open class MapShould<K, V>(private val actual: Map<K, V>) : io.fromsource.kiwi.core.BeEqual<Map<K, V>, MapShould<K, V>> {
+open class MapShould<K, V>(private val actual: Map<K, V>) : BeEqual<Map<K, V>, MapShould<K, V>> {
     override fun actual(): Map<K, V> = actual
 
     open fun beEmpty(): MapShould<K, V> {

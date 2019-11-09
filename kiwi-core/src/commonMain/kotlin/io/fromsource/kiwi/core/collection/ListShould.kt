@@ -34,3 +34,10 @@ open class ListShould<T>(override val actual: List<T>) : CollectionShould<T, Lis
         return ListShould(actual.filter(predicate))
     }
 }
+
+fun <T:Comparable<T>> ListShould<T>.beSorted(): ListShould<T> {
+    val sorted = actual().sorted()
+    val message = "$actual should be sorted: $sorted"
+    assert(actual == sorted) { message }
+    return this
+}

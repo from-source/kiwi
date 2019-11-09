@@ -248,6 +248,42 @@ class ListShouldTest {
         }.should()
                 .beSuccess(3)
     }
+
+    @Test
+    fun `should fail when list is not sorted by provided selector`() {
+        val words = listOf("kiwi", "anaconda", "crocodile", "emu")
+
+        runCatching {
+            words.should().beSorted { it.length }
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$words should be sorted: [emu, kiwi, anaconda, crocodile]")
+    }
+
+    @Test
+    fun `should guarantee list is sorted by provided selector`() {
+        val words = listOf("emu", "kiwi", "anaconda", "crocodile")
+
+        words.should().beSorted { it.length }
+    }
+
+    @Test
+    fun `should fail when list is not sorted by its natural order`() {
+        val words = listOf("anaconda", "crocodile", "kiwi", "emu")
+
+        runCatching {
+            words.should().beSorted()
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$words should be sorted: [anaconda, crocodile, emu, kiwi]")
+    }
+
+    @Test
+    fun `should guarantee list is sorted by its natural order`() {
+        val words = listOf("anaconda", "crocodile", "emu", "kiwi")
+
+        words.should().beSorted()
+    }
 }
 
 
