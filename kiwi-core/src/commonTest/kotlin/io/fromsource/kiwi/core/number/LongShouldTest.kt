@@ -237,15 +237,32 @@ class LongShouldTest {
         more.should() beGreaterThan less.toDouble()
     }
 
-//    @ParameterizedTest
-//    @MethodSource(value = ["notBetween"])
-//    fun `should fail when number is not between`(number: Long, lower: Long, higher: Long) {
-//        runCatching {
-//            number.should().beBetween(lower, higher)
-//        }.should()
-//                .beFailure(AssertionError::class)
-//                .haveFailureMessage("$number should be between ($lower .. $higher)")
-//    }
+    @Test
+    fun `should fail because number is not between (0, positive)`() {
+        runCatching {
+            negative.should().beBetween(zero, positive)
+        }.should()
+                .beFailure(AssertionError::class)
+                .haveFailureMessage("$negative should be between ($zero .. $positive)")
+    }
+
+    @Test
+    fun `should fail when because 0 is not between (0, positive)`() {
+        runCatching {
+            zero.should().beBetween(zero, positive)
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$zero should be between ($zero .. $positive)")
+    }
+
+    @Test
+    fun `should fail when because positive number is not between (netagive, positive)`() {
+        runCatching {
+            positive.should().beBetween(zero, positive)
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$positive should be between ($zero .. $positive)")
+    }
 
     @Test
     fun `should guarantee than number is between`() {
@@ -256,13 +273,6 @@ class LongShouldTest {
         private const val zero = 0L
         private const val negative = -20L
         private const val positive = 20L
-
-//        @JvmStatic
-//        fun notBetween(): Stream<Arguments> = Stream.of(
-//                Arguments.of(negative, zero, positive),
-//                Arguments.of(zero, zero, positive),
-//                Arguments.of(positive, negative, positive)
-//        )
     }
 }
 
