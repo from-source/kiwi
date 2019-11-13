@@ -17,16 +17,23 @@ class LocalDateShould(private val actual: LocalDate) : DateShould<LocalDate> {
         return this
     }
 
-    override fun haveSameMonthAs(expected: LocalDate): DateShould<LocalDate> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override infix fun haveSameMonthAs(expected: LocalDate): DateShould<LocalDate> {
+        val message = "${actual()} should have the same month as $expected"
+        assert(actual().month == expected.month) { message }
+        return this
     }
 
-    override fun haveSameDayOfYearAs(expected: LocalDate): DateShould<LocalDate> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override infix fun haveSameDayOfYearAs(expected: LocalDate): DateShould<LocalDate> {
+        val message = "${actual()} should have the same day of year as $expected"
+        assert(actual().month == expected.month &&
+                actual().dayOfMonth == expected.dayOfMonth) { message }
+        return this
     }
 
-    override fun haveSameDayOfWeekAs(expected: LocalDate): DateShould<LocalDate> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override infix fun haveSameDayOfWeekAs(expected: LocalDate): DateShould<LocalDate> {
+        val message = "${actual()} should have the same day of week as $expected"
+        assert(actual().dayOfWeek == expected.dayOfWeek) { message }
+        return this
     }
 
     override fun haveSameEpochDayAs(expected: LocalDate): DateShould<LocalDate> {
