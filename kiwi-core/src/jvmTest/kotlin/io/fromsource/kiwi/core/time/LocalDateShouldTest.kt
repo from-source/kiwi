@@ -1,13 +1,13 @@
 package io.fromsource.kiwi.core.time
 
 import io.fromsource.kiwi.core.should
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import java.time.LocalDate
 import java.time.LocalDate.now
 import java.util.stream.Stream
+import kotlin.test.Test
 
 class LocalDateShouldTest {
 
@@ -70,11 +70,26 @@ class LocalDateShouldTest {
         today.should().beBetween(yesterday, tomorrow)
     }
 
+    @Test
+    fun `should failed because date does not have the same year`() {
+        runCatching {
+            today.should() haveSameYearAs todayOneYearLater
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$today should have the same year as $todayOneYearLater")
+    }
+
+    @Test
+    fun `should guarantee dates have the same year`() {
+        today.should() haveSameYearAs today
+    }
+
     companion object {
         val today = now()
         val yesterday = today.minusDays(1)
         val tomorrow = today.plusDays(1)
         val dayAfterTomorrow = today.plusDays(2)
+        val todayOneYearLater = today.minusYears(1)
 
         @JvmStatic
         fun notBetween(): Stream<Arguments> =

@@ -1,13 +1,72 @@
 package io.fromsource.kiwi.core.time
 
-import io.fromsource.kiwi.core.BeComparable
-import io.fromsource.kiwi.core.BeEqual
+import java.time.DayOfWeek
 import java.time.LocalDate
+import java.time.Month
 
-class LocalDateShould(private val actual: LocalDate): BeEqual<LocalDate, LocalDateShould>, BeComparable<LocalDate, LocalDateShould> {
+class LocalDateShould(private val actual: LocalDate) : DateShould<LocalDate> {
     override fun actual() = actual
 
-    infix fun beAfter(expected: LocalDate) = beGreaterThan(expected)
+    override infix fun beAfter(expected: LocalDate) = beGreaterThan(expected)
 
-    infix fun beBefore(expected: LocalDate) = beLessThan(expected)
+    override infix fun beBefore(expected: LocalDate) = beLessThan(expected)
+
+    override infix fun haveSameYearAs(expected: LocalDate): DateShould<LocalDate> {
+        val message = "${actual()} should have the same year as $expected"
+        assert(actual().year == expected.year) { message }
+        return this
+    }
+
+    override fun haveSameMonthAs(expected: LocalDate): DateShould<LocalDate> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun haveSameDayOfYearAs(expected: LocalDate): DateShould<LocalDate> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun haveSameDayOfWeekAs(expected: LocalDate): DateShould<LocalDate> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun haveSameEpochDayAs(expected: LocalDate): DateShould<LocalDate> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun beAtYear(year: Int): DateShould<LocalDate> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun beAtMonth(month: Month): DateShould<LocalDate> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun beAtDayOfTheYear(dayOfWeek: DayOfWeek): DateShould<LocalDate> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun haveDayOfWeek(dayOfWeek: DayOfWeek): DateShould<LocalDate> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun isInFirstQuoter(): DateShould<LocalDate> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun isInSecondQuoter(): DateShould<LocalDate> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun isInThirdQuoter(): DateShould<LocalDate> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun isInFourthQuoter(): DateShould<LocalDate> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun hasLeapYear(): DateShould<LocalDate> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
 }

@@ -41,8 +41,8 @@ kotlin {
         jvmTest {
             dependencies {
                 implementation kotlin('test')
-                implementation ('org.junit.jupiter:junit-jupiter-params:5.5.2')
-                implementation kotlin('test-junit5')
+                implementation kotlin('test-junit')
+                implementation 'org.junit.jupiter:junit-jupiter-params:5.5.2'
             }
         }
     }
