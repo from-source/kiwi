@@ -82,8 +82,9 @@ class LocalDateShould(private val actual: LocalDate) : DateShould<LocalDate> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun hasLeapYear(): DateShould<LocalDate> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun beInLeapYear(): DateShould<LocalDate> {
+        val message = "${actual()} should be in leap year"
+        assert(actual().isLeapYear) { message }
+        return this
     }
-
 }

@@ -205,6 +205,20 @@ class LocalDateShouldTest {
         today.should() beDayOfWeek today.dayOfWeek
     }
 
+    @Test
+    fun `should failed because date is not in leap year`() {
+        runCatching {
+            nonLeapYear.should().beInLeapYear()
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$nonLeapYear should be in leap year")
+    }
+
+    @Test
+    fun `should guarantee date has in leap year`() {
+        leapYear.should().beInLeapYear()
+    }
+
     companion object {
         val today = now()
         val yesterday = today.minusDays(1)
@@ -216,6 +230,9 @@ class LocalDateShouldTest {
 
         val todayOneYearLater = today.plusYears(1)
         val todayOneMonthLater = today.plusMonths(1)
+
+        val leapYear = LocalDate.of(2020, 11, 14)
+        val nonLeapYear = leapYear.minusYears(1)
 
         @JvmStatic
         fun notBetween(): Stream<Arguments> =

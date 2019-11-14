@@ -26,5 +26,5 @@ interface DateShould<T : Comparable<T>> : BeEqual<T, DateShould<T>>, BeComparabl
     fun isInThirdQuoter(): DateShould<T>
     fun isInFourthQuoter(): DateShould<T>
 
-    fun hasLeapYear(): DateShould<T>
+    fun beInLeapYear(): DateShould<T>
 }
