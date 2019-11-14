@@ -81,7 +81,58 @@ class LocalDateShouldTest {
 
     @Test
     fun `should guarantee dates have the same year`() {
-        today.should() haveSameYearAs today
+        today.should() haveSameYearAs beginningOfYear
+    }
+
+    @Test
+    fun `should failed because date does not have the same month`() {
+        runCatching {
+            today.should() haveSameMonthAs todayOneMonthLater
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$today should have the same month as $todayOneMonthLater")
+    }
+
+    @Test
+    fun `should guarantee dates have the same month`() {
+        today.should() haveSameMonthAs beginningOfMonth
+    }
+
+    @Test
+    fun `should failed because date does not have the same day of year`() {
+        runCatching {
+            today.should() haveSameDayOfYearAs yesterday
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$today should have the same day of year as $yesterday")
+    }
+
+    @Test
+    fun `should guarantee dates have the same day of year`() {
+        val nonLeapYear = LocalDate.of(2019, 11, 14)
+        val nonLeapYearNeither = LocalDate.of(2018, 11, 14)
+        nonLeapYear.should() haveSameDayOfYearAs nonLeapYearNeither
+    }
+
+    @Test
+    fun `should guarantee dates have the same day even if one of them is leap year`() {
+        val nonLeapYear = LocalDate.of(2019, 11, 14)
+        val leapYear = LocalDate.of(2020, 11, 14)
+        nonLeapYear.should() haveSameDayOfYearAs leapYear
+    }
+
+    @Test
+    fun `should failed because date does not have the same day of week`() {
+        runCatching {
+            today.should() haveSameDayOfWeekAs yesterday
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$today should have the same day of week as $yesterday")
+    }
+
+    @Test
+    fun `should guarantee dates have the same day of week`() {
+        today.should() haveSameMonthAs todayOneYearLater
     }
 
     companion object {
@@ -89,7 +140,12 @@ class LocalDateShouldTest {
         val yesterday = today.minusDays(1)
         val tomorrow = today.plusDays(1)
         val dayAfterTomorrow = today.plusDays(2)
-        val todayOneYearLater = today.minusYears(1)
+
+        val beginningOfMonth = today.withDayOfMonth(1)
+        val beginningOfYear = today.withDayOfYear(1)
+
+        val todayOneYearLater = today.plusYears(1)
+        val todayOneMonthLater = today.plusMonths(1)
 
         @JvmStatic
         fun notBetween(): Stream<Arguments> =
