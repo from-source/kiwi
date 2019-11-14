@@ -135,6 +135,76 @@ class LocalDateShouldTest {
         today.should() haveSameMonthAs todayOneYearLater
     }
 
+    @Test
+    fun `should failed because date does not have expected days of epoch`() {
+        runCatching {
+            today.should() haveSameEpochDayAs yesterday.toEpochDay()
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$today should have ${yesterday.toEpochDay()} epoch days")
+    }
+
+    @Test
+    fun `should guarantee dates have the expected days of epoch`() {
+        today.should() haveSameEpochDayAs today.toEpochDay()
+    }
+
+    @Test
+    fun `should failed because date is not at given year`() {
+        runCatching {
+            today.should() beAtYear todayOneYearLater.year
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$today should be at ${todayOneYearLater.year} year")
+    }
+
+    @Test
+    fun `should guarantee date is at given year`() {
+        today.should() beAtYear today.year
+    }
+
+    @Test
+    fun `should failed because date is not at given month`() {
+        runCatching {
+            today.should() beAtMonth todayOneMonthLater.month
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$today should be at ${todayOneMonthLater.month} month")
+    }
+
+    @Test
+    fun `should guarantee date is at given month`() {
+        today.should() beAtMonth beginningOfMonth.month
+    }
+
+    @Test
+    fun `should failed because date does not have expected number of days in year`() {
+        runCatching {
+            today.should() beDayOfTheYear today.dayOfYear + 1
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$today should be ${today.dayOfYear + 1} day of year")
+    }
+
+    @Test
+    fun `should guarantee date has expected numer of days in year`() {
+        today.should() beDayOfTheYear today.dayOfYear
+    }
+
+    @Test
+    fun `should failed because date does not have expected number of days in week`() {
+        runCatching {
+            today.should() beDayOfWeek today.dayOfWeek + 1
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$today should be ${today.dayOfWeek + 1} day of week")
+    }
+
+    @Test
+    fun `should guarantee date has expected numer of days`() {
+        today.should() beDayOfWeek today.dayOfWeek
+    }
+
     companion object {
         val today = now()
         val yesterday = today.minusDays(1)
