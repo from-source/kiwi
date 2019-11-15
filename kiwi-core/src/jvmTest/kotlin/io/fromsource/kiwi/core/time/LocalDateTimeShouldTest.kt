@@ -1,12 +1,13 @@
 package io.fromsource.kiwi.core.time
 
 import io.fromsource.kiwi.core.should
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import java.time.LocalDateTime
 import java.time.LocalDateTime.now
+import java.time.Month
 import java.util.stream.Stream
 
 class LocalDateTimeShouldTest {
@@ -70,11 +71,227 @@ class LocalDateTimeShouldTest {
         today.should().beBetween(yesterday, tomorrow)
     }
 
+    @Test
+    fun `should failed because date does not have the same year`() {
+        runCatching {
+            today.should() haveSameYearAs todayOneYearLater
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$today should have the same year as $todayOneYearLater")
+    }
+
+    @Test
+    fun `should guarantee dates have the same year`() {
+        today.should() haveSameYearAs beginningOfYear
+    }
+
+    @Test
+    fun `should failed because date does not have the same month`() {
+        runCatching {
+            today.should() haveSameMonthAs todayOneMonthLater
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$today should have the same month as $todayOneMonthLater")
+    }
+
+    @Test
+    fun `should guarantee dates have the same month`() {
+        today.should() haveSameMonthAs beginningOfMonth
+    }
+
+    @Test
+    fun `should failed because date does not have the same day of year`() {
+        runCatching {
+            today.should() haveSameDayOfYearAs yesterday
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$today should have the same day of year as $yesterday")
+    }
+
+    @Test
+    fun `should guarantee dates have the same day of year`() {
+        val nonLeapYearNeither = nonLeapYear.plusYears(4)
+        nonLeapYear.should() haveSameDayOfYearAs nonLeapYearNeither
+    }
+
+    @Test
+    fun `should guarantee dates have the same day even if one of them is leap year`() {
+        nonLeapYear.should() haveSameDayOfYearAs leapYear
+    }
+
+    @Test
+    fun `should failed because date does not have the same day of week`() {
+        runCatching {
+            today.should() haveSameDayOfWeekAs yesterday
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$today should have the same day of week as $yesterday")
+    }
+
+    @Test
+    fun `should guarantee dates have the same day of week`() {
+        today.should() haveSameMonthAs todayOneYearLater
+    }
+
+    @Test
+    fun `should failed because date does not have expected days of epoch`() {
+        runCatching {
+            today.should() haveSameEpochDayAs yesterday.toLocalDate().toEpochDay()
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$today should have ${yesterday.toLocalDate().toEpochDay()} epoch days")
+    }
+
+    @Test
+    fun `should guarantee dates have the expected days of epoch`() {
+        today.should() haveSameEpochDayAs today.toLocalDate().toEpochDay()
+    }
+
+    @Test
+    fun `should failed because date is not at given year`() {
+        runCatching {
+            today.should() beAtYear todayOneYearLater.year
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$today should be at ${todayOneYearLater.year} year")
+    }
+
+    @Test
+    fun `should guarantee date is at given year`() {
+        today.should() beAtYear today.year
+    }
+
+    @Test
+    fun `should failed because date is not at given month`() {
+        runCatching {
+            today.should() beAtMonth todayOneMonthLater.month
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$today should be at ${todayOneMonthLater.month} month")
+    }
+
+    @Test
+    fun `should guarantee date is at given month`() {
+        today.should() beAtMonth beginningOfMonth.month
+    }
+
+    @Test
+    fun `should failed because date does not have expected number of days in year`() {
+        runCatching {
+            today.should() beDayOfTheYear today.dayOfYear + 1
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$today should be ${today.dayOfYear + 1} day of year")
+    }
+
+    @Test
+    fun `should guarantee date has expected numer of days in year`() {
+        today.should() beDayOfTheYear today.dayOfYear
+    }
+
+    @Test
+    fun `should failed because date does not have expected number of days in week`() {
+        runCatching {
+            today.should() beDayOfWeek today.dayOfWeek + 1
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$today should be ${today.dayOfWeek + 1} day of week")
+    }
+
+    @Test
+    fun `should guarantee date has expected numer of days`() {
+        today.should() beDayOfWeek today.dayOfWeek
+    }
+
+    @Test
+    fun `should failed because date is not in leap year`() {
+        runCatching {
+            nonLeapYear.should().beInLeapYear()
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$nonLeapYear should be in leap year")
+    }
+
+    @Test
+    fun `should guarantee date has in leap year`() {
+        leapYear.should().beInLeapYear()
+    }
+
+    @Test
+    fun `should failed because date is is not in q1`() {
+        runCatching {
+            q2.should().beInQ1()
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$q2 should be in 1st quoter")
+    }
+
+    @Test
+    fun `should guarantee date is in q1`() {
+        q1.should().beInQ1()
+    }
+
+    @Test
+    fun `should failed because date is is not in q2`() {
+        runCatching {
+            q3.should().beInQ2()
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$q3 should be in 2nd quoter")
+    }
+
+    @Test
+    fun `should guarantee date is in q2`() {
+        q2.should().beInQ2()
+    }
+
+    @Test
+    fun `should failed because date is is not in q3`() {
+        runCatching {
+            q4.should().beInQ3()
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$q4 should be in 3rd quoter")
+    }
+
+    @Test
+    fun `should guarantee date is in q3`() {
+        q3.should().beInQ3()
+    }
+
+    @Test
+    fun `should failed because date is is not in q4`() {
+        runCatching {
+            q1.should().beInQ4()
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$q1 should be in 4th quoter")
+    }
+
+    @Test
+    fun `should guarantee date is in q4`() {
+        q4.should().beInQ4()
+    }
+
     companion object {
-        val today = now()
+        val today = LocalDateTime.now()
         val yesterday = today.minusDays(1)
         val tomorrow = today.plusDays(1)
         val dayAfterTomorrow = today.plusDays(2)
+
+        val beginningOfMonth = today.withDayOfMonth(1)
+        val beginningOfYear = today.withDayOfYear(1)
+
+        val todayOneYearLater = today.plusYears(1)
+        val todayOneMonthLater = today.plusMonths(1)
+
+        val leapYear = LocalDateTime.of(2020, 11, 14, 1, 1)
+        val nonLeapYear = leapYear.minusYears(1)
+
+        val q1 = LocalDateTime.of(2020, Month.FEBRUARY, 1, 1, 1)
+        val q2 = LocalDateTime.of(2020, Month.APRIL, 1, 1, 1)
+        val q3 = LocalDateTime.of(2020, Month.AUGUST, 1, 1, 1)
+        val q4 = LocalDateTime.of(2020, Month.NOVEMBER, 1, 1, 1)
 
         @JvmStatic
         fun notBetween(): Stream<Arguments> =
