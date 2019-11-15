@@ -6,6 +6,7 @@ import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import java.time.LocalDate
 import java.time.LocalDate.now
+import java.time.Month
 import java.util.stream.Stream
 import kotlin.test.Test
 
@@ -219,6 +220,62 @@ class LocalDateShouldTest {
         leapYear.should().beInLeapYear()
     }
 
+    @Test
+    fun `should failed because date is is not in q1`() {
+        runCatching {
+            q2.should().beInQ1()
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$q2 should be in 1st quoter")
+    }
+
+    @Test
+    fun `should guarantee date is in q1`() {
+        q1.should().beInQ1()
+    }
+
+    @Test
+    fun `should failed because date is is not in q2`() {
+        runCatching {
+            q3.should().beInQ2()
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$q3 should be in 2nd quoter")
+    }
+
+    @Test
+    fun `should guarantee date is in q2`() {
+        q2.should().beInQ2()
+    }
+
+    @Test
+    fun `should failed because date is is not in q3`() {
+        runCatching {
+            q4.should().beInQ3()
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$q4 should be in 3rd quoter")
+    }
+
+    @Test
+    fun `should guarantee date is in q3`() {
+        q3.should().beInQ3()
+    }
+
+    @Test
+    fun `should failed because date is is not in q4`() {
+        runCatching {
+            q1.should().beInQ4()
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$q1 should be in 4th quoter")
+    }
+
+    @Test
+    fun `should guarantee date is in q4`() {
+        q4.should().beInQ4()
+    }
+
     companion object {
         val today = now()
         val yesterday = today.minusDays(1)
@@ -233,6 +290,11 @@ class LocalDateShouldTest {
 
         val leapYear = LocalDate.of(2020, 11, 14)
         val nonLeapYear = leapYear.minusYears(1)
+
+        val q1 = LocalDate.of(2020, Month.FEBRUARY, 1)
+        val q2 = LocalDate.of(2020, Month.APRIL, 1)
+        val q3 = LocalDate.of(2020, Month.AUGUST, 1)
+        val q4 = LocalDate.of(2020, Month.NOVEMBER, 1)
 
         @JvmStatic
         fun notBetween(): Stream<Arguments> =

@@ -21,10 +21,10 @@ interface DateShould<T : Comparable<T>> : BeEqual<T, DateShould<T>>, BeComparabl
     infix fun beDayOfTheYear(expected: Int): DateShould<T>
     infix fun beDayOfWeek(expected: DayOfWeek): DateShould<T>
 
-    fun isInFirstQuoter(): DateShould<T>
-    fun isInSecondQuoter(): DateShould<T>
-    fun isInThirdQuoter(): DateShould<T>
-    fun isInFourthQuoter(): DateShould<T>
+    fun beInQ1(): DateShould<T>
+    fun beInQ2(): DateShould<T>
+    fun beInQ3(): DateShould<T>
+    fun beInQ4(): DateShould<T>
 
     fun beInLeapYear(): DateShould<T>
 }

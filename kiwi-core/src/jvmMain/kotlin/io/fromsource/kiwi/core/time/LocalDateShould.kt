@@ -66,20 +66,28 @@ class LocalDateShould(private val actual: LocalDate) : DateShould<LocalDate> {
         return this
     }
 
-    override fun isInFirstQuoter(): DateShould<LocalDate> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun beInQ1(): DateShould<LocalDate> {
+        val message = "${actual()} should be in 1st quoter"
+        assert(actual().month in Month.JANUARY .. Month.MARCH) { message }
+        return this
     }
 
-    override fun isInSecondQuoter(): DateShould<LocalDate> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun beInQ2(): DateShould<LocalDate> {
+        val message = "${actual()} should be in 2nd quoter"
+        assert(actual().month in Month.APRIL .. Month.JUNE) { message }
+        return this
     }
 
-    override fun isInThirdQuoter(): DateShould<LocalDate> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun beInQ3(): DateShould<LocalDate> {
+        val message = "${actual()} should be in 3rd quoter"
+        assert(actual().month in Month.JULY .. Month.SEPTEMBER) { message }
+        return this
     }
 
-    override fun isInFourthQuoter(): DateShould<LocalDate> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun beInQ4(): DateShould<LocalDate> {
+        val message = "${actual()} should be in 4th quoter"
+        assert(actual().month in Month.OCTOBER .. Month.DECEMBER) { message }
+        return this
     }
 
     override fun beInLeapYear(): DateShould<LocalDate> {
