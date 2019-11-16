@@ -1,15 +1,15 @@
 package io.fromsource.kiwi.core.number
 
 import io.fromsource.kiwi.core.should
-import java.math.BigDecimal
+import java.math.BigInteger
 import kotlin.test.Test
 
-class BigDecimalShouldTest {
-    private val more = BigDecimal.TEN
-    private val less = BigDecimal.ONE
-    private val zero = BigDecimal.ZERO
-    private val negative = BigDecimal("-20.01")
-    private val positive = BigDecimal("20.01")
+class BigIntegerShouldTest {
+    private val more = BigInteger.valueOf(Long.MAX_VALUE).inc()
+    private val less = BigInteger.ONE
+    private val zero = BigInteger.ZERO
+    private val negative = BigInteger.valueOf(Long.MIN_VALUE).dec()
+    private val positive = BigInteger.valueOf(Long.MAX_VALUE).inc()
 
     @Test
     fun `should fail when numbers are not equaled`() {
