@@ -63,3 +63,54 @@ fun <T : Comparable<T>, R : CollectionShould<T, R>> CollectionShould<T, R>.beSor
     assert(actual.toList() == sorted) { message }
     return this as R
 }
+
+@kotlin.jvm.JvmName("_shouldSumBytes")
+infix fun <R : CollectionShould<Byte, R>> CollectionShould<Byte, R>.sumTo(expected: Int): R {
+    val sum = actual().sum()
+    val message = "$actual should sum to: $expected"
+    assert(sum == expected) { message }
+    return this as R
+}
+
+@kotlin.jvm.JvmName("_shouldSumShorts")
+infix fun <R : CollectionShould<Short, R>> CollectionShould<Short, R>.sumTo(expected: Int): R {
+    val sum = actual().sum()
+    val message = "$actual should sum to: $expected"
+    assert(sum == expected) { message }
+    return this as R
+}
+
+@kotlin.jvm.JvmName("_shouldSumInts")
+infix fun <R : CollectionShould<Int, R>> CollectionShould<Int, R>.sumTo(expected: Int): R {
+    val sum = actual().sum()
+    val message = "$actual should sum to: $expected"
+    assert(sum == expected) { message }
+    return this as R
+}
+
+
+@kotlin.jvm.JvmName("_shouldSumLongs")
+infix fun <R : CollectionShould<Long, R>> CollectionShould<Long, R>.sumTo(expected: Long): R {
+    val sum = actual().sum()
+    val message = "$actual should sum to: $expected"
+    assert(sum == expected) { message }
+    return this as R
+}
+
+
+@kotlin.jvm.JvmName("_shouldSumFloats")
+infix fun <R : CollectionShould<Float, R>> CollectionShould<Float, R>.sumTo(expected: Float): R {
+    val sum = actual().sum()
+    val message = "$actual should sum to: $expected"
+    assert(sum == expected) { message }
+    return this as R
+}
+
+
+@kotlin.jvm.JvmName("_shouldSumDoubles")
+infix fun <R : CollectionShould<Double, R>> CollectionShould<Double, R>.sumTo(expected: Double): R {
+    val sum = actual().sum()
+    val message = "$actual should sum to: $expected"
+    assert(sum == expected) { message }
+    return this as R
+}
