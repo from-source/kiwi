@@ -9,6 +9,8 @@ class ByteShould(private val actual: Byte) : NumberShould<Byte> {
 
     override fun beNegative(): ByteShould = beLessThan(0)
 
+    override fun beZero(): ByteShould  = beEqual(0.toByte()) as ByteShould
+
     infix fun beLessThan(expected: Short): ByteShould {
         val message = "${actual()} should be < $expected"
         assert(actual() < expected) { message }

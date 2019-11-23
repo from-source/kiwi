@@ -4,8 +4,6 @@ import io.fromsource.kiwi.core.should
 import kotlin.test.Test
 
 class FloatShouldTest {
-    private val more = 10.0f
-    private val less = 1.0f
 
     @Test
     fun `should fail when numbers are not equaled`() {
@@ -282,7 +280,24 @@ class FloatShouldTest {
         zero.should().beBetween(negative, positive)
     }
 
+    @Test
+    fun `should fail when because number is not zero`() {
+        runCatching {
+            positive.should().beZero()
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$positive should == $zero")
+    }
+
+    @Test
+    fun `should guarantee number is zero`() {
+        zero.should().beZero()
+    }
+
     companion object {
+        private const val more = 10.0f
+        private const val less = 1.0f
+
         private const val zero = 0.0f
         private const val negative = -20.0f
         private const val positive = 20.0f

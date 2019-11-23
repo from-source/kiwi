@@ -5,9 +5,6 @@ import kotlin.test.Test
 
 class ShortShouldTest {
 
-    private val more: Short = 10
-    private val less: Short = 1
-
     @Test
     fun `should fail when numbers are not equaled`() {
         runCatching {
@@ -282,7 +279,24 @@ class ShortShouldTest {
         zero.should().beBetween(negative, positive)
     }
 
+    @Test
+    fun `should fail when because number is not zero`() {
+        runCatching {
+            positive.should().beZero()
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$positive should == $zero")
+    }
+
+    @Test
+    fun `should guarantee number is zero`() {
+        zero.should().beZero()
+    }
+
     companion object {
+        private const val more: Short = 10
+        private const val less: Short = 1
+
         private const val zero: Short = 0
         private const val negative: Short = -20
         private const val positive: Short = 20

@@ -9,6 +9,8 @@ class FloatShould(private val actual: Float) : NumberShould<Float> {
 
     override fun beNegative(): FloatShould = beLessThan(0)
 
+    override fun beZero(): FloatShould = beEqual(0.0f) as FloatShould
+
     infix fun beLessThan(expected: Byte): FloatShould {
         val message = "${actual()} should be < $expected"
         assert(actual() < expected) { message }

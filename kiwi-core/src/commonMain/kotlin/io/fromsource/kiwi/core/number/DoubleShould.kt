@@ -9,6 +9,7 @@ class DoubleShould(private val actual: Double) : NumberShould<Double> {
 
     override fun beNegative(): DoubleShould = beLessThan(0)
 
+    override fun beZero(): DoubleShould = beEqual(0.0) as DoubleShould
 
     infix fun beLessThan(expected: Byte): DoubleShould {
         val message = "${actual()} should be < $expected"

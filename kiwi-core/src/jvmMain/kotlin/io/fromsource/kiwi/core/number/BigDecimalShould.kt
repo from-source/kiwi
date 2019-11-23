@@ -8,4 +8,6 @@ class BigDecimalShould(private val actual: BigDecimal) : NumberShould<BigDecimal
     override fun bePositive() = beGreaterThan(BigDecimal.ZERO)
 
     override fun beNegative() = beLessThan(BigDecimal.ZERO)
+
+    override fun beZero(): BigDecimalShould = beEqual(BigDecimal.ZERO) as BigDecimalShould
 }

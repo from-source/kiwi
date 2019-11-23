@@ -7,4 +7,5 @@ interface NumberShould<T : Comparable<T>> : BeEqual<T, NumberShould<T>>, BeCompa
 
     fun bePositive(): NumberShould<T>
     fun beNegative(): NumberShould<T>
+    fun beZero(): NumberShould<T>
 }

@@ -5,11 +5,6 @@ import java.math.BigDecimal
 import kotlin.test.Test
 
 class BigDecimalShouldTest {
-    private val more = BigDecimal.TEN
-    private val less = BigDecimal.ONE
-    private val zero = BigDecimal.ZERO
-    private val negative = BigDecimal("-20.01")
-    private val positive = BigDecimal("20.01")
 
     @Test
     fun `should fail when numbers are not equaled`() {
@@ -92,5 +87,28 @@ class BigDecimalShouldTest {
         }.should()
             .beFailure(AssertionError::class)
             .haveFailureMessage("$more should be <= $less")
+    }
+
+    @Test
+    fun `should fail when because number is not zero`() {
+        runCatching {
+            positive.should().beZero()
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$positive should == $zero")
+    }
+
+    @Test
+    fun `should guarantee number is zero`() {
+        zero.should().beZero()
+    }
+
+    companion object {
+        private val more = BigDecimal.TEN
+        private val less = BigDecimal.ONE
+
+        private val zero = BigDecimal.ZERO
+        private val negative = BigDecimal("-20.01")
+        private val positive = BigDecimal("20.01")
     }
 }

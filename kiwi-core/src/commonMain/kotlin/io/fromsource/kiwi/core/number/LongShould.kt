@@ -9,6 +9,7 @@ class LongShould(private val actual: Long) : NumberShould<Long> {
 
     override fun beNegative(): LongShould = beLessThan(0)
 
+    override fun beZero(): LongShould = beEqual(0L) as LongShould
 
     infix fun beLessThan(expected: Byte): LongShould {
         val message = "${actual()} should be < $expected"

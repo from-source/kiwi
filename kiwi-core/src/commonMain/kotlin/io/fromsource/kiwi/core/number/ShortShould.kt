@@ -9,6 +9,7 @@ class ShortShould(private val actual: Short) : NumberShould<Short> {
 
     override fun beNegative(): ShortShould = beLessThan(0)
 
+    override fun beZero(): ShortShould = beEqual(0.toShort()) as ShortShould
 
     infix fun beLessThan(expected: Byte): ShortShould {
         val message = "${actual()} should be < $expected"

@@ -5,11 +5,6 @@ import java.math.BigInteger
 import kotlin.test.Test
 
 class BigIntegerShouldTest {
-    private val more = BigInteger.valueOf(Long.MAX_VALUE).inc()
-    private val less = BigInteger.ONE
-    private val zero = BigInteger.ZERO
-    private val negative = BigInteger.valueOf(Long.MIN_VALUE).dec()
-    private val positive = BigInteger.valueOf(Long.MAX_VALUE).inc()
 
     @Test
     fun `should fail when numbers are not equaled`() {
@@ -92,5 +87,28 @@ class BigIntegerShouldTest {
         }.should()
             .beFailure(AssertionError::class)
             .haveFailureMessage("$more should be <= $less")
+    }
+
+    @Test
+    fun `should fail when because number is not zero`() {
+        runCatching {
+            positive.should().beZero()
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$positive should == $zero")
+    }
+
+    @Test
+    fun `should guarantee number is zero`() {
+        zero.should().beZero()
+    }
+
+    companion object {
+        private val more = BigInteger.valueOf(Long.MAX_VALUE).inc()
+        private val less = BigInteger.ONE
+
+        private val zero = BigInteger.ZERO
+        private val negative = BigInteger.valueOf(Long.MIN_VALUE).dec()
+        private val positive = BigInteger.valueOf(Long.MAX_VALUE).inc()
     }
 }

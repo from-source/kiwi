@@ -5,9 +5,6 @@ import kotlin.test.Test
 
 class ByteShouldTest {
 
-    private val more: Byte = 10
-    private val less: Byte = 1
-
     @Test
     fun `should fail when numbers are not equaled`() {
         runCatching {
@@ -283,7 +280,24 @@ class ByteShouldTest {
         zero.should().beBetween(negative, positive)
     }
 
+    @Test
+    fun `should fail when because number is not zero`() {
+        runCatching {
+            positive.should().beZero()
+        }.should()
+            .beFailure(AssertionError::class)
+            .haveFailureMessage("$positive should == $zero")
+    }
+
+    @Test
+    fun `should guarantee number is zero`() {
+        zero.should().beZero()
+    }
+
     companion object {
+        private const val more: Byte = 10
+        private const val less: Byte = 1
+
         private const val zero: Byte = 0
         private const val negative: Byte = -20
         private const val positive: Byte = 20
