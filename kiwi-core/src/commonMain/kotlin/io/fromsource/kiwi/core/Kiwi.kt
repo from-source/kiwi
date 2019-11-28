@@ -17,6 +17,9 @@ fun Long.should() = LongShould(this)
 fun Float.should() = FloatShould(this)
 fun Double.should() = DoubleShould(this)
 
+@ExperimentalUnsignedTypes
+fun UByte.should() = UByteShould(this)
+
 fun String.should() = StringShould(this)
 
 fun assert(condition: Boolean, lazyMessage: () -> String) {

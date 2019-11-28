@@ -20,7 +20,7 @@ class ByteShouldTest {
     }
 
     @Test
-    fun `should fail because netagive is not positive`() {
+    fun `should fail because negative is not positive`() {
         runCatching {
             negative.should().bePositive()
         }.should()
