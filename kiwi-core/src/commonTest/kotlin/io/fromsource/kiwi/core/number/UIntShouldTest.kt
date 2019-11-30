@@ -1,10 +1,10 @@
 package io.fromsource.kiwi.core.number
 
 import io.fromsource.kiwi.core.should
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 
 @ExperimentalUnsignedTypes
-class UByteShouldTest {
+class UIntShouldTest {
 
     @Test
     fun `should fail because numbers are not equaled`() {
@@ -77,6 +77,20 @@ class UByteShouldTest {
     }
 
     @Test
+    fun `should fail because number is not less than ubyte`() {
+        runCatching {
+            more.should() beLessThan less.toUByte()
+        }.should()
+                .beFailure(AssertionError::class)
+                .haveFailureMessage("$more should be < ${less.toUByte()}")
+    }
+
+    @Test
+    fun `should guarantee than number is less than ubyte`() {
+        less.should() beLessThan more.toUByte()
+    }
+
+    @Test
     fun `should fail because number is not less than ushort`() {
         runCatching {
             more.should() beLessThan less.toUShort()
@@ -88,20 +102,6 @@ class UByteShouldTest {
     @Test
     fun `should guarantee than number is less than ushort`() {
         less.should() beLessThan more.toUShort()
-    }
-
-    @Test
-    fun `should fail because number is not less than uint`() {
-        runCatching {
-            more.should() beLessThan less.toUInt()
-        }.should()
-                .beFailure(AssertionError::class)
-                .haveFailureMessage("$more should be < ${less.toUInt()}")
-    }
-
-    @Test
-    fun `should guarantee than number is less than uint`() {
-        less.should() beLessThan more.toUInt()
     }
 
     @Test
@@ -147,17 +147,17 @@ class UByteShouldTest {
     }
 
     @Test
-    fun `should fail because number is not greater than uint`() {
+    fun `should fail because number is not greater`() {
         runCatching {
-            less.should() beGreaterThan more.toUInt()
+            less.should() beGreaterThan more
         }.should()
                 .beFailure(AssertionError::class)
-                .haveFailureMessage("$less should be > ${more.toUInt()}")
+                .haveFailureMessage("$less should be > $more")
     }
 
     @Test
-    fun `should guarantee than number is greater than uint`() {
-        more.should() beGreaterThan less.toUInt()
+    fun `should guarantee than number is greater`() {
+        more.should() beGreaterThan less
     }
 
     @Test
@@ -189,8 +189,8 @@ class UByteShouldTest {
     }
 
     companion object {
-        val zero = UByte.MIN_VALUE
-        val less = 1.toUByte()
-        val more = 10.toUByte()
+        val zero = UInt.MIN_VALUE
+        val less = 1.toUInt()
+        val more = 10.toUInt()
     }
 }

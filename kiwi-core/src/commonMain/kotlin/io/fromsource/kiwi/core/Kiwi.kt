@@ -21,6 +21,8 @@ fun Double.should() = DoubleShould(this)
 fun UByte.should() = UByteShould(this)
 @ExperimentalUnsignedTypes
 fun UShort.should() = UShortShould(this)
+@ExperimentalUnsignedTypes
+fun UInt.should() = UIntShould(this)
 
 fun String.should() = StringShould(this)
 

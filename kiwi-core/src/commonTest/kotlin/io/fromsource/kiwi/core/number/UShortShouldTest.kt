@@ -1,10 +1,11 @@
 package io.fromsource.kiwi.core.number
 
 import io.fromsource.kiwi.core.should
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 
 @ExperimentalUnsignedTypes
 class UShortShouldTest {
+
     @Test
     fun `should fail because numbers are not equaled`() {
         runCatching {
@@ -132,17 +133,17 @@ class UShortShouldTest {
     }
 
     @Test
-    fun `should fail because number is not greater than ushort`() {
+    fun `should fail because number is not greater`() {
         runCatching {
-            less.should() beGreaterThan more.toUShort()
+            less.should() beGreaterThan more
         }.should()
                 .beFailure(AssertionError::class)
-                .haveFailureMessage("$less should be > ${more.toUShort()}")
+                .haveFailureMessage("$less should be > $more")
     }
 
     @Test
-    fun `should guarantee than number is greater than ushort`() {
-        more.should() beGreaterThan less.toUShort()
+    fun `should guarantee than number is greater`() {
+        more.should() beGreaterThan less
     }
 
     @Test
