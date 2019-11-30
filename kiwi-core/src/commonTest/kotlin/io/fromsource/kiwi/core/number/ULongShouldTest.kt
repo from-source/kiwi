@@ -4,7 +4,7 @@ import io.fromsource.kiwi.core.should
 import kotlin.test.Test
 
 @ExperimentalUnsignedTypes
-class UIntShouldTest {
+class ULongShouldTest {
 
     @Test
     fun `should fail because numbers are not equaled`() {
@@ -105,17 +105,17 @@ class UIntShouldTest {
     }
 
     @Test
-    fun `should fail because number is not less than ulong`() {
+    fun `should fail because number is not less than uint`() {
         runCatching {
-            more.should() beLessThan less.toULong()
+            more.should() beLessThan less.toUInt()
         }.should()
                 .beFailure(AssertionError::class)
-                .haveFailureMessage("$more should be < ${less.toULong()}")
+                .haveFailureMessage("$more should be < ${less.toUInt()}")
     }
 
     @Test
-    fun `should guarantee than number is less than ulong`() {
-        less.should() beLessThan more.toULong()
+    fun `should guarantee than number is less than uint`() {
+        less.should() beLessThan more.toUInt()
     }
 
     @Test
@@ -161,17 +161,17 @@ class UIntShouldTest {
     }
 
     @Test
-    fun `should fail because number is not greater than ulong`() {
+    fun `should fail because number is not greater than uint`() {
         runCatching {
-            less.should() beGreaterThan more.toULong()
+            less.should() beGreaterThan more.toUInt()
         }.should()
                 .beFailure(AssertionError::class)
-                .haveFailureMessage("$less should be > ${more.toULong()}")
+                .haveFailureMessage("$less should be > ${more.toUInt()}")
     }
 
     @Test
-    fun `should guarantee than number is greater than ulong`() {
-        more.should() beGreaterThan less.toULong()
+    fun `should guarantee than number is greater than uint`() {
+        more.should() beGreaterThan less.toUInt()
     }
 
     @Test

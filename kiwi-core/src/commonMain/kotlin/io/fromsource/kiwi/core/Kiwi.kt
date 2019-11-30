@@ -23,6 +23,8 @@ fun UByte.should() = UByteShould(this)
 fun UShort.should() = UShortShould(this)
 @ExperimentalUnsignedTypes
 fun UInt.should() = UIntShould(this)
+@ExperimentalUnsignedTypes
+fun ULong.should() = ULongShould(this)
 
 fun String.should() = StringShould(this)
 

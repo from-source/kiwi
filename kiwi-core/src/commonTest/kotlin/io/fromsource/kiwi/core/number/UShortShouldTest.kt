@@ -121,15 +121,15 @@ class UShortShouldTest {
     @Test
     fun `should fail because number is not greater than ubyte`() {
         runCatching {
-            less.should() beGreaterThan more
+            less.should() beGreaterThan more.toUByte()
         }.should()
                 .beFailure(AssertionError::class)
-                .haveFailureMessage("$less should be > $more")
+                .haveFailureMessage("$less should be > ${more.toUByte()}")
     }
 
     @Test
     fun `should guarantee than number is greater than ubyte`() {
-        more.should() beGreaterThan less
+        more.should() beGreaterThan less.toUByte()
     }
 
     @Test
