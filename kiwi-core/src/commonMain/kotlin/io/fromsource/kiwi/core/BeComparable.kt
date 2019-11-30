@@ -21,6 +21,12 @@ interface BeComparable<T : Comparable<T>, R : BeComparable<T, R>> {
         return this as R
     }
 
+    infix fun beGreaterOrEqualThan(expected: T): R {
+        val message = "${actual()} should be >= $expected"
+        assert(actual() >= expected) { message }
+        return this as R
+    }
+
     fun beBetween(lower: T, upper: T): R {
         val message = "${actual()} should be between ($lower .. $upper)"
         assert(lower < actual() && actual() < upper) { message }

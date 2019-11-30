@@ -49,6 +49,20 @@ class UByteShouldTest {
     }
 
     @Test
+    fun `should fail because number is not greater or equal`() {
+        runCatching {
+            less.should() beGreaterOrEqualThan more
+        }.should()
+                .beFailure(AssertionError::class)
+                .haveFailureMessage("$less should be >= $more")
+    }
+
+    @Test
+    fun `should guarantee than number is greater or equal`() {
+        less.should() beGreaterOrEqualThan less
+    }
+
+    @Test
     fun `should fail because number is not less`() {
         runCatching {
             more.should() beLessThan less
