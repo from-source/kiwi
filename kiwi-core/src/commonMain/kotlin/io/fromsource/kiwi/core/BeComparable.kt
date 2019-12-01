@@ -1,5 +1,6 @@
 package io.fromsource.kiwi.core
 
+@Suppress("UNCHECKED_CAST")
 interface BeComparable<T : Comparable<T>, R : BeComparable<T, R>> {
     fun actual(): T
 

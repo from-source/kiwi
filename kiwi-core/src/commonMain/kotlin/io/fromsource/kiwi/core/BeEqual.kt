@@ -1,5 +1,6 @@
 package io.fromsource.kiwi.core
 
+@Suppress("UNCHECKED_CAST")
 interface BeEqual<T, R : BeEqual<T, R>> {
     fun actual(): T
 

@@ -1,3 +1,5 @@
+@file:Suppress("UNCHECKED_CAST")
+
 package io.fromsource.kiwi.core.collection
 
 import io.fromsource.kiwi.core.BeEqual
