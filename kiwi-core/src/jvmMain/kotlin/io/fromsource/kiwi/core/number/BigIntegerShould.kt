@@ -1,13 +1,15 @@
 package io.fromsource.kiwi.core.number
 
+import io.fromsource.kiwi.core.BeComparable
+import io.fromsource.kiwi.core.BeEqual
 import java.math.BigInteger
 
-class BigIntegerShould(private val actual: BigInteger) : NumberShould<BigInteger> {
+class BigIntegerShould(private val actual: BigInteger) : BeEqual<BigInteger, BigIntegerShould>, BeComparable<BigInteger, BigIntegerShould> {
     override fun actual(): BigInteger = actual
 
-    override fun bePositive() = beGreaterThan(BigInteger.ZERO) as BigIntegerShould
+    fun bePositive() = beGreaterThan(BigInteger.ZERO)
 
-    override fun beNegative() = beLessThan(BigInteger.ZERO) as BigIntegerShould
+    fun beNegative() = beLessThan(BigInteger.ZERO)
 
-    override fun beZero(): BigIntegerShould = beEqual(BigInteger.ZERO) as BigIntegerShould
+    fun beZero(): BigIntegerShould = beEqual(BigInteger.ZERO)
 }

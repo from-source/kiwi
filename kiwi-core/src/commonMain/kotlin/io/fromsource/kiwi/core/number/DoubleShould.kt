@@ -1,15 +1,17 @@
 package io.fromsource.kiwi.core.number
 
+import io.fromsource.kiwi.core.BeComparable
+import io.fromsource.kiwi.core.BeEqual
 import io.fromsource.kiwi.core.assert
 
-class DoubleShould(private val actual: Double) : NumberShould<Double> {
+class DoubleShould(private val actual: Double) : BeEqual<Double, DoubleShould>, BeComparable<Double, DoubleShould> {
     override fun actual(): Double = actual
 
-    override fun bePositive(): DoubleShould = beGreaterThan(0)
+    fun bePositive(): DoubleShould = beGreaterThan(0)
 
-    override fun beNegative(): DoubleShould = beLessThan(0)
+    fun beNegative(): DoubleShould = beLessThan(0)
 
-    override fun beZero(): DoubleShould = beEqual(0.0) as DoubleShould
+    fun beZero(): DoubleShould = beEqual(0.0)
 
     infix fun beLessThan(expected: Byte): DoubleShould {
         val message = "${actual()} should be < $expected"

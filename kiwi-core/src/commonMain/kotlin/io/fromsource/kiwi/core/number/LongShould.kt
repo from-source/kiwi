@@ -1,15 +1,17 @@
 package io.fromsource.kiwi.core.number
 
+import io.fromsource.kiwi.core.BeComparable
+import io.fromsource.kiwi.core.BeEqual
 import io.fromsource.kiwi.core.assert
 
-class LongShould(private val actual: Long) : NumberShould<Long> {
+class LongShould(private val actual: Long) : BeEqual<Long, LongShould>, BeComparable<Long, LongShould> {
     override fun actual(): Long = actual
 
-    override fun bePositive(): LongShould = beGreaterThan(0)
+    fun bePositive(): LongShould = beGreaterThan(0)
 
-    override fun beNegative(): LongShould = beLessThan(0)
+    fun beNegative(): LongShould = beLessThan(0)
 
-    override fun beZero(): LongShould = beEqual(0L) as LongShould
+    fun beZero(): LongShould = beEqual(0L)
 
     infix fun beLessThan(expected: Byte): LongShould {
         val message = "${actual()} should be < $expected"
