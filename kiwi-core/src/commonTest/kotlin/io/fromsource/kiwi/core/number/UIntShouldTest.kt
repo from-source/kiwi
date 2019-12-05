@@ -1,6 +1,7 @@
 package io.fromsource.kiwi.core.number
 
 import io.fromsource.kiwi.core.should
+import io.fromsource.kiwi.core._should
 import kotlin.test.Test
 
 @ExperimentalUnsignedTypes
@@ -9,7 +10,7 @@ class UIntShouldTest {
     @Test
     fun `should fail because numbers are not equaled`() {
         runCatching {
-            more.should() beEqual less
+            more._should() beEqual less
         }.should()
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("$more should == $less")
@@ -17,13 +18,13 @@ class UIntShouldTest {
 
     @Test
     fun `should guarantee numbers are equaled`() {
-        more.should() beEqual more
+        more._should() beEqual more
     }
 
     @Test
     fun `should fail because number is not zero`() {
         runCatching {
-            more.should().beZero()
+            more._should().beZero()
         }.should()
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("$more should == $zero")
@@ -31,13 +32,13 @@ class UIntShouldTest {
 
     @Test
     fun `should guarantee that number is zero`() {
-        zero.should().beZero()
+        zero._should().beZero()
     }
 
     @Test
     fun `should fail because number is not less or equal`() {
         runCatching {
-            more.should() beLessOrEqualThan less
+            more._should() beLessOrEqualThan less
         }.should()
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("$more should be <= $less")
@@ -45,13 +46,13 @@ class UIntShouldTest {
 
     @Test
     fun `should guarantee than number is less or equal`() {
-        less.should() beLessOrEqualThan less
+        less._should() beLessOrEqualThan less
     }
 
     @Test
     fun `should fail because number is not greater or equal`() {
         runCatching {
-            less.should() beGreaterOrEqualThan more
+            less._should() beGreaterOrEqualThan more
         }.should()
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("$less should be >= $more")
@@ -59,13 +60,13 @@ class UIntShouldTest {
 
     @Test
     fun `should guarantee than number is greater or equal`() {
-        less.should() beGreaterOrEqualThan less
+        less._should() beGreaterOrEqualThan less
     }
 
     @Test
     fun `should fail because number is not less`() {
         runCatching {
-            more.should() beLessThan less
+            more._should() beLessThan less
         }.should()
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("$more should be < $less")
@@ -73,13 +74,13 @@ class UIntShouldTest {
 
     @Test
     fun `should guarantee than number is less`() {
-        less.should() beLessThan more
+        less._should() beLessThan more
     }
 
     @Test
     fun `should fail because number is not less than ubyte`() {
         runCatching {
-            more.should() beLessThan less.toUByte()
+            more._should() beLessThan less.toUByte()
         }.should()
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("$more should be < ${less.toUByte()}")
@@ -87,13 +88,13 @@ class UIntShouldTest {
 
     @Test
     fun `should guarantee than number is less than ubyte`() {
-        less.should() beLessThan more.toUByte()
+        less._should() beLessThan more.toUByte()
     }
 
     @Test
     fun `should fail because number is not less than ushort`() {
         runCatching {
-            more.should() beLessThan less.toUShort()
+            more._should() beLessThan less.toUShort()
         }.should()
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("$more should be < ${less.toUShort()}")
@@ -101,13 +102,13 @@ class UIntShouldTest {
 
     @Test
     fun `should guarantee than number is less than ushort`() {
-        less.should() beLessThan more.toUShort()
+        less._should() beLessThan more.toUShort()
     }
 
     @Test
     fun `should fail because number is not less than ulong`() {
         runCatching {
-            more.should() beLessThan less.toULong()
+            more._should() beLessThan less.toULong()
         }.should()
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("$more should be < ${less.toULong()}")
@@ -115,13 +116,13 @@ class UIntShouldTest {
 
     @Test
     fun `should guarantee than number is less than ulong`() {
-        less.should() beLessThan more.toULong()
+        less._should() beLessThan more.toULong()
     }
 
     @Test
     fun `should fail because number is not greater than ubyte`() {
         runCatching {
-            less.should() beGreaterThan more.toUByte()
+            less._should() beGreaterThan more.toUByte()
         }.should()
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("$less should be > $more")
@@ -129,13 +130,13 @@ class UIntShouldTest {
 
     @Test
     fun `should guarantee than number is greater than ubyte`() {
-        more.should() beGreaterThan less.toUByte()
+        more._should() beGreaterThan less.toUByte()
     }
 
     @Test
     fun `should fail because number is not greater than ushort`() {
         runCatching {
-            less.should() beGreaterThan more.toUShort()
+            less._should() beGreaterThan more.toUShort()
         }.should()
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("$less should be > ${more.toUShort()}")
@@ -143,13 +144,13 @@ class UIntShouldTest {
 
     @Test
     fun `should guarantee than number is greater than ushort`() {
-        more.should() beGreaterThan less.toUShort()
+        more._should() beGreaterThan less.toUShort()
     }
 
     @Test
     fun `should fail because number is not greater`() {
         runCatching {
-            less.should() beGreaterThan more
+            less._should() beGreaterThan more
         }.should()
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("$less should be > $more")
@@ -157,13 +158,13 @@ class UIntShouldTest {
 
     @Test
     fun `should guarantee than number is greater`() {
-        more.should() beGreaterThan less
+        more._should() beGreaterThan less
     }
 
     @Test
     fun `should fail because number is not greater than ulong`() {
         runCatching {
-            less.should() beGreaterThan more.toULong()
+            less._should() beGreaterThan more.toULong()
         }.should()
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("$less should be > ${more.toULong()}")
@@ -171,13 +172,13 @@ class UIntShouldTest {
 
     @Test
     fun `should guarantee than number is greater than ulong`() {
-        more.should() beGreaterThan less.toULong()
+        more._should() beGreaterThan less.toULong()
     }
 
     @Test
     fun `should fail because number is not between`() {
         runCatching {
-            more.should().beBetween(zero, less)
+            more._should().beBetween(zero, less)
         }.should()
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("$more should be between ($zero .. $less)")
@@ -185,7 +186,7 @@ class UIntShouldTest {
 
     @Test
     fun `should guarantee number is between`() {
-        less.should().beBetween(zero, more)
+        less._should().beBetween(zero, more)
     }
 
     companion object {

@@ -10,6 +10,7 @@ fun <T> List<T>.should() = ListShould(this)
 fun <T> Set<T>.should() = SetShould(this)
 fun <K, V> Map<K, V>.should() = MapShould(this)
 
+fun Any.should() = AnyShould(this)
 fun Byte.should() = ByteShould(this)
 fun Short.should() = ShortShould(this)
 fun Int.should() = IntShould(this)
@@ -17,14 +18,18 @@ fun Long.should() = LongShould(this)
 fun Float.should() = FloatShould(this)
 fun Double.should() = DoubleShould(this)
 
+/**
+ * Temporary rename should() to _should() for unsigned types
+ * https://youtrack.jetbrains.com/issue/KT-35305
+ */
 @ExperimentalUnsignedTypes
-fun UByte.should() = UByteShould(this)
+internal fun UByte._should() = UByteShould(this)
 @ExperimentalUnsignedTypes
-fun UShort.should() = UShortShould(this)
+internal fun UShort._should() = UShortShould(this)
 @ExperimentalUnsignedTypes
-fun UInt.should() = UIntShould(this)
+internal fun UInt._should() = UIntShould(this)
 @ExperimentalUnsignedTypes
-fun ULong.should() = ULongShould(this)
+internal fun ULong._should() = ULongShould(this)
 
 fun String.should() = StringShould(this)
 
