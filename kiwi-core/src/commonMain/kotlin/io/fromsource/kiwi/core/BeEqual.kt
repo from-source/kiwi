@@ -9,4 +9,22 @@ interface BeEqual<T, R : BeEqual<T, R>> {
         assert(actual() == expected) { message }
         return this as R
     }
+
+    infix fun notBeEqual(expected: T): R {
+        val message = "${actual()} should != $expected"
+        assert(actual() != expected) { message }
+        return this as R
+    }
+
+    infix fun beTheSame(expected: T): R {
+        val message = "${actual()} should be the same as $expected"
+        assert(actual() === expected) { message }
+        return this as R
+    }
+
+    infix fun notBeTheSame(expected: T): R {
+        val message = "${actual()} should not be the same as $expected"
+        assert(actual() !== expected) { message }
+        return this as R
+    }
 }
