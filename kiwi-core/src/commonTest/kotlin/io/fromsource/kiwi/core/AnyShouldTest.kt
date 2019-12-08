@@ -70,7 +70,7 @@ class AnyShouldTest {
 
     @Test
     fun `should guarantee objects not equal`() {
-        anything.should() notBeEqual  "anything".toUpperCase()
+        anything.should() notBeEqual "anything".toUpperCase()
     }
 
     @Test
@@ -99,5 +99,35 @@ class AnyShouldTest {
     @Test
     fun `should guarantee objects are not the same`() {
         anything.should() notBeTheSame Anything()
+    }
+
+    @Test
+    fun `should fail because object does not have expected hashCode`() {
+        val differentHashCode = -1 * anything.hashCode()
+        runCatching {
+            anything.should() haveHashCodeEqualTo differentHashCode
+        }.should()
+                .beFailure(AssertionError::class)
+                .haveFailureMessage("$anything should have hashCode equal $differentHashCode, but has ${anything.hashCode()}")
+    }
+
+    @Test
+    fun `should guarantee object has expected hashCode`() {
+        anything.should() haveHashCodeEqualTo anything.hashCode()
+    }
+
+    @Test
+    fun `should fail because object has expected hashCode`() {
+        val differentHasCode = anything.hashCode()
+        runCatching {
+            anything.should() notHaveHashCodeEqualTo differentHasCode
+        }.should()
+                .beFailure(AssertionError::class)
+                .haveFailureMessage("$anything should not have hashCode equal $differentHasCode, but has ${anything.hashCode()}")
+    }
+
+    @Test
+    fun `should guarantee object has not expected hashCode`() {
+        anything.should() notHaveHashCodeEqualTo anything.hashCode() * -1
     }
 }

@@ -27,4 +27,16 @@ interface BeEqual<T, R : BeEqual<T, R>> {
         assert(actual() !== expected) { message }
         return this as R
     }
+
+    infix fun haveHashCodeEqualTo(expected: Int): R {
+        val message = "${actual()} should have hashCode equal $expected, but has ${actual().hashCode()}"
+        assert(actual().hashCode() == expected) { message }
+        return this as R
+    }
+
+    infix fun notHaveHashCodeEqualTo(expected: Int): R {
+        val message = "${actual()} should not have hashCode equal $expected, but has ${actual().hashCode()}"
+        assert(actual().hashCode() != expected) { message }
+        return this as R
+    }
 }
