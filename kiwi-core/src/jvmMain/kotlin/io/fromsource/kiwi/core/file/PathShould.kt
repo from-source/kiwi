@@ -1,9 +1,14 @@
 package io.fromsource.kiwi.core.file
 
+import io.fromsource.kiwi.core.BeAny
+import io.fromsource.kiwi.core.BeEqual
 import java.io.File
 import java.nio.file.Path
 
-class PathShould(private val actual: Path) : io.fromsource.kiwi.core.BeEqual<Path, PathShould> {
+class PathShould(private val actual: Path) :
+        BeAny<Path, PathShould>,
+        BeEqual<Path, PathShould> {
+
     override fun actual(): Path = actual
 
     fun exist(): PathShould {

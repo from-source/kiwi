@@ -1,11 +1,16 @@
 package io.fromsource.kiwi.core.number
 
+import io.fromsource.kiwi.core.BeAny
 import io.fromsource.kiwi.core.BeComparable
 import io.fromsource.kiwi.core.BeEqual
 import io.fromsource.kiwi.core.assert
 
 @ExperimentalUnsignedTypes
-class UIntShould(private val actual: UInt) : BeEqual<UInt, UIntShould>, BeComparable<UInt, UIntShould> {
+class UIntShould(private val actual: UInt) :
+        BeAny<UInt, UIntShould>,
+        BeEqual<UInt, UIntShould>,
+        BeComparable<UInt, UIntShould> {
+
     override fun actual(): UInt = actual
 
     fun beZero(): UIntShould = beEqual(UInt.MIN_VALUE)

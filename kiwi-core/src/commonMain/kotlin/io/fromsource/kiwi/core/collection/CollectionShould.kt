@@ -2,11 +2,13 @@
 
 package io.fromsource.kiwi.core.collection
 
+import io.fromsource.kiwi.core.BeAny
 import io.fromsource.kiwi.core.BeEqual
 import io.fromsource.kiwi.core.assert
 
 open class CollectionShould<T, R : CollectionShould<T, R>>(open val actual: Collection<T>) :
-    BeEqual<Collection<T>, CollectionShould<T, R>> {
+        BeAny<Collection<T>, CollectionShould<T, R>>,
+        BeEqual<Collection<T>, CollectionShould<T, R>> {
     override fun actual(): Collection<T> = actual
 
     open fun beEmpty(): R {

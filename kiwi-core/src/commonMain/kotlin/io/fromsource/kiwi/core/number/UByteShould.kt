@@ -1,12 +1,17 @@
 package io.fromsource.kiwi.core.number
 
+import io.fromsource.kiwi.core.BeAny
 import io.fromsource.kiwi.core.BeComparable
 import io.fromsource.kiwi.core.BeEqual
 import io.fromsource.kiwi.core.assert
 import kotlin.UByte.Companion.MIN_VALUE
 
 @ExperimentalUnsignedTypes
-class UByteShould(private val actual: UByte) : BeEqual<UByte, UByteShould>, BeComparable<UByte, UByteShould> {
+class UByteShould(private val actual: UByte) :
+        BeAny<UByte, UByteShould>,
+        BeEqual<UByte, UByteShould>,
+        BeComparable<UByte, UByteShould> {
+
     override fun actual(): UByte = actual
 
     fun beZero(): UByteShould = beEqual(MIN_VALUE)

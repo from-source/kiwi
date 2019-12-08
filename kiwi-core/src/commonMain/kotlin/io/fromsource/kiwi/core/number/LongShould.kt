@@ -1,10 +1,15 @@
 package io.fromsource.kiwi.core.number
 
+import io.fromsource.kiwi.core.BeAny
 import io.fromsource.kiwi.core.BeComparable
 import io.fromsource.kiwi.core.BeEqual
 import io.fromsource.kiwi.core.assert
 
-class LongShould(private val actual: Long) : BeEqual<Long, LongShould>, BeComparable<Long, LongShould> {
+class LongShould(private val actual: Long) :
+        BeAny<Long, LongShould>,
+        BeEqual<Long, LongShould>,
+        BeComparable<Long, LongShould> {
+
     override fun actual(): Long = actual
 
     fun bePositive(): LongShould = beGreaterThan(0)

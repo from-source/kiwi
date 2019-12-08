@@ -1,11 +1,15 @@
 package io.fromsource.kiwi.core.time
 
+import io.fromsource.kiwi.core.BeAny
 import io.fromsource.kiwi.core.BeComparable
 import io.fromsource.kiwi.core.BeEqual
 import java.time.DayOfWeek
 import java.time.Month
 
-interface DateShould<T : Comparable<T>> : BeEqual<T, DateShould<T>>, BeComparable<T, DateShould<T>> {
+interface DateShould<T : Comparable<T>> :
+        BeAny<T, DateShould<T>>,
+        BeEqual<T, DateShould<T>>,
+        BeComparable<T, DateShould<T>> {
 
     infix fun beAfter(expected: T): DateShould<T>
     infix fun beBefore(expected: T): DateShould<T>

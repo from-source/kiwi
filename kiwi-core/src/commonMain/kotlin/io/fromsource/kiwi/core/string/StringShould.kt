@@ -1,10 +1,15 @@
 package io.fromsource.kiwi.core.string
 
+import io.fromsource.kiwi.core.BeAny
 import io.fromsource.kiwi.core.BeComparable
 import io.fromsource.kiwi.core.BeEqual
 import io.fromsource.kiwi.core.assert
 
-class StringShould(private val actual: String) : BeEqual<String, StringShould>, BeComparable<String, StringShould> {
+class StringShould(private val actual: String) :
+        BeAny<String, StringShould>,
+        BeEqual<String, StringShould>,
+        BeComparable<String, StringShould> {
+
     override fun actual(): String = actual
 
     fun beEmpty(): StringShould {

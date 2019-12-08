@@ -1,10 +1,15 @@
 package io.fromsource.kiwi.core.number
 
+import io.fromsource.kiwi.core.BeAny
 import io.fromsource.kiwi.core.BeComparable
 import io.fromsource.kiwi.core.BeEqual
 import io.fromsource.kiwi.core.assert
 
-class DoubleShould(private val actual: Double) : BeEqual<Double, DoubleShould>, BeComparable<Double, DoubleShould> {
+class DoubleShould(private val actual: Double) :
+        BeAny<Double, DoubleShould>,
+        BeEqual<Double, DoubleShould>,
+        BeComparable<Double, DoubleShould> {
+
     override fun actual(): Double = actual
 
     fun bePositive(): DoubleShould = beGreaterThan(0)

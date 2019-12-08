@@ -1,11 +1,16 @@
 package io.fromsource.kiwi.core.number
 
+import io.fromsource.kiwi.core.BeAny
 import io.fromsource.kiwi.core.BeComparable
 import io.fromsource.kiwi.core.BeEqual
 import io.fromsource.kiwi.core.assert
 
 @ExperimentalUnsignedTypes
-class ULongShould(private val actual: ULong) : BeEqual<ULong, ULongShould>, BeComparable<ULong, ULongShould> {
+class ULongShould(private val actual: ULong) :
+        BeAny<ULong, ULongShould>,
+        BeEqual<ULong, ULongShould>,
+        BeComparable<ULong, ULongShould> {
+
     override fun actual(): ULong = actual
 
     fun beZero(): ULongShould = beEqual(ULong.MIN_VALUE)

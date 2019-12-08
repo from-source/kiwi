@@ -1,10 +1,15 @@
 package io.fromsource.kiwi.core.number
 
+import io.fromsource.kiwi.core.BeAny
 import io.fromsource.kiwi.core.BeComparable
 import io.fromsource.kiwi.core.BeEqual
 import io.fromsource.kiwi.core.assert
 
-class ShortShould(private val actual: Short) : BeEqual<Short, ShortShould>, BeComparable<Short, ShortShould> {
+class ShortShould(private val actual: Short) :
+        BeAny<Short, ShortShould>,
+        BeEqual<Short, ShortShould>,
+        BeComparable<Short, ShortShould> {
+
     override fun actual(): Short = actual
 
     fun bePositive(): ShortShould = beGreaterThan(0)
