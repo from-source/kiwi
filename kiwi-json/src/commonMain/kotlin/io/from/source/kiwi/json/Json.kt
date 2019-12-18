@@ -3,6 +3,10 @@ package io.from.source.kiwi.json
 sealed class Json
 
 data class JsonObject(val value: Map<String, Json> = mapOf()) : Json() {
+
+    operator fun plus(jsonObject: JsonObject): JsonObject = JsonObject()
+    operator fun set(key: String, value: Json): JsonObject = TODO()
+
     override fun toString(): String =
             value.entries.joinToString(
                     separator = ", ",
@@ -12,6 +16,9 @@ data class JsonObject(val value: Map<String, Json> = mapOf()) : Json() {
 }
 
 data class JsonArray(val value: List<Json> = arrayListOf()) : Json() {
+
+    operator fun plus(json: Json) = JsonArray(value + json)
+
     override fun toString(): String = value.toString()
 }
 

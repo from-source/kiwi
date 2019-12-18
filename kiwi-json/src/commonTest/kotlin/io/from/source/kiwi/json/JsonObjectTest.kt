@@ -37,4 +37,9 @@ class JsonObjectTest {
 
         object1.should() notBeEqual object2
     }
+
+    @Test
+    fun `should add empty JsonObject to empty JsonObject`() {
+        JsonObject().should() beEqual JsonObject() + JsonObject()
+    }
 }
