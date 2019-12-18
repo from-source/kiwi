@@ -5,12 +5,7 @@ sealed class Json
 data class JsonObject(val value: Map<String, Json> = mapOf()) : Json() {
 
     operator fun plus(jsonObject: JsonObject) = JsonObject(value + jsonObject.value)
-    fun set(key: String, json: Json): JsonObject {
-        val result = mutableMapOf<String, Json>()
-        result.putAll(value)
-        result.put(key, json)
-        return JsonObject(result.toMap())
-    }
+    fun set(key: String, json: Json) = JsonObject(value + Pair(key, json))
 
     override fun toString(): String =
             value.entries.joinToString(
