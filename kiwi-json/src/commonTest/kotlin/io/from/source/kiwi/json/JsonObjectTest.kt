@@ -8,7 +8,7 @@ class JsonObjectTest {
     private val jsonBoolean = JsonBoolean(true)
     private val jsonString = JsonString("something")
 
-    val object1 = JsonObject(mapOf(
+    private val object1 = JsonObject(mapOf(
             "number" to jsonNumber,
             "boolean" to jsonBoolean,
             "string" to jsonString
@@ -59,7 +59,8 @@ class JsonObjectTest {
                 "number" to jsonNumber,
                 "boolean" to jsonBoolean,
                 "string" to jsonString,
-                "value" to jsonNumber))
+                "value" to jsonNumber
+        ))
     }
 
     @Test
@@ -68,5 +69,19 @@ class JsonObjectTest {
         val object4 = JsonObject(mapOf("boolean" to JsonBoolean(true)))
 
         (object3 + object4).should() beEqual JsonObject(mapOf("boolean" to JsonBoolean(true)))
+    }
+
+    @Test
+    fun `should assign value to key`() {
+        val empty = JsonObject()
+
+        empty.set("value", jsonNumber).should() beEqual JsonObject(mapOf("value" to jsonNumber))
+    }
+
+    @Test
+    fun `should reassign value to key`() {
+        val single = JsonObject(mapOf("value" to JsonBoolean(false)))
+
+        single.set("value", jsonNumber).should() beEqual JsonObject(mapOf("value" to jsonNumber))
     }
 }
