@@ -4,7 +4,7 @@ sealed class Json
 
 data class JsonObject(val value: Map<String, Json> = mapOf()) : Json() {
 
-    operator fun plus(jsonObject: JsonObject): JsonObject = JsonObject()
+    operator fun plus(jsonObject: JsonObject) = JsonObject(value + jsonObject.value)
     operator fun set(key: String, value: Json): JsonObject = TODO()
 
     override fun toString(): String =
