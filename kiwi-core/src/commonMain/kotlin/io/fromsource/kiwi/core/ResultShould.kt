@@ -10,7 +10,7 @@ open class ResultShould<T>(private val actual: Result<T>) {
             assert(false) { message }
         }
 
-        val theSameFailure = assertionError.java == actual.exceptionOrNull()?.javaClass
+        val theSameFailure = actual.hasException(assertionError)
         val message = "expected: $assertionError != ${actual.exceptionOrNull()} actual"
         assert(theSameFailure) { message }
         return this
