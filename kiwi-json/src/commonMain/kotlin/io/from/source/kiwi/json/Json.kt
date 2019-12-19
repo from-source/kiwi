@@ -1,6 +1,10 @@
 package io.from.source.kiwi.json
 
-sealed class Json
+sealed class Json {
+    companion object {
+        fun parse(json: String): Json = JsonParser().parse(json)
+    }
+}
 
 data class JsonObject(val value: Map<String, Json> = mapOf()) : Json() {
 

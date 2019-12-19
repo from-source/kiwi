@@ -1,10 +1,10 @@
-package io.fromsource.kiwi.core.util
+package io.fromsource.kiwi.core
 
 import kotlin.reflect.KClass
 
 open class ResultShould<T>(private val actual: Result<T>) {
 
-    infix fun beFailure(assertionError: KClass<AssertionError>): ResultShould<T> {
+    infix fun beFailure(assertionError: KClass<out Throwable>): ResultShould<T> {
         if(!actual.isFailure) {
             val message = "Expected $assertionError to be thrown"
             assert(false) { message }

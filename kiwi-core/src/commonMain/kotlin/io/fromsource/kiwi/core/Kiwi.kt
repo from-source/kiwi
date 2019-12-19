@@ -33,6 +33,8 @@ internal fun ULong._should() = ULongShould(this)
 
 fun String.should() = StringShould(this)
 
+fun <T> Result<T>.should(): ResultShould<T> = ResultShould(this)
+
 fun assert(condition: Boolean, lazyMessage: () -> String) {
     if(!condition) throw AssertionError(lazyMessage())
 }
