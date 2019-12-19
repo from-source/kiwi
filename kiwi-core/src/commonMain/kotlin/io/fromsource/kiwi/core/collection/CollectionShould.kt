@@ -47,7 +47,7 @@ open class CollectionShould<T, R : CollectionShould<T, R>>(open val actual: Coll
     }
 
     open infix fun matchAll(predicate: (T) -> Boolean): R {
-        val matchAll = actual.any(predicate)
+        val matchAll = actual.all(predicate)
         val message = "$actual should match all predicate"
         assert(matchAll) { message }
         return this as R
