@@ -2,7 +2,6 @@ package io.fromsource.kiwi.core.string
 
 import io.fromsource.kiwi.core.should
 import kotlin.test.Test
-import java.math.BigInteger
 
 class StringShouldTest {
 
@@ -95,7 +94,7 @@ class StringShouldTest {
         runCatching {
             "hello kiwi".should() containIgnoringCase "LoKi"
         }.should()
-                .beFailure(java.lang.AssertionError::class)
+                .beFailure(AssertionError::class)
                 .haveFailureMessage("'hello kiwi' should contain ignoring case 'LoKi'")
     }
 
@@ -220,9 +219,9 @@ class StringShouldTest {
 
     @Test
     fun `should fail when string is not Long`() {
-        val aboveLong = BigInteger.valueOf(Long.MAX_VALUE).plus(BigInteger.ONE)
+        val aboveLong = "${Long.MAX_VALUE}0"
         runCatching {
-            "$aboveLong".should().beLong()
+            aboveLong.should().beLong()
         }.should()
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("'$aboveLong' should be Long")
@@ -296,7 +295,7 @@ class StringShouldTest {
         runCatching {
             "kiwi".should() beEqualIgnoringCase "NOT KIWI"
         }.should()
-                .beFailure(java.lang.AssertionError::class)
+                .beFailure(AssertionError::class)
                 .haveFailureMessage("'kiwi' should be equal ignoring case to 'NOT KIWI'")
     }
 
