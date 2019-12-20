@@ -35,6 +35,8 @@ fun String.should() = StringShould(this)
 
 fun <T> Result<T>.should(): ResultShould<T> = ResultShould(this)
 
+fun <A, B> Pair<A, B>.should(): PairShould<A, B> = PairShould(this)
+
 fun assert(condition: Boolean, lazyMessage: () -> String) {
     if(!condition) throw AssertionError(lazyMessage())
 }
