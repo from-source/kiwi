@@ -176,10 +176,17 @@ class ListShouldTest {
         val numbers = listOf(1, 2, 3)
 
         runCatching {
-            numbers.should() matchAll { it == 4 }
+            numbers.should() matchAll { it > 2 }
         }.should()
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("[1, 2, 3] should match all predicate")
+    }
+
+    @Test
+    fun `should pass when all elements pass predicate`() {
+        val numbers = listOf(1, 2, 3)
+
+        numbers.should() matchAll { it > 0 }
     }
 
     @Test
