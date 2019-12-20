@@ -11,7 +11,7 @@ class JsonParser {
         return when {
             token.whitespace() -> parse(tokens.drop(1), json)
             token.openBracket() -> parseObject(tokens.drop(1), json)
-            else -> TODO()
+            else -> throw JsonException("Unrecognized character '$token'")
         }
     }
 
@@ -20,8 +20,8 @@ class JsonParser {
         return when {
             token.whitespace() -> parseObject(tokens.drop(1), json)
             token.closeBracket() -> json
-            token == null -> throw JsonException("Unexpected end of json")
-            else -> TODO()
+            token.isNull() -> throw JsonException("Unexpected end of json")
+            else -> throw JsonException("Unrecognized character '$token'")
         }
     }
 }
@@ -29,3 +29,4 @@ class JsonParser {
 private fun Char?.whitespace(): Boolean = this != null && this.isWhitespace()
 private fun Char?.openBracket(): Boolean = '{' == this
 private fun Char?.closeBracket(): Boolean = '}' == this
+private fun Char?.isNull(): Boolean = null == this

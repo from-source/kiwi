@@ -35,4 +35,22 @@ class JsonTest {
                 .beFailure(JsonException::class)
                 .haveFailureMessage("Unexpected end of json")
     }
+
+    @Test
+    fun `should throw exception when token can not be recognized when parsing object`() {
+        runCatching {
+            Json.parse("{.}")
+        }.should()
+                .beFailure(JsonException::class)
+                .haveFailureMessage("Unrecognized character '.'")
+    }
+
+    @Test
+    fun `should throw exception when token can not be recognized before parsing`() {
+        runCatching {
+            Json.parse("a {}")
+        }.should()
+                .beFailure(JsonException::class)
+                .haveFailureMessage("Unrecognized character 'a'")
+    }
 }
