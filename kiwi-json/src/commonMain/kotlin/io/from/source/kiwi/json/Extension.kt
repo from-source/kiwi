@@ -4,6 +4,8 @@ internal fun Char?.whitespace(): Boolean = this != null && this.isWhitespace()
 internal fun Char?.openBracket(): Boolean = '{' == this
 internal fun Char?.closeBracket(): Boolean = '}' == this
 internal fun Char?.isNull(): Boolean = null == this
+internal fun Char?.openArray(): Boolean = '[' == this
+
 internal fun String.toCharList(): List<Char> = this.toCharArray().toList()
 
 internal fun List<Char>.split(token: Char, limit: Int): Pair<List<Char>, List<Char>> {

@@ -1,7 +1,6 @@
 package io.from.source.kiwi.json
 
 import io.fromsource.kiwi.core.should
-import kotlin.reflect.KClass
 import kotlin.test.Test
 
 @ExperimentalStdlibApi
@@ -52,5 +51,14 @@ class JsonTest {
         }.should()
                 .beFailure(JsonException::class)
                 .haveFailureMessage("Unrecognized character 'a'")
+    }
+
+    @Test
+    fun `should parse json with single string element`() {
+        val json = """{ 
+            "key":"value"                    
+        }"""
+
+        Json.parse(json).should() beEqual JsonObject(mapOf("key" to JsonString("value")))
     }
 }
