@@ -25,8 +25,3 @@ class JsonParser {
         }
     }
 }
-
-private fun Char?.whitespace(): Boolean = this != null && this.isWhitespace()
-private fun Char?.openBracket(): Boolean = '{' == this
-private fun Char?.closeBracket(): Boolean = '}' == this
-private fun Char?.isNull(): Boolean = null == this
