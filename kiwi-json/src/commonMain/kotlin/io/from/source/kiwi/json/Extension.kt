@@ -5,6 +5,9 @@ internal fun Char?.openBracket(): Boolean = '{' == this
 internal fun Char?.closeBracket(): Boolean = '}' == this
 internal fun Char?.isNull(): Boolean = null == this
 internal fun Char?.openArray(): Boolean = '[' == this
+internal fun Char?.quotation(): Boolean = '"' == this
+internal fun Char?.coma(): Boolean = ',' == this
+internal fun Char?.colon(): Boolean = ':' == this
 
 internal fun String.toCharList(): List<Char> = this.toCharArray().toList()
 
@@ -29,4 +32,14 @@ internal fun List<Char>.split(token: Char, limit: Int): Pair<List<Char>, List<Ch
         limit > 0 -> take(emptyList(), this, limit)
         else -> Pair(this, emptyList())
     }
+}
+
+fun List<Char>.nextString(): Pair<String, List<Char>> {
+    val splited = this.split('"', limit = 2)
+    val string = splited.first
+            .take(splited.first.size - 1)
+            .drop(1)
+            .joinToString(separator = "")
+    val rest = splited.second
+    return Pair(string, rest)
 }

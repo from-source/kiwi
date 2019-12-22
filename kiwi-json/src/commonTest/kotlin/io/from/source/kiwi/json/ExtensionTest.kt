@@ -49,4 +49,12 @@ class ExtensionTest {
                 .firstBeEqual(""" "key"""".toCharList())
                 .secondBeEqual(""": "value" """.toCharList())
     }
+
+    @Test
+    fun `should read string from list of chars`() {
+        """"this is some string" and something rest """.toCharList().nextString()
+                .should()
+                .firstBeEqual("this is some string")
+                .secondBeEqual(" and something rest ".toCharList())
+    }
 }

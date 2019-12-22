@@ -61,4 +61,50 @@ class JsonTest {
 
         Json.parse(json).should() beEqual JsonObject(mapOf("key" to JsonString("value")))
     }
+
+    @Test
+    fun `should throw exception when coma is not followed by name value pair`() {
+        runCatching {
+            Json.parse("""{ "key":"value", }""")
+        }.should()
+                .beFailure(JsonException::class)
+                .haveFailureMessage("Unrecognized character '}'")
+    }
+
+    @Test
+    fun `should throw exception when name value pair is not separated by colon`() {
+        runCatching {
+            Json.parse("""{ "key";"value"}""")
+        }.should()
+                .beFailure(JsonException::class)
+                .haveFailureMessage("Unrecognized character ';'")
+    }
+
+    @Test
+    fun `should parse json with multiple string element`() {
+        val json = """{ 
+            "key":  "value",                    
+            "some": "other"                    
+        }"""
+
+        Json.parse(json).should() beEqual JsonObject(mapOf(
+                "key" to JsonString("value"),
+                "some" to JsonString("other")
+        ))
+    }
+
+    @Test
+    fun `should parse json with multiple string elements where values are in separate lines`() {
+        val json = """{ 
+            "some"  :     
+            "other" ,
+            "and"   :
+            "another"
+        }"""
+
+        Json.parse(json).should().beEqual(JsonObject(mapOf(
+                "some" to JsonString("other"),
+                "and" to JsonString("another")
+        )))
+    }
 }
