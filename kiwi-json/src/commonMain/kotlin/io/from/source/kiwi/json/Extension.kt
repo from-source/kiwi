@@ -8,6 +8,7 @@ internal fun Char?.openArray(): Boolean = '[' == this
 internal fun Char?.quotation(): Boolean = '"' == this
 internal fun Char?.coma(): Boolean = ',' == this
 internal fun Char?.colon(): Boolean = ':' == this
+internal fun Char?.boolStart(): Boolean = 't' == this || 'f' == this
 
 internal fun String.toCharList(): List<Char> = this.toCharArray().toList()
 
@@ -34,7 +35,7 @@ internal fun List<Char>.split(token: Char, limit: Int): Pair<List<Char>, List<Ch
     }
 }
 
-fun List<Char>.nextString(): Pair<String, List<Char>> {
+internal fun List<Char>.nextString(): Pair<String, List<Char>> {
     val splited = this.split('"', limit = 2)
     val string = splited.first
             .take(splited.first.size - 1)
@@ -42,4 +43,14 @@ fun List<Char>.nextString(): Pair<String, List<Char>> {
             .joinToString(separator = "")
     val rest = splited.second
     return Pair(string, rest)
+}
+
+internal fun List<Char>.nextBoolean(): Pair<Boolean, List<Char>> {
+    if (this.take(5).joinToString(separator = "") == "false") {
+        return Pair(false, this.drop(5))
+    } else if (this.take(4).joinToString(separator = "") == "true") {
+        return Pair(true, this.drop(5))
+    } else {
+        throw TODO()
+    }
 }

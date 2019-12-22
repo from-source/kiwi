@@ -70,6 +70,10 @@ class JsonParser {
                 val string = splited.first.take(splited.first.size - 1).drop(1).joinToString(separator = "")
                 return Pair(JsonString(string), splited.second)
             }
+            token.boolStart() -> {
+                val (value, restObject) = tokens.nextBoolean()
+                return Pair(JsonBoolean(value), restObject)
+            }
             else -> throw JsonException("Unrecognized character '$token'")
         }
     }

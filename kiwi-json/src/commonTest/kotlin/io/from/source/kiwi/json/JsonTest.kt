@@ -107,4 +107,26 @@ class JsonTest {
                 "and" to JsonString("another")
         )))
     }
+
+    @Test
+    fun `should parse json with false boolean value`() {
+        val json = """{ 
+            "false or true": false     
+        }"""
+
+        Json.parse(json).should().beEqual(JsonObject(mapOf(
+                "false or true" to JsonBoolean(false)
+        )))
+    }
+
+    @Test
+    fun `should parse json with true boolean value`() {
+        val json = """{ 
+            "false or true": true     
+        }"""
+
+        Json.parse(json).should().beEqual(JsonObject(mapOf(
+                "false or true" to JsonBoolean(true)
+        )))
+    }
 }
