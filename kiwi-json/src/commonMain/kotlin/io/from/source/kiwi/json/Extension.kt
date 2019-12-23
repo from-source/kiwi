@@ -1,5 +1,8 @@
 package io.from.source.kiwi.json
 
+internal const val TRUE = true.toString()
+internal const val FALSE = false.toString()
+
 internal fun Char?.whitespace(): Boolean = this != null && this.isWhitespace()
 internal fun Char?.openBracket(): Boolean = '{' == this
 internal fun Char?.closeBracket(): Boolean = '}' == this
@@ -45,12 +48,4 @@ internal fun List<Char>.nextString(): Pair<String, List<Char>> {
     return Pair(string, rest)
 }
 
-internal fun List<Char>.nextBoolean(): Pair<Boolean, List<Char>> {
-    if (this.take(5).joinToString(separator = "") == "false") {
-        return Pair(false, this.drop(5))
-    } else if (this.take(4).joinToString(separator = "") == "true") {
-        return Pair(true, this.drop(5))
-    } else {
-        throw TODO()
-    }
-}
+internal fun List<Char>.startsWith(string: String): Boolean = this.take(string.length) == string.toCharList()

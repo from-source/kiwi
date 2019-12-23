@@ -129,4 +129,13 @@ class JsonTest {
                 "false or true" to JsonBoolean(true)
         )))
     }
+
+    @Test
+    fun `should throw exception when booleam value can not parsed`() {
+        runCatching {
+            Json.parse("""{ "bool": fals }""")
+        }.should()
+                .beFailure(JsonException::class)
+                .haveFailureMessage("Unrecognized boolean value")
+    }
 }

@@ -65,17 +65,25 @@ class JsonParser {
         val token = tokens.firstOrNull()
         return when {
             token.whitespace() -> parseValue(tokens.drop(1))
-            token.quotation() -> {
-                val splited = tokens.split('"', 2)
-                val string = splited.first.take(splited.first.size - 1).drop(1).joinToString(separator = "")
-                return Pair(JsonString(string), splited.second)
-            }
-            token.boolStart() -> {
-                val (value, restObject) = tokens.nextBoolean()
-                return Pair(JsonBoolean(value), restObject)
-            }
+            token.quotation() -> parseStringValue(tokens)
+            token.boolStart() -> parseBoolValue(tokens)
             else -> throw JsonException("Unrecognized character '$token'")
         }
+    }
+
+    private fun parseStringValue(tokens: List<Char>): Pair<Json, List<Char>> {
+        val splited = tokens.split('"', 2)
+        val string = splited.first.take(splited.first.size - 1).drop(1).joinToString(separator = "")
+        return Pair(JsonString(string), splited.second)
+    }
+
+    private fun parseBoolValue(tokens: List<Char>): Pair<Json, List<Char>> {
+        val (value, restObject) = when {
+            tokens.startsWith(TRUE) -> Pair(true, tokens.drop(TRUE.length))
+            tokens.startsWith(FALSE) -> Pair(false, tokens.drop(FALSE.length))
+            else -> throw JsonException("Unrecognized boolean value")
+        }
+        return Pair(JsonBoolean(value), restObject)
     }
 }
 
