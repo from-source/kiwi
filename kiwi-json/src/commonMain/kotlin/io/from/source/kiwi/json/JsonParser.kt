@@ -68,6 +68,7 @@ class JsonParser {
             token.quotation() -> parseStringValue(tokens)
             token.boolStart() -> parseBoolValue(tokens)
             token.digit() -> parseNumberValue(tokens)
+            token.minus() -> parseNumberValue(tokens, negative = true)
             else -> throw JsonException("Unrecognized character '$token'")
         }
     }
@@ -87,11 +88,25 @@ class JsonParser {
         return Pair(JsonBoolean(value), restObject)
     }
 
-    private fun parseNumberValue(tokens: List<Char>): Pair<Json, List<Char>> {
+    private fun parseNumberValue(tokens: List<Char>, negative: Boolean = false): Pair<JsonNumber, List<Char>> {
+        if (negative) {
+            val (number, rest) = parseNumberValue(tokens.drop(1), false)
+            return Pair(number.negate(), rest)
+        }
+
         val digits = tokens.takeWhile { it.digit() }
         val rest = tokens.drop(digits.size)
         val number = digits.joinToString(separator = "").toLong()
         return Pair(JsonNumber(number), rest)
     }
+}
+
+fun JsonNumber.negate(): JsonNumber {
+    val number: Number = when {
+        this.value is Long -> -this.value
+        this.value is Double -> -this.value
+        else -> throw RuntimeException("Unsupported number")
+    }
+    return JsonNumber(number)
 }
 

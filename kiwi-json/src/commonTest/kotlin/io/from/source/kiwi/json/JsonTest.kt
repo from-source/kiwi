@@ -149,4 +149,15 @@ class JsonTest {
                 "number" to JsonNumber(1987L)
         )))
     }
+
+    @Test
+    fun `should parse json with negative integer number value`() {
+        val json = """{ 
+            "number": -1987     
+        }"""
+
+        Json.parse(json).should().beEqual(JsonObject(mapOf(
+                "number" to JsonNumber(-1987L)
+        )))
+    }
 }
