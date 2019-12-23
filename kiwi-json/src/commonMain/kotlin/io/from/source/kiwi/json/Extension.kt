@@ -31,7 +31,7 @@ internal fun List<Char>.split(token: Char, limit: Int): Pair<List<Char>, List<Ch
             return take(prefix + newPrefix, emptyList(), 0)
         }
 
-        return take(prefix + newPrefix.plus(token), newSuffix.drop(1), upperLimit - 1)
+        return take(prefix + newPrefix.plus(token), newSuffix.tail(), upperLimit - 1)
     }
 
     return when {
@@ -44,10 +44,12 @@ internal fun List<Char>.nextString(): Pair<String, List<Char>> {
     val splited = this.split('"', limit = 2)
     val string = splited.first
             .take(splited.first.size - 1)
-            .drop(1)
+            .tail()
             .joinToString(separator = "")
     val rest = splited.second
     return Pair(string, rest)
 }
 
 internal fun List<Char>.startsWith(string: String): Boolean = this.take(string.length) == string.toCharList()
+
+internal fun <T> List<T>.tail() = this.drop(1)

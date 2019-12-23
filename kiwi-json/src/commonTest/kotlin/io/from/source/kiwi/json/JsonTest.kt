@@ -160,4 +160,51 @@ class JsonTest {
                 "number" to JsonNumber(-1987L)
         )))
     }
+
+    @Test
+    fun `should parse json with nested json object`() {
+        val json = """{ 
+            "object": {}     
+        }"""
+
+        Json.parse(json).should().beEqual(JsonObject(mapOf(
+                "object" to JsonObject()
+        )))
+    }
+
+    @Test
+    fun `should parse json object that contains basic types and nested objects`() {
+        val json = """{
+            "widget": {
+                "debug": "on",
+                "window": {
+                    "title": "Sample Konfabulator Widget"
+                },
+                "image": { 
+                    "src": "Images/Sun.png",
+                    "vOffset": 1024
+                },
+                "text": {
+                    "alignment": false,
+                    "onMouseUp": "sun1.opacity = (sun1.opacity / 100) * 90;"
+                }
+        }}""".trimIndent()
+
+        Json.parse(json).should().beEqual(JsonObject(mapOf(
+                "widget" to JsonObject(mapOf(
+                        "debug" to JsonString("on"),
+                        "window" to JsonObject(mapOf(
+                                "title" to JsonString("Sample Konfabulator Widget")
+                        )),
+                        "image" to JsonObject(mapOf(
+                                "src" to JsonString("Images/Sun.png"),
+                                "vOffset" to JsonNumber(1024L)
+                        )),
+                        "text" to JsonObject(mapOf(
+                                "alignment" to JsonBoolean(false),
+                                "onMouseUp" to JsonString("sun1.opacity = (sun1.opacity / 100) * 90;")
+                        ))
+                ))
+        )))
+    }
 }
