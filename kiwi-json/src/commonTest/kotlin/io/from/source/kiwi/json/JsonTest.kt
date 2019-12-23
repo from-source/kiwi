@@ -138,4 +138,15 @@ class JsonTest {
                 .beFailure(JsonException::class)
                 .haveFailureMessage("Unrecognized boolean value")
     }
+
+    @Test
+    fun `should parse json with integer number value`() {
+        val json = """{ 
+            "number": 1987     
+        }"""
+
+        Json.parse(json).should().beEqual(JsonObject(mapOf(
+                "number" to JsonNumber(1987L)
+        )))
+    }
 }
