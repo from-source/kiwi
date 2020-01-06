@@ -8,6 +8,7 @@ internal fun Char?.openBracket(): Boolean = '{' == this
 internal fun Char?.closeBracket(): Boolean = '}' == this
 internal fun Char?.isNull(): Boolean = null == this
 internal fun Char?.openArray(): Boolean = '[' == this
+internal fun Char?.closeArray(): Boolean = ']' == this
 internal fun Char?.quotation(): Boolean = '"' == this
 internal fun Char?.coma(): Boolean = ',' == this
 internal fun Char?.colon(): Boolean = ':' == this

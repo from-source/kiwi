@@ -16,7 +16,13 @@ class JsonParser {
     }
 
     private fun parseArray(tokens: List<Char>, json: JsonArray): Pair<Json, List<Char>> {
-        return Pair(json, tokens.tail())
+        val token = tokens.firstOrNull()
+        return when {
+            token.whitespace() -> parseArray(tokens.tail(), json)
+            token.closeArray() -> Pair(json, tokens.tail())
+            token.isNull() -> throw JsonException("Unexpected end of json")
+            else -> throw JsonException("Unrecognized character '$token'")
+        }
     }
 
     private tailrec fun parseObject(tokens: List<Char>, json: JsonObject): Pair<Json, List<Char>> {

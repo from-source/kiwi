@@ -213,4 +213,36 @@ class JsonTest {
         val empty = "[]"
         Json.parse(empty).should() beEqual JsonArray()
     }
+
+    @Test
+    fun `should parse empty array with spaces`() {
+        val empty = " [ ] "
+        Json.parse(empty).should() beEqual JsonArray()
+    }
+
+    @Test
+    fun `should parse multiline empty array`() {
+        val empty = """[ 
+                            
+        ]"""
+        Json.parse(empty).should() beEqual JsonArray()
+    }
+
+    @Test
+    fun `should throw exception when array is not terminated`() {
+        runCatching {
+            Json.parse("[")
+        }.should()
+                .beFailure(JsonException::class)
+                .haveFailureMessage("Unexpected end of json")
+    }
+
+    @Test
+    fun `should throw exception when token can not be recognized when parsing array`() {
+        runCatching {
+            Json.parse("[x]")
+        }.should()
+                .beFailure(JsonException::class)
+                .haveFailureMessage("Unrecognized character 'x'")
+    }
 }
