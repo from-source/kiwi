@@ -3,17 +3,20 @@ package io.from.source.kiwi.json
 class JsonParser {
     fun parse(json: String): Json {
         val tokens = json.toCharArray().dropWhile { it.isWhitespace() }
-        return parse(tokens, JsonObject()).first
+        return parse(tokens).first
     }
 
-    private tailrec fun parse(tokens: List<Char>, json: JsonObject): Pair<Json, List<Char>> {
+    private fun parse(tokens: List<Char>): Pair<Json, List<Char>> {
         val token = tokens.firstOrNull()
         return when {
-            token.whitespace() -> parse(tokens.tail(), json)
-            token.openBracket() -> parseObject(tokens.tail(), json)
-            token.openArray() -> TODO()
+            token.openBracket() -> parseObject(tokens.tail(), JsonObject())
+            token.openArray() -> parseArray(tokens.tail(), JsonArray())
             else -> throw JsonException("Unrecognized character '$token'")
         }
+    }
+
+    private fun parseArray(tokens: List<Char>, json: JsonArray): Pair<Json, List<Char>> {
+        return Pair(json, tokens.tail())
     }
 
     private tailrec fun parseObject(tokens: List<Char>, json: JsonObject): Pair<Json, List<Char>> {

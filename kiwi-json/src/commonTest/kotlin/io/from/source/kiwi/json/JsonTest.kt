@@ -207,4 +207,10 @@ class JsonTest {
                 ))
         )))
     }
+
+    @Test
+    fun `should parse empty array`() {
+        val empty = "[]"
+        Json.parse(empty).should() beEqual JsonArray()
+    }
 }
