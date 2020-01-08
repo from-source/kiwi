@@ -245,4 +245,25 @@ class JsonTest {
                 .beFailure(JsonException::class)
                 .haveFailureMessage("Unrecognized character 'x'")
     }
+
+    @Test
+    fun `should parse array with single string value`() {
+        val empty = """[ "text value" ]"""
+
+        Json.parse(empty).should() beEqual JsonArray(arrayListOf(JsonString("text value")))
+    }
+
+    @Test
+    fun `should parse array with single int value`() {
+        val empty = """[ 1 ]"""
+
+        Json.parse(empty).should() beEqual JsonArray(arrayListOf(JsonNumber(1L)))
+    }
+
+    @Test
+    fun `should parse array with single boolean value`() {
+        val empty = """[ false ]"""
+
+        Json.parse(empty).should() beEqual JsonArray(arrayListOf(JsonBoolean(false)))
+    }
 }

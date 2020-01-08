@@ -20,6 +20,10 @@ class JsonParser {
         return when {
             token.whitespace() -> parseArray(tokens.tail(), json)
             token.closeArray() -> Pair(json, tokens.tail())
+            token.quotation() || token.boolStart() || token.digit() -> {
+                val (value, rest) = parseValue(tokens)
+                parseArray(rest, json + value)
+            }
             token.isNull() -> throw JsonException("Unexpected end of json")
             else -> throw JsonException("Unrecognized character '$token'")
         }
