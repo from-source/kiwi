@@ -248,22 +248,36 @@ class JsonTest {
 
     @Test
     fun `should parse array with single string value`() {
-        val empty = """[ "text value" ]"""
+        val array = """[ "text value" ]"""
 
-        Json.parse(empty).should() beEqual JsonArray(arrayListOf(JsonString("text value")))
+        Json.parse(array).should() beEqual JsonArray(arrayListOf(JsonString("text value")))
     }
 
     @Test
     fun `should parse array with single int value`() {
-        val empty = """[ 1 ]"""
+        val array = """[ 1 ]"""
 
-        Json.parse(empty).should() beEqual JsonArray(arrayListOf(JsonNumber(1L)))
+        Json.parse(array).should() beEqual JsonArray(arrayListOf(JsonNumber(1L)))
+    }
+
+    @Test
+    fun `should parse array with single negative int value`() {
+        val array = """[ -1 ]"""
+
+        Json.parse(array).should() beEqual JsonArray(arrayListOf(JsonNumber(-1L)))
     }
 
     @Test
     fun `should parse array with single boolean value`() {
-        val empty = """[ false ]"""
+        val array = """[ false ]"""
 
-        Json.parse(empty).should() beEqual JsonArray(arrayListOf(JsonBoolean(false)))
+        Json.parse(array).should() beEqual JsonArray(arrayListOf(JsonBoolean(false)))
+    }
+
+    @Test
+    fun `should parse array with single json object value`() {
+        val array = """[ { "some": "value" } ]"""
+
+        Json.parse(array).should() beEqual JsonArray(arrayListOf(JsonObject(mapOf("some" to JsonString("value")))))
     }
 }
