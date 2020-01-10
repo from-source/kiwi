@@ -280,4 +280,17 @@ class JsonTest {
 
         Json.parse(array).should() beEqual JsonArray(arrayListOf(JsonObject(mapOf("some" to JsonString("value")))))
     }
+
+    @Test
+    fun `should parse array with multi values`() {
+        val array = """[ "text", "another value", false, 1, { "some": "value" } ]"""
+
+        Json.parse(array).should() beEqual JsonArray(arrayListOf(
+                JsonString("text"),
+                JsonString("another value"),
+                JsonBoolean(false),
+                JsonNumber(1L),
+                JsonObject(mapOf("some" to JsonString("value")))
+        ))
+    }
 }
