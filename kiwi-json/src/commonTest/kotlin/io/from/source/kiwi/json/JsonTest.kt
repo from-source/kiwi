@@ -282,15 +282,26 @@ class JsonTest {
     }
 
     @Test
+    fun `should parse nested array`() {
+        val array = """[ [], [] ]"""
+
+        Json.parse(array).should() beEqual JsonArray(arrayListOf(
+                JsonArray(),
+                JsonArray()
+        ))
+    }
+
+    @Test
     fun `should parse array with multi values`() {
-        val array = """[ "text", "another value", false, 1, { "some": "value" } ]"""
+        val array = """[ "text", "another value", false, 1, { "some": "value" }, [ "text" ] ]"""
 
         Json.parse(array).should() beEqual JsonArray(arrayListOf(
                 JsonString("text"),
                 JsonString("another value"),
                 JsonBoolean(false),
                 JsonNumber(1L),
-                JsonObject(mapOf("some" to JsonString("value")))
+                JsonObject(mapOf("some" to JsonString("value"))),
+                JsonArray(arrayListOf(JsonString("text")))
         ))
     }
 }

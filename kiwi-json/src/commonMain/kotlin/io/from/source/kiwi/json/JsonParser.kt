@@ -96,6 +96,7 @@ class JsonParser {
             token.boolStart() -> parseBoolValue(tokens)
             token.whitespace() -> parseValue(tokens.tail())
             token.openBracket() -> parseObject(tokens.tail(), JsonObject())
+            token.openArray() -> parseArray(tokens.tail(), JsonArray())
             else -> throw JsonException("Unrecognized character '$token'")
         }
     }
@@ -135,4 +136,3 @@ fun JsonNumber.negate(): JsonNumber {
     }
     return JsonNumber(number)
 }
-
