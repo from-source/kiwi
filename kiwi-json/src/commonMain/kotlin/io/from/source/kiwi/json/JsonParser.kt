@@ -9,65 +9,65 @@ class JsonParser {
     private fun parse(tokens: List<Char>): ParsingCxt {
         val token = tokens.firstOrNull()
         return when {
-            token.openBracket() -> startParseObject(tokens.tail(), JsonObject())
-            token.openArray() -> startParseArray(tokens.tail(), JsonArray())
+            token.openBracket() -> startParseObject(JsonObject(), tokens.tail())
+            token.openArray() -> startParseArray(JsonArray(), tokens.tail())
             else -> throw JsonException("Unrecognized character '$token'")
         }
     }
 
-    private tailrec fun startParseArray(tokens: List<Char>, json: JsonArray): ParsingCxt {
+    private tailrec fun startParseArray(json: JsonArray, tokens: List<Char>): ParsingCxt {
         val token = tokens.firstOrNull()
         return when {
-            token.whitespace() -> startParseArray(tokens.tail(), json)
+            token.whitespace() -> startParseArray(json, tokens.tail())
             token.closeArray() -> ParsingCxt(json, tokens.tail())
             token.isNull() -> throw JsonException("Unexpected end of json")
             else -> {
                 val (value, rest) = parseValue(tokens)
-                parseArray(rest, json + value)
+                parseArray(json + value, rest)
             }
         }
     }
 
-    private tailrec fun parseArray(tokens: List<Char>, json: JsonArray): ParsingCxt {
+    private tailrec fun parseArray(json: JsonArray, tokens: List<Char>): ParsingCxt {
         val token = tokens.firstOrNull()
         return when {
-            token.whitespace() -> parseArray(tokens.tail(), json)
+            token.whitespace() -> parseArray(json, tokens.tail())
             token.closeArray() -> ParsingCxt(json, tokens.tail())
             token.isNull() -> throw JsonException("Unexpected end of json")
             token.coma() -> {
                 val (value, rest) = parseValue(tokens.tail())
-                parseArray(rest, json + value)
+                parseArray(json + value, rest)
             }
             else -> throw JsonException("Unrecognized character '$token'")
         }
     }
 
-    private tailrec fun startParseObject(tokens: List<Char>, json: JsonObject): ParsingCxt {
+    private tailrec fun startParseObject(json: JsonObject, tokens: List<Char>): ParsingCxt {
         val token = tokens.firstOrNull()
         return when {
-            token.whitespace() -> startParseObject(tokens.tail(), json)
+            token.whitespace() -> startParseObject(json, tokens.tail())
             token.closeBracket() -> ParsingCxt(json, tokens.tail())
-            token.quotation() -> parseNameValue(tokens, json)
+            token.quotation() -> parseNameValue(json, tokens)
             token.isNull() -> throw JsonException("Unexpected end of json")
             else -> throw JsonException("Unrecognized character '$token'")
         }
     }
 
-    private tailrec fun parseObject(tokens: List<Char>, json: JsonObject): ParsingCxt {
+    private tailrec fun parseObject(json: JsonObject, tokens: List<Char>): ParsingCxt {
         val token = tokens.firstOrNull()
         return when {
-            token.whitespace() -> parseObject(tokens.tail(), json)
+            token.whitespace() -> parseObject(json, tokens.tail())
             token.closeBracket() -> ParsingCxt(json, tokens.tail())
-            token.coma() -> parseNameValue(tokens.tail(), json)
+            token.coma() -> parseNameValue(json, tokens.tail())
             token.isNull() -> throw JsonException("Unexpected end of json")
             else -> throw JsonException("Unrecognized character '$token'")
         }
     }
 
-    private tailrec fun parseNameValue(tokens: List<Char>, json: JsonObject): ParsingCxt {
+    private tailrec fun parseNameValue(json: JsonObject, tokens: List<Char>): ParsingCxt {
         val token = tokens.firstOrNull()
         return when {
-            token.whitespace() -> parseNameValue(tokens.tail(), json)
+            token.whitespace() -> parseNameValue(json, tokens.tail())
             token.quotation() -> {
                 val (key, rest) = tokens.nextString()
 
@@ -80,7 +80,7 @@ class JsonParser {
                     else -> throw JsonException("Unrecognized character '$separator'")
                 }
                 val (value, restObject) = parseValue(valueRest)
-                return parseObject(restObject, json.set(key, value))
+                return parseObject(json.set(key, value), restObject)
             }
             token.isNull() -> throw JsonException("Unexpected end of json")
             else -> throw JsonException("Unrecognized character '$token'")
@@ -95,8 +95,8 @@ class JsonParser {
             token.quotation() -> parseStringValue(tokens)
             token.boolStart() -> parseBoolValue(tokens)
             token.whitespace() -> parseValue(tokens.tail())
-            token.openBracket() -> startParseObject(tokens.tail(), JsonObject())
-            token.openArray() -> startParseArray(tokens.tail(), JsonArray())
+            token.openBracket() -> startParseObject(JsonObject(), tokens.tail())
+            token.openArray() -> startParseArray(JsonArray(), tokens.tail())
             else -> throw JsonException("Unrecognized character '$token'")
         }
     }
