@@ -3,10 +3,10 @@ package io.from.source.kiwi.json
 class JsonParser {
     fun parse(json: String): Json {
         val tokens = json.toCharArray().dropWhile { it.isWhitespace() }
-        return parse(tokens).first
+        return parse(tokens).json
     }
 
-    private fun parse(tokens: List<Char>): Pair<Json, List<Char>> {
+    private fun parse(tokens: List<Char>): ParsingCxt {
         val token = tokens.firstOrNull()
         return when {
             token.openBracket() -> startParseObject(tokens.tail(), JsonObject())
@@ -15,11 +15,11 @@ class JsonParser {
         }
     }
 
-    private tailrec fun startParseArray(tokens: List<Char>, json: JsonArray): Pair<Json, List<Char>> {
+    private tailrec fun startParseArray(tokens: List<Char>, json: JsonArray): ParsingCxt {
         val token = tokens.firstOrNull()
         return when {
             token.whitespace() -> startParseArray(tokens.tail(), json)
-            token.closeArray() -> Pair(json, tokens.tail())
+            token.closeArray() -> ParsingCxt(json, tokens.tail())
             token.isNull() -> throw JsonException("Unexpected end of json")
             else -> {
                 val (value, rest) = parseValue(tokens)
@@ -28,11 +28,11 @@ class JsonParser {
         }
     }
 
-    private tailrec fun parseArray(tokens: List<Char>, json: JsonArray): Pair<Json, List<Char>> {
+    private tailrec fun parseArray(tokens: List<Char>, json: JsonArray): ParsingCxt {
         val token = tokens.firstOrNull()
         return when {
             token.whitespace() -> parseArray(tokens.tail(), json)
-            token.closeArray() -> Pair(json, tokens.tail())
+            token.closeArray() -> ParsingCxt(json, tokens.tail())
             token.isNull() -> throw JsonException("Unexpected end of json")
             token.coma() -> {
                 val (value, rest) = parseValue(tokens.tail())
@@ -42,29 +42,29 @@ class JsonParser {
         }
     }
 
-    private tailrec fun startParseObject(tokens: List<Char>, json: JsonObject): Pair<Json, List<Char>> {
+    private tailrec fun startParseObject(tokens: List<Char>, json: JsonObject): ParsingCxt {
         val token = tokens.firstOrNull()
         return when {
             token.whitespace() -> startParseObject(tokens.tail(), json)
-            token.closeBracket() -> Pair(json, tokens.tail())
+            token.closeBracket() -> ParsingCxt(json, tokens.tail())
             token.quotation() -> parseNameValue(tokens, json)
             token.isNull() -> throw JsonException("Unexpected end of json")
             else -> throw JsonException("Unrecognized character '$token'")
         }
     }
 
-    private tailrec fun parseObject(tokens: List<Char>, json: JsonObject): Pair<Json, List<Char>> {
+    private tailrec fun parseObject(tokens: List<Char>, json: JsonObject): ParsingCxt {
         val token = tokens.firstOrNull()
         return when {
             token.whitespace() -> parseObject(tokens.tail(), json)
-            token.closeBracket() -> Pair(json, tokens.tail())
+            token.closeBracket() -> ParsingCxt(json, tokens.tail())
             token.coma() -> parseNameValue(tokens.tail(), json)
             token.isNull() -> throw JsonException("Unexpected end of json")
             else -> throw JsonException("Unrecognized character '$token'")
         }
     }
 
-    private tailrec fun parseNameValue(tokens: List<Char>, json: JsonObject): Pair<Json, List<Char>> {
+    private tailrec fun parseNameValue(tokens: List<Char>, json: JsonObject): ParsingCxt {
         val token = tokens.firstOrNull()
         return when {
             token.whitespace() -> parseNameValue(tokens.tail(), json)
@@ -87,7 +87,7 @@ class JsonParser {
         }
     }
 
-    private tailrec fun parseValue(tokens: List<Char>): Pair<Json, List<Char>> {
+    private tailrec fun parseValue(tokens: List<Char>): ParsingCxt {
         val token = tokens.firstOrNull()
         return when {
             token.minus() -> parseNumberValue(tokens, negative = true)
@@ -101,30 +101,30 @@ class JsonParser {
         }
     }
 
-    private fun parseStringValue(tokens: List<Char>): Pair<Json, List<Char>> {
+    private fun parseStringValue(tokens: List<Char>): ParsingCxt {
         val splited = tokens.split('"', 2)
         val string = splited.first.take(splited.first.size - 1).tail().joinToString(separator = "")
-        return Pair(JsonString(string), splited.second)
+        return ParsingCxt(JsonString(string), splited.second)
     }
 
-    private fun parseBoolValue(tokens: List<Char>): Pair<Json, List<Char>> {
+    private fun parseBoolValue(tokens: List<Char>): ParsingCxt {
         val (value, restObject) = when {
             tokens.startsWith(TRUE) -> Pair(true, tokens.drop(TRUE.length))
             tokens.startsWith(FALSE) -> Pair(false, tokens.drop(FALSE.length))
             else -> throw JsonException("Unrecognized boolean value")
         }
-        return Pair(JsonBoolean(value), restObject)
+        return ParsingCxt(JsonBoolean(value), restObject)
     }
 
-    private fun parseNumberValue(tokens: List<Char>, negative: Boolean = false): Pair<JsonNumber, List<Char>> {
+    private fun parseNumberValue(tokens: List<Char>, negative: Boolean = false): ParsingCxt {
         if (negative) {
             val (number, rest) = parseNumberValue(tokens.tail(), false)
-            return Pair(number.negate(), rest)
+            return ParsingCxt((number as JsonNumber).negate(), rest)
         }
         val digits = tokens.takeWhile { it.digit() }
         val rest = tokens.drop(digits.size)
         val number = digits.joinToString(separator = "").toLong()
-        return Pair(JsonNumber(number), rest)
+        return ParsingCxt(JsonNumber(number), rest)
     }
 }
 
@@ -136,3 +136,5 @@ fun JsonNumber.negate(): JsonNumber {
     }
     return JsonNumber(number)
 }
+
+data class ParsingCxt(val json: Json, val rest: List<Char>)
