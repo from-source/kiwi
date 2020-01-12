@@ -292,6 +292,27 @@ class JsonTest {
     }
 
     @Test
+    fun `should parse multiple array value`() {
+        val array = """[ true , 
+            false  
+            ]"""
+
+        Json.parse(array).should() beEqual JsonArray(arrayListOf(
+                JsonBoolean(true),
+                JsonBoolean(false)
+        ))
+    }
+
+    @Test
+    fun `should throw exception when values are terminates by coma`() {
+        runCatching {
+            Json.parse("""[ false, true , ]""")
+        }.should()
+                .beFailure(JsonException::class)
+                .haveFailureMessage("Unrecognized character ']'")
+    }
+
+    @Test
     fun `should parse array with multi values`() {
         val array = """[ "text", "another value", false, 1, { "some": "value" }, [ "text" ] ]"""
 
