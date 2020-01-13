@@ -22,13 +22,9 @@ fun Double.should() = DoubleShould(this)
  * Temporary rename should() to _should() for unsigned types
  * https://youtrack.jetbrains.com/issue/KT-35305
  */
-@ExperimentalUnsignedTypes
 internal fun UByte._should() = UByteShould(this)
-@ExperimentalUnsignedTypes
 internal fun UShort._should() = UShortShould(this)
-@ExperimentalUnsignedTypes
 internal fun UInt._should() = UIntShould(this)
-@ExperimentalUnsignedTypes
 internal fun ULong._should() = ULongShould(this)
 
 fun String.should() = StringShould(this)

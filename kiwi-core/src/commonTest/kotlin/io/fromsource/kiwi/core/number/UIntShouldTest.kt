@@ -4,7 +4,6 @@ import io.fromsource.kiwi.core.should
 import io.fromsource.kiwi.core._should
 import kotlin.test.Test
 
-@ExperimentalUnsignedTypes
 class UIntShouldTest {
 
     @Test

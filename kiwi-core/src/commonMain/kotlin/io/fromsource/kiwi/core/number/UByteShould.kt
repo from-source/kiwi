@@ -6,7 +6,6 @@ import io.fromsource.kiwi.core.BeEqual
 import io.fromsource.kiwi.core.assert
 import kotlin.UByte.Companion.MIN_VALUE
 
-@ExperimentalUnsignedTypes
 class UByteShould(private val actual: UByte) :
         BeAny<UByte, UByteShould>,
         BeEqual<UByte, UByteShould>,

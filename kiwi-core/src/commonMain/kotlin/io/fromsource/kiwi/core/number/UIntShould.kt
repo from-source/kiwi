@@ -5,7 +5,6 @@ import io.fromsource.kiwi.core.BeComparable
 import io.fromsource.kiwi.core.BeEqual
 import io.fromsource.kiwi.core.assert
 
-@ExperimentalUnsignedTypes
 class UIntShould(private val actual: UInt) :
         BeAny<UInt, UIntShould>,
         BeEqual<UInt, UIntShould>,

@@ -5,7 +5,6 @@ import io.fromsource.kiwi.core.BeComparable
 import io.fromsource.kiwi.core.BeEqual
 import io.fromsource.kiwi.core.assert
 
-@ExperimentalUnsignedTypes
 class ULongShould(private val actual: ULong) :
         BeAny<ULong, ULongShould>,
         BeEqual<ULong, ULongShould>,
