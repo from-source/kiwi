@@ -10,8 +10,8 @@ class ExtensionTest {
         "This is a sentence".toCharList()
                 .split('a', 0)
                 .should()
-                .firstBeEqual("This is a sentence".toCharList())
-                .secondBeEqual("".toCharList())
+                .haveFirstEqualTo("This is a sentence".toCharList())
+                .haveSecondBeEqual("".toCharList())
     }
 
     @Test
@@ -19,8 +19,8 @@ class ExtensionTest {
         "This is a sentence".toCharList()
                 .split('-', 1)
                 .should()
-                .firstBeEqual("This is a sentence".toCharList())
-                .secondBeEqual("".toCharList())
+                .haveFirstEqualTo("This is a sentence".toCharList())
+                .haveSecondBeEqual("".toCharList())
     }
 
     @Test
@@ -28,8 +28,8 @@ class ExtensionTest {
         "This is a sentence".toCharList()
                 .split('-', 0)
                 .should()
-                .firstBeEqual("This is a sentence".toCharList())
-                .secondBeEqual("".toCharList())
+                .haveFirstEqualTo("This is a sentence".toCharList())
+                .haveSecondBeEqual("".toCharList())
     }
 
     @Test
@@ -37,8 +37,8 @@ class ExtensionTest {
         "This is a sentence".toCharList()
                 .split('a', 1)
                 .should()
-                .firstBeEqual("This is a".toCharList())
-                .secondBeEqual(" sentence".toCharList())
+                .haveFirstEqualTo("This is a".toCharList())
+                .haveSecondBeEqual(" sentence".toCharList())
     }
 
     @Test
@@ -46,15 +46,15 @@ class ExtensionTest {
         """ "key": "value" """.toCharList()
                 .split('"', 2)
                 .should()
-                .firstBeEqual(""" "key"""".toCharList())
-                .secondBeEqual(""": "value" """.toCharList())
+                .haveFirstEqualTo(""" "key"""".toCharList())
+                .haveSecondBeEqual(""": "value" """.toCharList())
     }
 
     @Test
     fun `should read string from list of chars`() {
         """"this is some string" and something rest """.toCharList().nextString()
                 .should()
-                .firstBeEqual("this is some string")
-                .secondBeEqual(" and something rest ".toCharList())
+                .haveFirstEqualTo("this is some string")
+                .haveSecondBeEqual(" and something rest ".toCharList())
     }
 }
