@@ -16,6 +16,17 @@ interface BeEqual<T, R : BeEqual<T, R>> {
         return this as R
     }
 
+
+    /**
+     * Alias for beEqual, just allows to use more native DSL language
+     */
+    infix fun be(expected: T): R = beEqual(expected)
+
+    /**
+     * Alias for notBeEqual, just allows to use more native DSL language
+     */
+    infix fun notBe(expected: T): R = notBeEqual(expected)
+
     infix fun beTheSame(expected: T): R {
         val message = "${actual()} should be the same as $expected"
         assert(actual() === expected) { message }

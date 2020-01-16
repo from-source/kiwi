@@ -10,6 +10,4 @@ class BooleanShould(private val actual: Boolean) :
     fun beTrue(): BooleanShould = beEqual(true)
 
     fun beFalse(): BooleanShould = beEqual(false)
-
-    infix fun be(expected: Boolean): BooleanShould = beEqual(expected)
 }
