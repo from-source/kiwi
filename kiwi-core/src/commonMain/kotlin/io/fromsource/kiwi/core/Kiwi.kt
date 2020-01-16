@@ -14,6 +14,7 @@ import io.fromsource.kiwi.core.number.UByteShould
 import io.fromsource.kiwi.core.number.UIntShould
 import io.fromsource.kiwi.core.number.ULongShould
 import io.fromsource.kiwi.core.number.UShortShould
+import io.fromsource.kiwi.core.range.IntRangeShould
 import io.fromsource.kiwi.core.string.StringShould
 
 fun <T> List<T>.should() = ListShould(this)
@@ -31,6 +32,9 @@ fun Boolean.should() = BooleanShould(this)
 fun String.should() = StringShould(this)
 fun <T> Result<T>.should(): ResultShould<T> = ResultShould(this)
 fun <A, B> Pair<A, B>.should(): PairShould<A, B> = PairShould(this)
+
+val IntRange.should: IntRangeShould
+    get() = IntRangeShould(this)
 
 /**
  * Temporary rename should() to _should() for unsigned types
