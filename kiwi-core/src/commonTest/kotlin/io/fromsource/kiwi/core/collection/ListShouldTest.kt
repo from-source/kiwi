@@ -10,8 +10,8 @@ class ListShouldTest {
         val numbers = listOf(1, 2, 3)
 
         runCatching {
-            numbers.should() beEqual listOf(1, 2, 1)
-        }.should()
+            numbers.should beEqual listOf(1, 2, 1)
+        }.should
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("[1, 2, 3] should == [1, 2, 1]")
     }
@@ -20,7 +20,7 @@ class ListShouldTest {
     fun `should guarantee list are equaled`() {
         val numbers = listOf(1, 2, 3)
 
-        numbers.should() beEqual listOf(1, 2, 3)
+        numbers.should beEqual listOf(1, 2, 3)
     }
 
     @Test
@@ -28,8 +28,8 @@ class ListShouldTest {
         val numbers = listOf(1, 2, 3)
 
         runCatching {
-            numbers.should() haveSize numbers.size - 1
-        }.should()
+            numbers.should haveSize numbers.size - 1
+        }.should
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("Expected size: 2, actual: 3")
     }
@@ -38,7 +38,7 @@ class ListShouldTest {
     fun `should guarantee list have size`() {
         val numbers = listOf(1, 2, 3)
 
-        numbers.should() haveSize 3
+        numbers.should haveSize 3
     }
 
     @Test
@@ -46,8 +46,8 @@ class ListShouldTest {
         val numbers = listOf(1, 2, 3)
 
         runCatching {
-            numbers.should() contain 4
-        }.should()
+            numbers.should contain 4
+        }.should
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("[1, 2, 3] should contain 4")
     }
@@ -56,7 +56,7 @@ class ListShouldTest {
     fun `should guarantee that list contains element`() {
         val numbers = listOf(1, 2, 3)
 
-        numbers.should() contain 3
+        numbers.should contain 3
     }
 
     @Test
@@ -64,8 +64,8 @@ class ListShouldTest {
         val numbers = listOf(1, 2, 3)
 
         runCatching {
-            numbers.should().beEmpty()
-        }.should()
+            numbers.should.beEmpty()
+        }.should
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("[1, 2, 3] should be empty")
     }
@@ -74,7 +74,7 @@ class ListShouldTest {
     fun `should guarantee that list is empty`() {
         val numbers = emptyList<Number>()
 
-        numbers.should().beEmpty()
+        numbers.should.beEmpty()
     }
 
     @Test
@@ -82,8 +82,8 @@ class ListShouldTest {
         val numbers = listOf(1, 2, 3)
 
         runCatching {
-            numbers.should().contain(3, 4)
-        }.should()
+            numbers.should.contain(3, 4)
+        }.should
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("[1, 2, 3] should contain 4")
     }
@@ -92,7 +92,7 @@ class ListShouldTest {
     fun `should guarantee that list contains all elements`() {
         val numbers = listOf(1, 2, 3)
 
-        numbers.should().contain(1, 3)
+        numbers.should.contain(1, 3)
     }
 
     @Test
@@ -100,8 +100,8 @@ class ListShouldTest {
         val numbers = listOf(1, 2, 3)
 
         runCatching {
-            numbers.should() have1st 2
-        }.should()
+            numbers.should have1st 2
+        }.should
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("[1, 2, 3] should have first element to be 2")
     }
@@ -110,7 +110,7 @@ class ListShouldTest {
     fun `should guarantee that list contains have element to be equal at first position`() {
         val numbers = listOf(1, 2, 3)
 
-        numbers.should() have1st 1
+        numbers.should have1st 1
     }
 
     @Test
@@ -118,8 +118,8 @@ class ListShouldTest {
         val numbers = emptyList<Number>()
 
         runCatching {
-            numbers.should() have1st 2
-        }.should()
+            numbers.should have1st 2
+        }.should
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("[] should have first element to be 2")
     }
@@ -129,8 +129,8 @@ class ListShouldTest {
         val numbers = listOf(1, 2, 3)
 
         runCatching {
-            numbers.should() have2nd 1
-        }.should()
+            numbers.should have2nd 1
+        }.should
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("[1, 2, 3] should have second element to be 1")
     }
@@ -139,7 +139,7 @@ class ListShouldTest {
     fun `should guarantee that list have element to be equal at second position`() {
         val numbers = listOf(1, 2, 3)
 
-        numbers.should() have2nd 2
+        numbers.should have2nd 2
     }
 
     @Test
@@ -147,8 +147,8 @@ class ListShouldTest {
         val numbers = emptyList<Number>()
 
         runCatching {
-            numbers.should() have2nd 2
-        }.should()
+            numbers.should have2nd 2
+        }.should
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("[] should have second element to be 2")
     }
@@ -158,8 +158,8 @@ class ListShouldTest {
         val numbers = listOf(1, 2, 3)
 
         runCatching {
-            numbers.should() matchAny { it == 4 }
-        }.should()
+            numbers.should matchAny { it == 4 }
+        }.should
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("[1, 2, 3] should match any predicate")
     }
@@ -168,7 +168,7 @@ class ListShouldTest {
     fun `should guarantee that list match any predicate`() {
         val numbers = listOf(1, 2, 3)
 
-        numbers.should() matchAny { it == 2 }
+        numbers.should matchAny { it == 2 }
     }
 
     @Test
@@ -176,8 +176,8 @@ class ListShouldTest {
         val numbers = listOf(1, 2, 3)
 
         runCatching {
-            numbers.should() matchAll { it > 2 }
-        }.should()
+            numbers.should matchAll { it > 2 }
+        }.should
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("[1, 2, 3] should match all predicate")
     }
@@ -186,14 +186,14 @@ class ListShouldTest {
     fun `should pass when all elements pass predicate`() {
         val numbers = listOf(1, 2, 3)
 
-        numbers.should() matchAll { it > 0 }
+        numbers.should matchAll { it > 0 }
     }
 
     @Test
     fun `should guarantee list match all predicate`() {
         val numbers = listOf(1, 2, 3)
 
-        numbers.should() matchAny { it < 4 }
+        numbers.should matchAny { it < 4 }
     }
 
     @Test
@@ -201,8 +201,8 @@ class ListShouldTest {
         val numbers = listOf(1, 2, 3)
 
         runCatching {
-            numbers.should() beEqual listOf(1, 2, 4)
-        }.should()
+            numbers.should beEqual listOf(1, 2, 4)
+        }.should
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("[1, 2, 3] should == [1, 2, 4]")
     }
@@ -211,7 +211,7 @@ class ListShouldTest {
     fun `should guarantee list is equal other list`() {
         val numbers = listOf(1, 2, 3)
 
-        numbers.should() beEqual listOf(1, 2, 3)
+        numbers.should beEqual listOf(1, 2, 3)
     }
 
     @Test
@@ -219,8 +219,8 @@ class ListShouldTest {
         val numbers = emptyList<Number>()
 
         runCatching {
-            numbers.should().first()
-        }.should()
+            numbers.should.first()
+        }.should
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("[] should have first element")
     }
@@ -230,8 +230,8 @@ class ListShouldTest {
         val numbers = listOf(1, 2, 3)
 
         runCatching {
-            numbers.should().first()
-        }.should()
+            numbers.should.first()
+        }.should
                 .beSuccess(1)
     }
 
@@ -240,8 +240,8 @@ class ListShouldTest {
         val numbers = emptyList<Number>()
 
         runCatching {
-            numbers.should().last()
-        }.should()
+            numbers.should.last()
+        }.should
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("[] should have last element")
     }
@@ -251,8 +251,8 @@ class ListShouldTest {
         val numbers = listOf(1, 2, 3)
 
         runCatching {
-            numbers.should().last()
-        }.should()
+            numbers.should.last()
+        }.should
                 .beSuccess(3)
     }
 
@@ -261,8 +261,8 @@ class ListShouldTest {
         val words = listOf("kiwi", "anaconda", "crocodile", "emu")
 
         runCatching {
-            words.should().beSorted { it.length }
-        }.should()
+            words.should.beSorted { it.length }
+        }.should
             .beFailure(AssertionError::class)
             .haveFailureMessage("$words should be sorted: [emu, kiwi, anaconda, crocodile]")
     }
@@ -271,7 +271,7 @@ class ListShouldTest {
     fun `should guarantee list is sorted by provided selector`() {
         val words = listOf("emu", "kiwi", "anaconda", "crocodile")
 
-        words.should().beSorted { it.length }
+        words.should.beSorted { it.length }
     }
 
     @Test
@@ -279,8 +279,8 @@ class ListShouldTest {
         val words = listOf("anaconda", "crocodile", "kiwi", "emu")
 
         runCatching {
-            words.should().beSorted()
-        }.should()
+            words.should.beSorted()
+        }.should
             .beFailure(AssertionError::class)
             .haveFailureMessage("$words should be sorted: [anaconda, crocodile, emu, kiwi]")
     }
@@ -289,7 +289,7 @@ class ListShouldTest {
     fun `should guarantee list is sorted by its natural order`() {
         val words = listOf("anaconda", "crocodile", "emu", "kiwi")
 
-        words.should().beSorted()
+        words.should.beSorted()
     }
 }
 

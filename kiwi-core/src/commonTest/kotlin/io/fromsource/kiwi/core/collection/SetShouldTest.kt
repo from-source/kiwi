@@ -10,8 +10,8 @@ class SetShouldTest {
         val numbers = setOf(1, 2, 3)
 
         runCatching {
-            numbers.should() beEqual setOf(1, 2, 1)
-        }.should()
+            numbers.should beEqual setOf(1, 2, 1)
+        }.should
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("[1, 2, 3] should == [1, 2]")
     }
@@ -20,7 +20,7 @@ class SetShouldTest {
     fun `should guarantee sets are equaled`() {
         val numbers = setOf(1, 2, 3)
 
-        numbers.should() beEqual setOf(1, 2, 3)
+        numbers.should beEqual setOf(1, 2, 3)
     }
 
     @Test
@@ -28,8 +28,8 @@ class SetShouldTest {
         val numbers = setOf(1, 2, 3)
 
         runCatching {
-            numbers.should() haveSize numbers.size - 1
-        }.should()
+            numbers.should haveSize numbers.size - 1
+        }.should
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("Expected size: 2, actual: 3")
     }
@@ -38,7 +38,7 @@ class SetShouldTest {
     fun `should guarantee set have size`() {
         val numbers = setOf(1, 2, 3)
 
-        numbers.should() haveSize 3
+        numbers.should haveSize 3
     }
 
     @Test
@@ -46,8 +46,8 @@ class SetShouldTest {
         val numbers = setOf(1, 2, 3)
 
         runCatching {
-            numbers.should() contain 4
-        }.should()
+            numbers.should contain 4
+        }.should
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("[1, 2, 3] should contain 4")
     }
@@ -56,7 +56,7 @@ class SetShouldTest {
     fun `should guarantee that set contains element`() {
         val numbers = setOf(1, 2, 3)
 
-        numbers.should() contain 3
+        numbers.should contain 3
     }
 
     @Test
@@ -64,8 +64,8 @@ class SetShouldTest {
         val numbers = setOf(1, 2, 3)
 
         runCatching {
-            numbers.should().beEmpty()
-        }.should()
+            numbers.should.beEmpty()
+        }.should
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("[1, 2, 3] should be empty")
     }
@@ -74,7 +74,7 @@ class SetShouldTest {
     fun `should guarantee that set is empty`() {
         val numbers = emptyList<Number>()
 
-        numbers.should().beEmpty()
+        numbers.should.beEmpty()
     }
 
     @Test
@@ -82,8 +82,8 @@ class SetShouldTest {
         val numbers = setOf(1, 2, 3)
 
         runCatching {
-            numbers.should().contain(3, 4)
-        }.should()
+            numbers.should.contain(3, 4)
+        }.should
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("[1, 2, 3] should contain 4")
     }
@@ -92,7 +92,7 @@ class SetShouldTest {
     fun `should guarantee that set contains all elements`() {
         val numbers = setOf(1, 2, 3)
 
-        numbers.should().contain(1, 3)
+        numbers.should.contain(1, 3)
     }
 
     @Test
@@ -100,8 +100,8 @@ class SetShouldTest {
         val numbers = setOf(1, 2, 3)
 
         runCatching {
-            numbers.should() matchAny { it == 4 }
-        }.should()
+            numbers.should matchAny { it == 4 }
+        }.should
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("[1, 2, 3] should match any predicate")
     }
@@ -110,7 +110,7 @@ class SetShouldTest {
     fun `should guarantee that list match any predicate`() {
         val numbers = setOf(1, 2, 3)
 
-        numbers.should() matchAny { it == 2 }
+        numbers.should matchAny { it == 2 }
     }
 
     @Test
@@ -118,8 +118,8 @@ class SetShouldTest {
         val numbers = setOf(1, 2, 3)
 
         runCatching {
-            numbers.should() matchAll { it == 4 }
-        }.should()
+            numbers.should matchAll { it == 4 }
+        }.should
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("[1, 2, 3] should match all predicate")
     }
@@ -128,7 +128,7 @@ class SetShouldTest {
     fun `should guarantee set match all predicate`() {
         val numbers = setOf(1, 2, 3)
 
-        numbers.should() matchAny { it < 4 }
+        numbers.should matchAny { it < 4 }
     }
 
     @Test
@@ -136,8 +136,8 @@ class SetShouldTest {
         val words = setOf("kiwi", "anaconda", "crocodile", "emu")
 
         runCatching {
-            words.should().beSorted { it.length }
-        }.should()
+            words.should.beSorted { it.length }
+        }.should
             .beFailure(AssertionError::class)
             .haveFailureMessage("$words should be sorted: [emu, kiwi, anaconda, crocodile]")
     }
@@ -146,7 +146,7 @@ class SetShouldTest {
     fun `should guarantee list is sorted by provided selector`() {
         val words = setOf("emu", "kiwi", "anaconda", "crocodile")
 
-        words.should().beSorted { it.length }
+        words.should.beSorted { it.length }
     }
 
     @Test
@@ -154,8 +154,8 @@ class SetShouldTest {
         val words = setOf("anaconda", "crocodile", "kiwi", "emu")
 
         runCatching {
-            words.should().beSorted()
-        }.should()
+            words.should.beSorted()
+        }.should
             .beFailure(AssertionError::class)
             .haveFailureMessage("$words should be sorted: [anaconda, crocodile, emu, kiwi]")
     }
@@ -164,7 +164,7 @@ class SetShouldTest {
     fun `should guarantee list is sorted by its natural order`() {
         val words = setOf("anaconda", "crocodile", "emu", "kiwi")
 
-        words.should().beSorted()
+        words.should.beSorted()
     }
 }
 

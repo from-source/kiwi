@@ -7,6 +7,6 @@ class JsonNullTest {
 
     @Test
     fun `should return "null" for toString()`() {
-        JsonNull.toString().should() beEqual "null"
+        JsonNull.toString().should beEqual "null"
     }
 }

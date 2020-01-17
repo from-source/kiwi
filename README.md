@@ -12,7 +12,7 @@ Below snippet demonstrates usage of Kiwi assertions for standard type like Strin
 ```kotlin
     @Test
     fun `should say hallo to kiwi()` {
-        "Kiwi, Hello World!".should() startWith "Kiwi" contain "Hello" endWith "!"
+        "Kiwi, Hello World!".should startWith "Kiwi" contain "Hello" endWith "!"
     }
 ```
 
@@ -22,7 +22,7 @@ Kiwi supports collections
     fun `should combine operator in infix chain`() {
         val animals = listOf("kiwi", "hedgehog", "flamingo", "humpback")
 
-        animals.should() haveSize 4 contain "humpback" have1st "kiwi"
+        animals.should haveSize 4 contain "humpback" have1st "kiwi"
     }
 ```
 
@@ -43,7 +43,7 @@ as well collections with custom types
 
         val animals = listOf(kiwi, hedgehog, flamingo, humpback)
 
-        animals.should()
+        animals.should
                 .haveSize(4)
                 .contain(flamingo)
                 .beSorted { it.weight }
@@ -61,9 +61,9 @@ Different types of operators e.g. `Collection`, `String`, `Numbers` can be used 
 
         val animals = listOf(kiwi, hedgehog, flamingo, humpback)
 
-        animals.should()
+        animals.should
                 .contain(hedgehog)                             // Collection operator
-                .last().name.should()                          // extract
+                .last().name.should                          // extract
                 .match(Regex("[a-z]+"))                        // String operator
     }
 ```

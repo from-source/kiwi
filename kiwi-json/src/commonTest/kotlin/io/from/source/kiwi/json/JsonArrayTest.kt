@@ -10,7 +10,7 @@ class JsonArrayTest {
 
     @Test
     fun `toString() should return JsonArray's value()`() {
-        JsonArray(arrayListOf(jsonNumber, jsonBoolean, jsonString)).toString().should()
+        JsonArray(arrayListOf(jsonNumber, jsonBoolean, jsonString)).toString().should
                 .beEqual("""[1, true, "something"]""")
     }
 
@@ -19,7 +19,7 @@ class JsonArrayTest {
         val array1 = JsonArray(arrayListOf(jsonNumber, jsonBoolean, jsonString))
         val array2 = JsonArray(arrayListOf(jsonNumber.copy(), jsonBoolean.copy(), jsonString.copy()))
 
-        array1.should() beEqual array2
+        array1.should beEqual array2
     }
 
     @Test
@@ -27,7 +27,7 @@ class JsonArrayTest {
         val array1 = JsonArray(arrayListOf(jsonNumber, jsonBoolean, jsonString))
         val array2 = JsonArray(arrayListOf(jsonNumber.copy(), JsonBoolean(false), jsonString.copy()))
 
-        array1.should() notBeEqual array2
+        array1.should notBeEqual array2
     }
 
     @Test
@@ -36,6 +36,6 @@ class JsonArrayTest {
 
         val updated = array + JsonBoolean(false)
 
-        updated.should() beEqual JsonArray(arrayListOf(JsonBoolean(true), JsonBoolean(false)))
+        updated.should beEqual JsonArray(arrayListOf(JsonBoolean(true), JsonBoolean(false)))
     }
 }

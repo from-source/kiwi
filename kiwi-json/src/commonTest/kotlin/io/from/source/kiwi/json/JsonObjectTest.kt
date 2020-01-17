@@ -16,7 +16,7 @@ class JsonObjectTest {
 
     @Test
     fun `toString() should return JsonObject's value()`() {
-        object1.toString().should().beEqual("""{"number": 1, "boolean": true, "string": "something"}""")
+        object1.toString().should.beEqual("""{"number": 1, "boolean": true, "string": "something"}""")
     }
 
     @Test
@@ -27,7 +27,7 @@ class JsonObjectTest {
                 "string" to jsonString.copy()
         ))
 
-        object1.should() beEqual object2
+        object1.should beEqual object2
     }
 
     @Test
@@ -38,24 +38,24 @@ class JsonObjectTest {
                 "string" to jsonString
         ))
 
-        object1.should() notBeEqual object2
+        object1.should notBeEqual object2
     }
 
     @Test
     fun `should add empty JsonObject to empty JsonObject`() {
-        JsonObject().should() beEqual JsonObject() + JsonObject()
+        JsonObject().should beEqual JsonObject() + JsonObject()
     }
 
     @Test
     fun `should add non empty JsonObject to empty JsonObject`() {
-        object1.should() beEqual object1 + JsonObject()
+        object1.should beEqual object1 + JsonObject()
     }
 
     @Test
     fun `should add non empty JsonObject to non empty JsonObject when there is not conflict in keys`() {
         val object3 = JsonObject(mapOf("value" to jsonNumber))
 
-        (object1 + object3).should() beEqual JsonObject(mapOf(
+        (object1 + object3).should beEqual JsonObject(mapOf(
                 "number" to jsonNumber,
                 "boolean" to jsonBoolean,
                 "string" to jsonString,
@@ -68,20 +68,20 @@ class JsonObjectTest {
         val object3 = JsonObject(mapOf("boolean" to JsonBoolean(false)))
         val object4 = JsonObject(mapOf("boolean" to JsonBoolean(true)))
 
-        (object3 + object4).should() beEqual JsonObject(mapOf("boolean" to JsonBoolean(true)))
+        (object3 + object4).should beEqual JsonObject(mapOf("boolean" to JsonBoolean(true)))
     }
 
     @Test
     fun `should assign value to key`() {
         val empty = JsonObject()
 
-        empty.set("value", jsonNumber).should() beEqual JsonObject(mapOf("value" to jsonNumber))
+        empty.set("value", jsonNumber).should beEqual JsonObject(mapOf("value" to jsonNumber))
     }
 
     @Test
     fun `should reassign value to key`() {
         val single = JsonObject(mapOf("value" to JsonBoolean(false)))
 
-        single.set("value", jsonNumber).should() beEqual JsonObject(mapOf("value" to jsonNumber))
+        single.set("value", jsonNumber).should beEqual JsonObject(mapOf("value" to jsonNumber))
     }
 }

@@ -1,8 +1,8 @@
 package io.fromsource.kiwi.core.file
 
 import io.fromsource.kiwi.core.should
-import kotlin.test.Test
 import java.io.File
+import kotlin.test.Test
 
 class PathShouldTest {
 
@@ -10,7 +10,7 @@ class PathShouldTest {
 
     @Test
     fun `should be able to verify if path exist`() {
-        File("src/jvmTest/resources/sample.txt").toPath().should().exist()
+        File("src/jvmTest/resources/sample.txt").toPath().should.exist()
     }
 
     @Test
@@ -18,15 +18,15 @@ class PathShouldTest {
         val path = File("src/jvmTest/resources/non_existent.txt").toPath()
 
         runCatching {
-            path.should().exist()
-        }.should()
+            path.should.exist()
+        }.should
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("Path 'src${separator}jvmTest${separator}resources${separator}non_existent.txt' does not exist")
     }
 
     @Test
     fun `should be able to verify if path points to a directory`() {
-        File("src/jvmTest/resources").toPath().should().beADirectory()
+        File("src/jvmTest/resources").toPath().should.beADirectory()
     }
 
     @Test
@@ -34,15 +34,15 @@ class PathShouldTest {
         val path = File("src/jvmTest/resources/sample.txt").toPath()
 
         runCatching {
-            path.should().beADirectory()
-        }.should()
+            path.should.beADirectory()
+        }.should
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("Path 'src${separator}jvmTest${separator}resources${separator}sample.txt' is not a directory")
     }
 
     @Test
     fun `should be able to verify if path points to a file`() {
-        File("src/jvmTest/resources/sample.txt").toPath().should().beAFile()
+        File("src/jvmTest/resources/sample.txt").toPath().should.beAFile()
     }
 
     @Test
@@ -50,8 +50,8 @@ class PathShouldTest {
         val path = File("src/jvmTest/resources").toPath()
 
         runCatching {
-            path.should().beAFile()
-        }.should()
+            path.should.beAFile()
+        }.should
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("Path 'src${separator}jvmTest${separator}resources' is not a file")
     }
@@ -59,15 +59,15 @@ class PathShouldTest {
     @Test
     internal fun `should be able to verify that path is absolute`() {
         val path = File("src/jvmTest/resources").toPath().toAbsolutePath()
-        path.should().beAbsolute()
+        path.should.beAbsolute()
     }
 
     @Test
     fun `should fail if path is not absolute`() {
         val path = File("src/jvmTest/resources").toPath()
         runCatching {
-            path.should().beAbsolute()
-        }.should()
+            path.should.beAbsolute()
+        }.should
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("Path 'src${separator}jvmTest${separator}resources' is not absolute")
     }
@@ -76,7 +76,7 @@ class PathShouldTest {
     fun `should be able to verify parent directory`() {
         val path = File("src/jvmTest/resources/sample.txt").toPath()
 
-        path.should().haveParentDirectory("src${separator}jvmTest${separator}resources")
+        path.should.haveParentDirectory("src${separator}jvmTest${separator}resources")
     }
 
     @Test
@@ -84,8 +84,8 @@ class PathShouldTest {
         val path = File("src").toPath()
         val actualParentPath = File(path.toUri()).parent
         runCatching {
-            path.should().haveParentDirectory("src/failure")
-        }.should()
+            path.should.haveParentDirectory("src/failure")
+        }.should
                 .beFailure(AssertionError::class)
                 .haveFailureMessage("Parent directory '$actualParentPath' does not match value '$actualParentPath${separator}src${separator}failure'")
     }
