@@ -97,7 +97,16 @@ class JsonParser {
             token.whitespace() -> parseValue(tokens.tail())
             token.openObject() -> startParseObject(JsonObject(), tokens.tail())
             token.openArray() -> startParseArray(JsonArray(), tokens.tail())
+            token.startNull() -> parseNull(tokens)
             else -> throw JsonException("Unrecognized character '$token'")
+        }
+    }
+
+    private fun parseNull(tokens: List<Char>) = when {
+        tokens.startsWith(NULL) -> ParsingCxt(JsonNull, tokens.drop(NULL.length))
+        else -> {
+            val unknown = tokens.takeWhile { !it.isWhitespace() }.joinToString(separator = "")
+            throw JsonException("Unrecognized value '${unknown}'")
         }
     }
 
@@ -125,6 +134,10 @@ class JsonParser {
         val rest = tokens.drop(digits.size)
         val number = digits.joinToString(separator = "").toLong()
         return ParsingCxt(JsonNumber(number), rest)
+    }
+
+    companion object {
+        const val NULL = "null"
     }
 }
 

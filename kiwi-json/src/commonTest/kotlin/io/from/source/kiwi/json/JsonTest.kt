@@ -63,6 +63,13 @@ class JsonTest {
     }
 
     @Test
+    fun `should parse json with single null element`() {
+        val json = """{ "key": null }"""
+
+        Json.parse(json).should beEqual JsonObject(mapOf("key" to JsonNull))
+    }
+
+    @Test
     fun `should throw exception when coma is not followed by name value pair`() {
         runCatching {
             Json.parse("""{ "key":"value", }""")
@@ -275,6 +282,31 @@ class JsonTest {
     }
 
     @Test
+    fun `should parse array with single null value`() {
+        val array = """[ null ]"""
+
+        Json.parse(array).should beEqual JsonArray(arrayListOf(JsonNull))
+    }
+
+    @Test
+    fun `should throw exception when parsing invalid null`() {
+        runCatching {
+            Json.parse("[ nil ]")
+        }.should
+                .beFailure(JsonException::class)
+                .haveFailureMessage("Unrecognized value 'nil'")
+    }
+
+    @Test
+    fun `should throw exception when parsing invalid value starting with null`() {
+        runCatching {
+            Json.parse("[ nullable ]")
+        }.should
+                .beFailure(JsonException::class)
+                .haveFailureMessage("Unrecognized character 'a'")
+    }
+
+    @Test
     fun `should parse array with single json object value`() {
         val array = """[ { "some": "value" } ]"""
 
@@ -314,13 +346,14 @@ class JsonTest {
 
     @Test
     fun `should parse array with multi values`() {
-        val array = """[ "text", "another value", false, 1, { "some": "value" }, [ "text" ] ]"""
+        val array = """[ "text", "another value", false, 1, null, { "some": "value" }, [ "text" ] ]"""
 
         Json.parse(array).should beEqual JsonArray(arrayListOf(
                 JsonString("text"),
                 JsonString("another value"),
                 JsonBoolean(false),
                 JsonNumber(1L),
+                JsonNull,
                 JsonObject(mapOf("some" to JsonString("value"))),
                 JsonArray(arrayListOf(JsonString("text")))
         ))

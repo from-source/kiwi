@@ -15,6 +15,7 @@ internal fun Char?.colon(): Boolean = ':' == this
 internal fun Char?.boolStart(): Boolean = 't' == this || 'f' == this
 internal fun Char?.digit(): Boolean = this in ('0'..'9')
 internal fun Char?.minus(): Boolean = '-' == this
+internal fun Char?.startNull(): Boolean = 'n' == this
 
 internal fun String.toCharList(): List<Char> = this.toCharArray().toList()
 
