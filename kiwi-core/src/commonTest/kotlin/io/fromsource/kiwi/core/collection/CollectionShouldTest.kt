@@ -10,8 +10,8 @@ class CollectionShouldTest {
         val numbers: List<Byte> = listOf(1, 2, 3)
 
         runCatching {
-            numbers.should() sumTo 7
-        }.should()
+            numbers.should sumTo 7
+        }.should
             .beFailure(AssertionError::class)
             .haveFailureMessage("$numbers should sum to: 7")
     }
@@ -20,7 +20,7 @@ class CollectionShouldTest {
     fun `should guarantee list of Bytes are sum properly`() {
         val numbers: List<Byte> = listOf(1, 2, Byte.MAX_VALUE)
 
-        numbers.should() sumTo 130
+        numbers.should sumTo 130
     }
 
     @Test
@@ -28,8 +28,8 @@ class CollectionShouldTest {
         val numbers: List<Short> = listOf(1, 2, 3)
 
         runCatching {
-            numbers.should() sumTo 7
-        }.should()
+            numbers.should sumTo 7
+        }.should
             .beFailure(AssertionError::class)
             .haveFailureMessage("$numbers should sum to: 7")
     }
@@ -38,7 +38,7 @@ class CollectionShouldTest {
     fun `should guarantee list of Shorts are sum properly`() {
         val numbers: List<Short> = listOf(1, 2, Short.MAX_VALUE)
 
-        numbers.should() sumTo 32770
+        numbers.should sumTo 32770
     }
 
     @Test
@@ -46,8 +46,8 @@ class CollectionShouldTest {
         val numbers: List<Int> = listOf(1, 2, 3)
 
         runCatching {
-            numbers.should() sumTo 7
-        }.should()
+            numbers.should sumTo 7
+        }.should
             .beFailure(AssertionError::class)
             .haveFailureMessage("$numbers should sum to: 7")
     }
@@ -56,7 +56,7 @@ class CollectionShouldTest {
     fun `should guarantee list of Ints are sum properly`() {
         val numbers: List<Int> = listOf(1, Int.MAX_VALUE.dec())
 
-        numbers.should() sumTo Int.MAX_VALUE
+        numbers.should sumTo Int.MAX_VALUE
     }
 
     @Test
@@ -64,8 +64,8 @@ class CollectionShouldTest {
         val numbers: List<Long> = listOf(1, 2, 3)
 
         runCatching {
-            numbers.should() sumTo 7
-        }.should()
+            numbers.should sumTo 7
+        }.should
             .beFailure(AssertionError::class)
             .haveFailureMessage("$numbers should sum to: 7")
     }
@@ -74,7 +74,7 @@ class CollectionShouldTest {
     fun `should guarantee list of Longs are sum properly`() {
         val numbers: List<Long> = listOf(1, 2, Int.MAX_VALUE.toLong())
 
-        numbers.should() sumTo 2147483650
+        numbers.should sumTo 2147483650
     }
 
     @Test
@@ -82,8 +82,8 @@ class CollectionShouldTest {
         val numbers: List<Float> = listOf(1.1f, 2.1f, 3.1f)
 
         runCatching {
-            numbers.should() sumTo 7.7f
-        }.should()
+            numbers.should sumTo 7.7f
+        }.should
             .beFailure(AssertionError::class)
             .haveFailureMessage("$numbers should sum to: 7.7")
     }
@@ -92,7 +92,7 @@ class CollectionShouldTest {
     fun `should guarantee list of Floats are sum properly`() {
         val numbers: List<Float> = listOf(1.1f, 2.1f, 3.1f)
 
-        numbers.should() sumTo numbers.sum()
+        numbers.should sumTo numbers.sum()
     }
 
     @Test
@@ -100,8 +100,8 @@ class CollectionShouldTest {
         val numbers: List<Double> = listOf(1.1, 2.1, 3.1)
 
         runCatching {
-            numbers.should() sumTo 7.7
-        }.should()
+            numbers.should sumTo 7.7
+        }.should
             .beFailure(AssertionError::class)
             .haveFailureMessage("$numbers should sum to: 7.7")
     }
@@ -110,6 +110,6 @@ class CollectionShouldTest {
     fun `should guarantee list of Doubles are sum properly`() {
         val numbers: List<Double> = listOf(1.1, 2.1, 3.1)
 
-        numbers.should() sumTo numbers.sum()
+        numbers.should sumTo numbers.sum()
     }
 }

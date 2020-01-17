@@ -11,10 +11,10 @@ import java.nio.file.Path
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-fun Path.should() = PathShould(this)
+val Path.should get() = PathShould(this)
 
-fun LocalDate.should() = LocalDateShould(this)
-fun LocalDateTime.should() = LocalDateTimeShould(this)
+val LocalDate.should get() = LocalDateShould(this)
+val LocalDateTime.should get() = LocalDateTimeShould(this)
 
-fun BigDecimal.should() = BigDecimalShould(this)
-fun BigInteger.should() = BigIntegerShould(this)
+val BigDecimal.should get() = BigDecimalShould(this)
+val BigInteger.should get() = BigIntegerShould(this)

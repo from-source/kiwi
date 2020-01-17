@@ -9,16 +9,16 @@ class JsonNumberTest {
 
     @Test
     fun `toString() should return JsonNumber's value`() {
-        JsonNumber(number).toString().should() beEqual "$number"
+        JsonNumber(number).toString().should beEqual "$number"
     }
 
     @Test
     fun `should verify == when JsonNumbers are the same`() {
-        JsonNumber(number).should() beEqual JsonNumber(number)
+        JsonNumber(number).should beEqual JsonNumber(number)
     }
 
     @Test
     fun `should verify == when JsonNumbers are different`() {
-        JsonNumber(number).should() notBeEqual JsonNumber(-number)
+        JsonNumber(number).should notBeEqual JsonNumber(-number)
     }
 }

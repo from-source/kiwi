@@ -15,13 +15,13 @@ class KiwiExtensionTest {
     fun `should apply collections & string operators for list of custom data class`() {
         val animals = listOf(kiwi, hedgehog, flamingo, humpback)
 
-        animals.should()
+        animals.should
                 .haveSize(4)
                 .contain(flamingo)
                 .have2nd(hedgehog)
                 .filtered { animal -> animal.mammal }
                 .matchAny { animal -> animal.heavy() }
-                .last().name.should()
+                .last().name.should
                 .match(Regex("[a-z]+"))
     }
 
@@ -29,7 +29,7 @@ class KiwiExtensionTest {
     fun `should sort custom data class collection by property`() {
         val animals = listOf(flamingo, hedgehog, humpback, kiwi)
 
-        animals.should()
+        animals.should
             .beSorted { it.name }
     }
 }

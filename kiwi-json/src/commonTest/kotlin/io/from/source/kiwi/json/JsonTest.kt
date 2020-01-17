@@ -9,13 +9,13 @@ class JsonTest {
     @Test
     fun `should parse empty json object`() {
         val empty = "{}"
-        Json.parse(empty).should() beEqual JsonObject()
+        Json.parse(empty).should beEqual JsonObject()
     }
 
     @Test
     fun `should parse empty json object with spaces`() {
         val empty = " { } "
-        Json.parse(empty).should() beEqual JsonObject()
+        Json.parse(empty).should beEqual JsonObject()
     }
 
     @Test
@@ -23,14 +23,14 @@ class JsonTest {
         val empty = """{ 
                             
         }"""
-        Json.parse(empty).should() beEqual JsonObject()
+        Json.parse(empty).should beEqual JsonObject()
     }
 
     @Test
     fun `should throw exception when object is not terminated`() {
         runCatching {
             Json.parse("{")
-        }.should()
+        }.should
                 .beFailure(JsonException::class)
                 .haveFailureMessage("Unexpected end of json")
     }
@@ -39,7 +39,7 @@ class JsonTest {
     fun `should throw exception when token can not be recognized when parsing object`() {
         runCatching {
             Json.parse("{.}")
-        }.should()
+        }.should
                 .beFailure(JsonException::class)
                 .haveFailureMessage("Unrecognized character '.'")
     }
@@ -48,7 +48,7 @@ class JsonTest {
     fun `should throw exception when token can not be recognized before parsing`() {
         runCatching {
             Json.parse("a {}")
-        }.should()
+        }.should
                 .beFailure(JsonException::class)
                 .haveFailureMessage("Unrecognized character 'a'")
     }
@@ -59,14 +59,14 @@ class JsonTest {
             "key":"value"                    
         }"""
 
-        Json.parse(json).should() beEqual JsonObject(mapOf("key" to JsonString("value")))
+        Json.parse(json).should beEqual JsonObject(mapOf("key" to JsonString("value")))
     }
 
     @Test
     fun `should throw exception when coma is not followed by name value pair`() {
         runCatching {
             Json.parse("""{ "key":"value", }""")
-        }.should()
+        }.should
                 .beFailure(JsonException::class)
                 .haveFailureMessage("Unrecognized character '}'")
     }
@@ -75,7 +75,7 @@ class JsonTest {
     fun `should throw exception when name value pair is not separated by colon`() {
         runCatching {
             Json.parse("""{ "key";"value"}""")
-        }.should()
+        }.should
                 .beFailure(JsonException::class)
                 .haveFailureMessage("Unrecognized character ';'")
     }
@@ -87,7 +87,7 @@ class JsonTest {
             "some": "other"                    
         }"""
 
-        Json.parse(json).should() beEqual JsonObject(mapOf(
+        Json.parse(json).should beEqual JsonObject(mapOf(
                 "key" to JsonString("value"),
                 "some" to JsonString("other")
         ))
@@ -102,7 +102,7 @@ class JsonTest {
             "another"
         }"""
 
-        Json.parse(json).should().beEqual(JsonObject(mapOf(
+        Json.parse(json).should.beEqual(JsonObject(mapOf(
                 "some" to JsonString("other"),
                 "and" to JsonString("another")
         )))
@@ -114,7 +114,7 @@ class JsonTest {
             "false or true": false     
         }"""
 
-        Json.parse(json).should().beEqual(JsonObject(mapOf(
+        Json.parse(json).should.beEqual(JsonObject(mapOf(
                 "false or true" to JsonBoolean(false)
         )))
     }
@@ -125,7 +125,7 @@ class JsonTest {
             "false or true": true     
         }"""
 
-        Json.parse(json).should().beEqual(JsonObject(mapOf(
+        Json.parse(json).should.beEqual(JsonObject(mapOf(
                 "false or true" to JsonBoolean(true)
         )))
     }
@@ -134,7 +134,7 @@ class JsonTest {
     fun `should throw exception when booleam value can not parsed`() {
         runCatching {
             Json.parse("""{ "bool": fals }""")
-        }.should()
+        }.should
                 .beFailure(JsonException::class)
                 .haveFailureMessage("Unrecognized boolean value")
     }
@@ -145,7 +145,7 @@ class JsonTest {
             "number": 1987     
         }"""
 
-        Json.parse(json).should().beEqual(JsonObject(mapOf(
+        Json.parse(json).should.beEqual(JsonObject(mapOf(
                 "number" to JsonNumber(1987L)
         )))
     }
@@ -156,7 +156,7 @@ class JsonTest {
             "number": -1987     
         }"""
 
-        Json.parse(json).should().beEqual(JsonObject(mapOf(
+        Json.parse(json).should.beEqual(JsonObject(mapOf(
                 "number" to JsonNumber(-1987L)
         )))
     }
@@ -167,7 +167,7 @@ class JsonTest {
             "object": {}     
         }"""
 
-        Json.parse(json).should().beEqual(JsonObject(mapOf(
+        Json.parse(json).should.beEqual(JsonObject(mapOf(
                 "object" to JsonObject()
         )))
     }
@@ -190,7 +190,7 @@ class JsonTest {
                 }
         }}""".trimIndent()
 
-        Json.parse(json).should().beEqual(JsonObject(mapOf(
+        Json.parse(json).should.beEqual(JsonObject(mapOf(
                 "widget" to JsonObject(mapOf(
                         "debug" to JsonString("on"),
                         "window" to JsonObject(mapOf(
@@ -211,13 +211,13 @@ class JsonTest {
     @Test
     fun `should parse empty array`() {
         val empty = "[]"
-        Json.parse(empty).should() beEqual JsonArray()
+        Json.parse(empty).should beEqual JsonArray()
     }
 
     @Test
     fun `should parse empty array with spaces`() {
         val empty = " [ ] "
-        Json.parse(empty).should() beEqual JsonArray()
+        Json.parse(empty).should beEqual JsonArray()
     }
 
     @Test
@@ -225,14 +225,14 @@ class JsonTest {
         val empty = """[ 
                             
         ]"""
-        Json.parse(empty).should() beEqual JsonArray()
+        Json.parse(empty).should beEqual JsonArray()
     }
 
     @Test
     fun `should throw exception when array is not terminated`() {
         runCatching {
             Json.parse("[")
-        }.should()
+        }.should
                 .beFailure(JsonException::class)
                 .haveFailureMessage("Unexpected end of json")
     }
@@ -241,7 +241,7 @@ class JsonTest {
     fun `should throw exception when token can not be recognized when parsing array`() {
         runCatching {
             Json.parse("[x]")
-        }.should()
+        }.should
                 .beFailure(JsonException::class)
                 .haveFailureMessage("Unrecognized character 'x'")
     }
@@ -250,42 +250,42 @@ class JsonTest {
     fun `should parse array with single string value`() {
         val array = """[ "text value" ]"""
 
-        Json.parse(array).should() beEqual JsonArray(arrayListOf(JsonString("text value")))
+        Json.parse(array).should beEqual JsonArray(arrayListOf(JsonString("text value")))
     }
 
     @Test
     fun `should parse array with single int value`() {
         val array = """[ 1 ]"""
 
-        Json.parse(array).should() beEqual JsonArray(arrayListOf(JsonNumber(1L)))
+        Json.parse(array).should beEqual JsonArray(arrayListOf(JsonNumber(1L)))
     }
 
     @Test
     fun `should parse array with single negative int value`() {
         val array = """[ -1 ]"""
 
-        Json.parse(array).should() beEqual JsonArray(arrayListOf(JsonNumber(-1L)))
+        Json.parse(array).should beEqual JsonArray(arrayListOf(JsonNumber(-1L)))
     }
 
     @Test
     fun `should parse array with single boolean value`() {
         val array = """[ false ]"""
 
-        Json.parse(array).should() beEqual JsonArray(arrayListOf(JsonBoolean(false)))
+        Json.parse(array).should beEqual JsonArray(arrayListOf(JsonBoolean(false)))
     }
 
     @Test
     fun `should parse array with single json object value`() {
         val array = """[ { "some": "value" } ]"""
 
-        Json.parse(array).should() beEqual JsonArray(arrayListOf(JsonObject(mapOf("some" to JsonString("value")))))
+        Json.parse(array).should beEqual JsonArray(arrayListOf(JsonObject(mapOf("some" to JsonString("value")))))
     }
 
     @Test
     fun `should parse nested array`() {
         val array = """[ [], [] ]"""
 
-        Json.parse(array).should() beEqual JsonArray(arrayListOf(
+        Json.parse(array).should beEqual JsonArray(arrayListOf(
                 JsonArray(),
                 JsonArray()
         ))
@@ -297,7 +297,7 @@ class JsonTest {
             false  
             ]"""
 
-        Json.parse(array).should() beEqual JsonArray(arrayListOf(
+        Json.parse(array).should beEqual JsonArray(arrayListOf(
                 JsonBoolean(true),
                 JsonBoolean(false)
         ))
@@ -307,7 +307,7 @@ class JsonTest {
     fun `should throw exception when values are terminates by coma`() {
         runCatching {
             Json.parse("""[ false, true , ]""")
-        }.should()
+        }.should
                 .beFailure(JsonException::class)
                 .haveFailureMessage("Unrecognized character ']'")
     }
@@ -316,7 +316,7 @@ class JsonTest {
     fun `should parse array with multi values`() {
         val array = """[ "text", "another value", false, 1, { "some": "value" }, [ "text" ] ]"""
 
-        Json.parse(array).should() beEqual JsonArray(arrayListOf(
+        Json.parse(array).should beEqual JsonArray(arrayListOf(
                 JsonString("text"),
                 JsonString("another value"),
                 JsonBoolean(false),

@@ -17,33 +17,33 @@ import io.fromsource.kiwi.core.number.UShortShould
 import io.fromsource.kiwi.core.range.IntRangeShould
 import io.fromsource.kiwi.core.string.StringShould
 
-fun <T> List<T>.should() = ListShould(this)
-fun <T> Set<T>.should() = SetShould(this)
-fun <K, V> Map<K, V>.should() = MapShould(this)
+val <T> List<T>.should get() = ListShould(this)
+val <T> Set<T>.should get() = SetShould(this)
+val <K, V> Map<K, V>.should get() = MapShould(this)
 
-fun Any.should() = AnyShould(this)
-fun Byte.should() = ByteShould(this)
-fun Short.should() = ShortShould(this)
-fun Int.should() = IntShould(this)
-fun Long.should() = LongShould(this)
-fun Float.should() = FloatShould(this)
-fun Double.should() = DoubleShould(this)
-fun Boolean.should() = BooleanShould(this)
-fun String.should() = StringShould(this)
-fun <T> Result<T>.should(): ResultShould<T> = ResultShould(this)
-fun <A, B> Pair<A, B>.should(): PairShould<A, B> = PairShould(this)
+val Any.should get() = AnyShould(this)
+val Byte.should get() = ByteShould(this)
+val Short.should get() = ShortShould(this)
+val Int.should get() = IntShould(this)
+val Long.should get() = LongShould(this)
+val Float.should get() = FloatShould(this)
+val Double.should get() = DoubleShould(this)
+val Boolean.should get() = BooleanShould(this)
+val String.should get()= StringShould(this)
+val <T> Result<T>.should: ResultShould<T> get()= ResultShould(this)
+val <A, B> Pair<A, B>.should: PairShould<A, B> get()= PairShould(this)
 
 val IntRange.should: IntRangeShould
     get() = IntRangeShould(this)
 
 /**
- * Temporary rename should() to _should() for unsigned types
+ * Temporary rename should to _should for unsigned types
  * https://youtrack.jetbrains.com/issue/KT-35305
  */
-internal fun UByte._should() = UByteShould(this)
-internal fun UShort._should() = UShortShould(this)
-internal fun UInt._should() = UIntShould(this)
-internal fun ULong._should() = ULongShould(this)
+internal val UByte._should get() = UByteShould(this)
+internal val UShort._should get() = UShortShould(this)
+internal val UInt._should get() = UIntShould(this)
+internal val ULong._should get() = ULongShould(this)
 
 fun assert(condition: Boolean, lazyMessage: () -> String) {
     if(!condition) throw AssertionError(lazyMessage())
