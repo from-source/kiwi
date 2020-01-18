@@ -180,6 +180,17 @@ class JsonTest {
     }
 
     @Test
+    fun `should parse json object with array as a value`() {
+        val json = """{ 
+            "array": []     
+        }"""
+
+        Json.parse(json).should.beEqual(JsonObject(mapOf(
+                "array" to JsonArray()
+        )))
+    }
+
+    @Test
     fun `should parse json object that contains basic types and nested objects`() {
         val json = """{
             "widget": {
