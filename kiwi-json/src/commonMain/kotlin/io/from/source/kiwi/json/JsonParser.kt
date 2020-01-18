@@ -141,13 +141,4 @@ class JsonParser {
     }
 }
 
-fun JsonNumber.negate(): JsonNumber {
-    val number: Number = when {
-        this.value is Long -> -this.value
-        this.value is Double -> -this.value
-        else -> throw RuntimeException("Unsupported number")
-    }
-    return JsonNumber(number)
-}
-
 data class ParsingCxt(val json: Json, val rest: List<Char>)
