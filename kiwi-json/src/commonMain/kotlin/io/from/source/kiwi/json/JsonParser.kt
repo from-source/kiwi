@@ -126,14 +126,14 @@ class JsonParser {
     }
 
     private fun parseNumberValue(tokens: List<Char>, negative: Boolean = false): ParsingCxt {
-        if (negative) {
-            val (number, rest) = parseNumberValue(tokens.tail(), false)
-            return ParsingCxt((number as JsonNumber).negate(), rest)
+        val number = tokens.takeWhile { it.digit() || it.fraction() || it.minus() || it.plus() || it.expo() }.joinToString(separator = "")
+        val long = number.toLongOrNull()
+        val double = number.toDoubleOrNull()
+        return when {
+            long != null -> ParsingCxt(JsonNumber(long), tokens.drop(number.length))
+            double != null -> ParsingCxt(JsonNumber(double), tokens.drop(number.length))
+            else -> throw JsonException("Can not parse number $number")
         }
-        val digits = tokens.takeWhile { it.digit() }
-        val rest = tokens.drop(digits.size)
-        val number = digits.joinToString(separator = "").toLong()
-        return ParsingCxt(JsonNumber(number), rest)
     }
 
     companion object {

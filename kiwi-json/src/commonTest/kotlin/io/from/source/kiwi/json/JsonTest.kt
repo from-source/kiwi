@@ -275,6 +275,48 @@ class JsonTest {
     }
 
     @Test
+    fun `should parse array with single decimal value`() {
+        val array = """[ 10.01  ]"""
+
+        Json.parse(array).should beEqual JsonArray(arrayListOf(JsonNumber(10.01)))
+    }
+
+    @Test
+    fun `should parse array with single decimal -e value`() {
+        val array = """[ 10e-2  ]"""
+
+        Json.parse(array).should beEqual JsonArray(arrayListOf(JsonNumber(0.1)))
+    }
+
+    @Test
+    fun `should parse array with single decimal +e value`() {
+        val array = """[ 10e+2  ]"""
+
+        Json.parse(array).should beEqual JsonArray(arrayListOf(JsonNumber(1000.0)))
+    }
+
+    @Test
+    fun `should parse array with single integer +e value`() {
+        val array = """[ 10.01e+2  ]"""
+
+        Json.parse(array).should beEqual JsonArray(arrayListOf(JsonNumber(1001.0)))
+    }
+
+    @Test
+    fun `should parse array with single integer -e value to decimal`() {
+        val array = """[ 1e-2  ]"""
+
+        Json.parse(array).should beEqual JsonArray(arrayListOf(JsonNumber(0.01)))
+    }
+
+    @Test
+    fun `should parse array with single integer -e`() {
+        val array = """[ 100e-2  ]"""
+
+        Json.parse(array).should beEqual JsonArray(arrayListOf(JsonNumber(1.0)))
+    }
+
+    @Test
     fun `should parse array with single boolean value`() {
         val array = """[ false ]"""
 
