@@ -63,6 +63,15 @@ class JsonTest {
     }
 
     @Test
+    fun `should parse json with single string element what has escaped characters`() {
+        val json = """{ 
+            "key" : "\"inner quote\" value"                    
+        }"""
+
+        Json.parse(json).should beEqual JsonObject(mapOf("key" to JsonString("\\\"inner quote\\\" value")))
+    }
+
+    @Test
     fun `should parse json with single null element`() {
         val json = """{ "key": null }"""
 

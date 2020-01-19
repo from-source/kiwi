@@ -24,6 +24,8 @@ internal fun String.toCharList(): List<Char> = this.toCharArray().toList()
 
 internal fun List<Char>.split(token: Char, limit: Int): Pair<List<Char>, List<Char>> {
     val stopCondition: (Char?) -> Boolean = { it != token }
+    val escape: (Char?) -> Boolean = { it == '\\' }
+
 
     tailrec fun take(prefix: List<Char>, suffix: List<Char>, upperLimit: Int): Pair<List<Char>, List<Char>> {
         if (upperLimit == 0) {
@@ -36,7 +38,11 @@ internal fun List<Char>.split(token: Char, limit: Int): Pair<List<Char>, List<Ch
             return take(prefix + newPrefix, emptyList(), 0)
         }
 
-        return take(prefix + newPrefix.plus(token), newSuffix.tail(), upperLimit - 1)
+        if(escape(newPrefix.lastOrNull())) {
+            return take(prefix + newPrefix.plus(token), newSuffix.tail(), upperLimit)
+        } else {
+            return take(prefix + newPrefix.plus(token), newSuffix.tail(), upperLimit - 1)
+        }
     }
 
     return when {

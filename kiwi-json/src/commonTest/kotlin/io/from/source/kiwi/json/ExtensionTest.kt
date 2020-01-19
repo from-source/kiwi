@@ -51,10 +51,11 @@ class ExtensionTest {
     }
 
     @Test
-    fun `should read string from list of chars`() {
-        """"this is some string" and something rest """.toCharList().nextString()
+    fun `should handle escape`() {
+        """ "\"key\"" : "value" """.toCharList()
+                .split('"', 2)
                 .should
-                .haveFirstEqualTo("this is some string")
-                .haveSecondBeEqual(" and something rest ".toCharList())
+                .haveFirstEqualTo(""" "\"key\""""".toCharList())
+                .haveSecondBeEqual(""" : "value" """.toCharList())
     }
 }
