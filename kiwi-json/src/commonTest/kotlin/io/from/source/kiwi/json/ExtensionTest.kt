@@ -58,4 +58,13 @@ class ExtensionTest {
                 .haveFirstEqualTo(""" "\"key\""""".toCharList())
                 .haveSecondBeEqual(""" : "value" """.toCharList())
     }
+
+    @Test
+    fun `should handle escape characters in string`() {
+        """ "\\" } """.toCharList()
+                .split('"', 2)
+                .should
+                .haveFirstEqualTo(""" "\\"""".toCharList())
+                .haveSecondBeEqual(" } ".toCharList())
+    }
 }

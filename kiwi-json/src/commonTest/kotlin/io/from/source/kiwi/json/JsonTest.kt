@@ -72,6 +72,20 @@ class JsonTest {
     }
 
     @Test
+    fun `should parse json with single string element contains backslash`() {
+        val json = """{"backslash" : "\\"}"""
+
+        Json.parse(json).should beEqual JsonObject(mapOf("backslash" to JsonString("""\\""")))
+    }
+
+    @Test
+    fun `should parse json with single string element contains backslash2`() {
+        val json = """{"backslash and escaped quote" : " \\\" "}"""
+
+        Json.parse(json).should beEqual JsonObject(mapOf("backslash and escaped quote" to JsonString(""" \\\" """)))
+    }
+
+    @Test
     fun `should parse json with single null element`() {
         val json = """{ "key": null }"""
 
@@ -310,7 +324,7 @@ class JsonTest {
 
     @Test
     fun `should parse array with single decimal +e value`() {
-        val array = """[ 10e+2  ]"""
+        val array = """[ 10E+2  ]"""
 
         Json.parse(array).should beEqual JsonArray(arrayListOf(JsonNumber(1000.0)))
     }

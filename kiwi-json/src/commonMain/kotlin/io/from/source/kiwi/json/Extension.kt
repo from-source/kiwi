@@ -18,7 +18,7 @@ internal fun Char?.fraction(): Boolean = '.' == this
 internal fun Char?.plus(): Boolean = '+' == this
 internal fun Char?.minus(): Boolean = '-' == this
 internal fun Char?.startNull(): Boolean = 'n' == this
-internal fun Char?.expo(): Boolean = 'e' == this
+internal fun Char?.expo(): Boolean = 'e' == this || 'E' == this
 
 internal fun String.toCharList(): List<Char> = this.toCharArray().toList()
 
@@ -26,6 +26,9 @@ internal fun List<Char>.split(token: Char, limit: Int): Pair<List<Char>, List<Ch
     val stopCondition: (Char?) -> Boolean = { it != token }
     val escape: (Char?) -> Boolean = { it == '\\' }
 
+    fun tokenEscaped(tokens: List<Char>): Boolean =
+            escape(tokens.lastOrNull()) &&
+                    tokens.reversed().takeWhile(escape).size % 2 == 1
 
     tailrec fun take(prefix: List<Char>, suffix: List<Char>, upperLimit: Int): Pair<List<Char>, List<Char>> {
         if (upperLimit == 0) {
@@ -38,10 +41,10 @@ internal fun List<Char>.split(token: Char, limit: Int): Pair<List<Char>, List<Ch
             return take(prefix + newPrefix, emptyList(), 0)
         }
 
-        if(escape(newPrefix.lastOrNull())) {
-            return take(prefix + newPrefix.plus(token), newSuffix.tail(), upperLimit)
+        return if (tokenEscaped(newPrefix)) {
+            take(prefix + newPrefix.plus(token), newSuffix.tail(), upperLimit)
         } else {
-            return take(prefix + newPrefix.plus(token), newSuffix.tail(), upperLimit - 1)
+            take(prefix + newPrefix.plus(token), newSuffix.tail(), upperLimit - 1)
         }
     }
 
