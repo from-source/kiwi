@@ -434,4 +434,26 @@ class JsonTest {
                 JsonArray(arrayListOf(JsonString("text")))
         ))
     }
+
+    @Test
+    fun `should parse int number as a valid json`() {
+        val number = "12"
+
+        Json.parse(number).should beEqual JsonNumber(12L)
+    }
+
+    @Test
+    fun `should parse double number as a valid json`() {
+        Json.parse("-10.2e+2").should beEqual JsonNumber(-1020.0)
+    }
+
+    @Test
+    fun `should parse string as a valid json`() {
+        Json.parse(""" "I am string" """).should beEqual JsonString("I am string")
+    }
+
+    @Test
+    fun `should parse boolean as a valid json`() {
+        Json.parse("false").should beEqual JsonBoolean(false)
+    }
 }

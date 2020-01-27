@@ -11,7 +11,7 @@ class JsonParser {
         return when {
             token.openObject() -> startParseObject(JsonObject(), tokens.tail())
             token.openArray() -> startParseArray(JsonArray(), tokens.tail())
-            else -> throw JsonException("Unrecognized character '$token'")
+            else -> parseValue(tokens)
         }
     }
 
