@@ -9,7 +9,6 @@ class JsonParser {
             return json
         }
         throw JsonException("Unexpected character '${trimmed.first()}'")
-
     }
 
     private fun parse(tokens: List<Char>): ParsingCxt {
