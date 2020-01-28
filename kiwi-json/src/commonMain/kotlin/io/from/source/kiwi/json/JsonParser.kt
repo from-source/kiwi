@@ -1,9 +1,15 @@
 package io.from.source.kiwi.json
 
 class JsonParser {
-    fun parse(json: String): Json {
-        val tokens = json.toCharArray().dropWhile { it.isWhitespace() }
-        return parse(tokens).json
+    fun parse(value: String): Json {
+        val tokens = value.toCharArray().dropWhile { it.isWhitespace() }
+        val (json, rest) = parse(tokens)
+        val trimmed = rest.dropWhile { it.whitespace() }
+        if (trimmed.isEmpty()) {
+            return json
+        }
+        throw JsonException("Unexpected character '${trimmed.first()}'")
+
     }
 
     private fun parse(tokens: List<Char>): ParsingCxt {

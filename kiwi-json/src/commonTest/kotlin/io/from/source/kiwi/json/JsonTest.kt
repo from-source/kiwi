@@ -54,6 +54,15 @@ class JsonTest {
     }
 
     @Test
+    fun `should throw exception when for false positive json`() {
+        runCatching {
+            Json.parse("{} {}")
+        }.should
+                .beFailure(JsonException::class)
+                .haveFailureMessage("Unexpected character '{'")
+    }
+
+    @Test
     fun `should parse json with single string element`() {
         val json = """{ 
             "key":"value"                    
