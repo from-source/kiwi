@@ -6,6 +6,8 @@
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/from-source/kiwi/blob/master/LICENSE.md)
 
 
+*Kiwi* is multiplatform projects written in pure Kotlin. Except testing it does not use external dependencies
+
 ## Kiwi, Hello World!
 
 Below snippet demonstrates usage of Kiwi assertions for standard type like String
@@ -62,9 +64,9 @@ Different types of operators e.g. `Collection`, `String`, `Numbers` can be used 
         val animals = listOf(kiwi, hedgehog, flamingo, humpback)
 
         animals.should
-                .contain(hedgehog)                             // Collection operator
-                .last().name.should                          // extract
-                .match(Regex("[a-z]+"))                        // String operator
+                .contain(hedgehog)                              // Collection operator
+                .last().name.should                             // extract
+                .match(Regex("[a-z]+"))                         // String operator
     }
 ```
 
@@ -75,3 +77,52 @@ $ git clone git@github.com/from-source/kiwi.git
 $ cd kiwi/
 $ ./gradlew clean build
 ```
+
+
+## Roadmap & Future 
+
+### JsonPath evaluation - in progress
+
+Take a look at the `JsonPathAcceptanceTest` to see which json path selectors have been introduced
+
+```kotlin
+    @Test
+    fun `should select first book in the store`() {
+        val json =  """{ 
+            "store": {
+                "details": {
+                    "name": "Books & Books"
+                },
+                "books": [
+                { 
+                    "category": "science",
+                    "author": "Douglas Hofstadter",
+                    "title": "I Am a Strange Loop",
+                    "price": 8.95
+                },
+                { 
+                    "category": "science fiction",
+                    "author": "Stanislaw Lem",
+                    "title": "Solaris",
+                    "isbn": "978-0156027601",
+                    "price": 10.99,
+                    "details": "Published in 1961"
+                }]
+            }
+        }"""
+
+        json.should
+                .haveJsonPath("$.store.details")                                // check if path exists
+                .haveJsonPath("$..books[1].category", "science fiction")        // check value of path
+                .haveJsonPath("$..books[0]", """{                              
+                    "category": "science",
+                    "author": "Douglas Hofstadter",
+                    "title": "I Am a Strange Loop",
+                    "price": 8.95
+                }""")
+                
+
+    }
+```
+
+### Support for more Kotlin types
