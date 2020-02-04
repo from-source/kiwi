@@ -84,4 +84,11 @@ class JsonObjectTest {
 
         single.set("value", jsonNumber).should beEqual JsonObject(mapOf("value" to jsonNumber))
     }
+
+    @Test
+    fun `should get all values`() {
+        val json = JsonObject(mapOf("value" to JsonBoolean(false)))
+
+        json.values().should be listOf(JsonBoolean(false))
+    }
 }

@@ -5,9 +5,13 @@ import io.from.source.kiwi.json.JsonArray
 import io.from.source.kiwi.json.JsonObject
 
 object JsonPath {
+    private const val root = "$"
+    private const val recursive = ".."
+    private const val child = "."
+
     fun evaluate(json: Json, path: String): List<Json> {
         val head = path.head()
-        if (head != "$") {
+        if (head != root) {
             throw JsonPathException("Json path should start with '\$'")
         }
         val tail = path.tail()
@@ -19,13 +23,13 @@ object JsonPath {
             return elements
         }
         return when {
-            path.startsWith("..") -> {
+            path.startsWith(recursive) -> {
                 val result = elements.flatMap { recursive(it, emptyList()) }
-                evaluate(result, path.drop(2))
+                evaluate(result, path.drop(recursive.length))
             }
-            path.startsWith(".") -> evaluate(elements, path.drop(1))
+            path.startsWith(child) -> evaluate(elements, path.drop(child.length))
             else -> {
-                val selector = path.split(".").filter { it.isNotBlank() }.head()
+                val selector = path.split(child).filter { it.isNotBlank() }.head()
                 val result = elements.map { select(it, selector) }.filterNotNull()
                 evaluate(result, path.drop(selector.length))
             }
@@ -34,7 +38,7 @@ object JsonPath {
 
     private fun select(json: Json, selector: String): Json? {
         return when (json) {
-            is JsonObject -> json.value[selector]
+            is JsonObject -> json.value(selector)
             else -> null
         }
     }
@@ -42,10 +46,10 @@ object JsonPath {
     private fun recursive(json: Json, selected: List<Json>): List<Json> {
         return when (json) {
             is JsonObject -> {
-                selected + json + json.value.values.flatMap { value -> recursive(value, emptyList()) }
+                selected + json + json.values().flatMap { value -> recursive(value, emptyList()) }
             }
             is JsonArray -> {
-                selected + json + json.value.flatMap { value -> recursive(value, emptyList()) }
+                selected + json + json.values().flatMap { value -> recursive(value, emptyList()) }
             }
             else -> selected
         }

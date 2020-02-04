@@ -6,10 +6,14 @@ sealed class Json {
     }
 }
 
-data class JsonObject(val value: Map<String, Json> = mapOf()) : Json() {
-
+data class JsonObject(private val value: Map<String, Json> = mapOf()) : Json() {
     operator fun plus(jsonObject: JsonObject) = JsonObject(value + jsonObject.value)
+
     fun set(key: String, json: Json) = JsonObject(value + Pair(key, json))
+
+    fun values(): List<Json> = value.values.toList()
+
+    fun value(key: String): Json? = value[key]
 
     override fun toString(): String =
             value.entries.joinToString(
@@ -19,10 +23,12 @@ data class JsonObject(val value: Map<String, Json> = mapOf()) : Json() {
                     transform = { """"${it.key}": ${it.value}""" })
 }
 
-data class JsonArray(val value: List<Json> = arrayListOf()) : Json() {
+data class JsonArray(private val value: List<Json> = arrayListOf()) : Json() {
     operator fun plus(json: Json) = JsonArray(value + json)
 
     override fun toString(): String = value.toString()
+
+    fun values(): List<Json> = value
 }
 
 data class JsonString(val value: String) : Json() {

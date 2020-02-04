@@ -38,4 +38,11 @@ class JsonArrayTest {
 
         updated.should beEqual JsonArray(arrayListOf(JsonBoolean(true), JsonBoolean(false)))
     }
+
+    @Test
+    fun `should get all values`() {
+        val json = JsonArray(listOf(JsonBoolean(false), JsonString("some")))
+
+        json.values().should be listOf(JsonBoolean(false), JsonString("some"))
+    }
 }
