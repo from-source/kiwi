@@ -11,32 +11,32 @@ object JsonPath {
             throw JsonPathException("Json path should start with '\$'")
         }
         val tail = path.tail()
+        return evaluate(listOf(json), tail)
+    }
 
+    private tailrec fun evaluate(elements: List<Json>, path: String): List<Json> {
+        if (path.isBlank()) {
+            return elements
+        }
         return when {
-            tail.isBlank() -> arrayListOf(json)
-            tail == ".." -> recursive(json, emptyList())
+            path.startsWith("..") -> {
+                val result = elements.flatMap { recursive(it, emptyList()) }
+                evaluate(result, path.drop(2))
+            }
+            path.startsWith(".") -> evaluate(elements, path.drop(1))
             else -> {
-                val paths = tail.split(".").filter { it.isNotBlank() }
-                val result: Json? = traverse(paths, json)
-                arrayListOf(result).filterNotNull()
+                val selector = path.split(".").filter { it.isNotBlank() }.head()
+                val result = elements.map { select(it, selector) }.filterNotNull()
+                evaluate(result, path.drop(selector.length))
             }
         }
     }
 
-    private tailrec fun traverse(path: List<String>, json: Json?): Json? {
-        if (path.isEmpty()) {
-            return json
+    private fun select(json: Json, selector: String): Json? {
+        return when (json) {
+            is JsonObject -> json.value[selector]
+            else -> null
         }
-        if (json == null) {
-            return json
-        }
-        val head = path.head()
-
-        val next = when (json) {
-            is JsonObject -> json.value[head]
-            else -> TODO()
-        }
-        return traverse(path.tail(), next)
     }
 
     private fun recursive(json: Json, selected: List<Json>): List<Json> {

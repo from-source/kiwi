@@ -59,7 +59,6 @@ class JsonPathAcceptanceTest {
     }
 
     @Test
-    @Ignore
     fun `should select all elements with single value`() {
         json.evaluatePath("$..author").should be listOf(
                 JsonString("Douglas Hofstadter"),

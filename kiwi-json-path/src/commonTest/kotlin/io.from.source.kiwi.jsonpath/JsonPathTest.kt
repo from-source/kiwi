@@ -105,4 +105,45 @@ class JsonPathTest {
                 )
                 .haveSize(5)
     }
+
+    @Test
+    fun `should find recursively all elements by name`() {
+        val json = parser.parse("""{
+            "new": {
+                "book": {
+                    "title": "The Lord of the Rings"
+                }
+            },
+            "used": {
+                "book": "Solaris",
+                "details": {}
+            }
+        }""")
+
+        json.evaluatePath("$..book").should
+                .contain(
+                        JsonObject(mapOf("title" to JsonString("The Lord of the Rings"))),
+                        JsonString("Solaris"))
+                .haveSize(2)
+    }
+
+    @Test
+    fun `should find recursively firstly and next by name`() {
+        val json = parser.parse("""{
+            "new": {
+                "book": {
+                    "title": "The Lord of the Rings"
+                }
+            },
+            "used": {
+                "book": "Solaris",
+                "details": {}
+            }
+        }""")
+
+        json.evaluatePath("$..book.title").should
+                .contain(
+                        JsonString("The Lord of the Rings"))
+                .haveSize(1)
+    }
 }
