@@ -1,12 +1,15 @@
 package io.from.source.kiwi.jsonpath
 
 import io.from.source.kiwi.json.Json
+import io.from.source.kiwi.json.JsonArray
 import io.from.source.kiwi.json.JsonObject
 
 object JsonPath {
     fun evaluate(json: Json, path: String): List<Json> {
         return if (path == "$") {
             arrayListOf(json)
+        } else if (path == "$..") {
+            recursive(json, emptyList())
         } else {
             val paths = path.drop(1).split(".").filter { it.isNotBlank() }
             val result: Json? = traverse(paths, json)
@@ -28,6 +31,18 @@ object JsonPath {
             else -> TODO()
         }
         return traverse(path.tail(), next)
+    }
+
+    private fun recursive(json: Json, selected: List<Json>): List<Json> {
+        return when (json) {
+            is JsonObject -> {
+                selected + json + json.value.values.flatMap { value -> recursive(value, emptyList()) }
+            }
+            is JsonArray -> {
+                selected + json + json.value.flatMap { value -> recursive(value, emptyList()) }
+            }
+            else -> selected
+        }
     }
 }
 
