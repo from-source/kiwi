@@ -6,14 +6,20 @@ import io.from.source.kiwi.json.JsonObject
 
 object JsonPath {
     fun evaluate(json: Json, path: String): List<Json> {
-        return if (path == "$") {
-            arrayListOf(json)
-        } else if (path == "$..") {
-            recursive(json, emptyList())
-        } else {
-            val paths = path.drop(1).split(".").filter { it.isNotBlank() }
-            val result: Json? = traverse(paths, json)
-            arrayListOf(result).filterNotNull()
+        val head = path.head()
+        if (head != "$") {
+            throw JsonPathException("Json path should start with '\$'")
+        }
+        val tail = path.tail()
+
+        return when {
+            tail.isBlank() -> arrayListOf(json)
+            tail == ".." -> recursive(json, emptyList())
+            else -> {
+                val paths = tail.split(".").filter { it.isNotBlank() }
+                val result: Json? = traverse(paths, json)
+                arrayListOf(result).filterNotNull()
+            }
         }
     }
 
@@ -48,3 +54,6 @@ object JsonPath {
 
 private fun <E> List<E>.tail(): List<E> = if (this.isEmpty()) throw RuntimeException("Empty list") else this.drop(1)
 private fun <E> List<E>.head(): E = this.first()
+
+private fun String.tail(): String = if (this.isEmpty()) throw RuntimeException("Empty string") else this.drop(1)
+private fun String.head(): String = this.take(1)

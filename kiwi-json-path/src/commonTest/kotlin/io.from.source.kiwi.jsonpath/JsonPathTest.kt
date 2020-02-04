@@ -19,6 +19,17 @@ class JsonPathTest {
     }
 
     @Test
+    fun `should throw exception when path does not start with $`() {
+        val json = parser.parse("{}")
+
+        runCatching {
+            json.evaluatePath(".")
+        }.should
+                .beFailure(JsonPathException::class)
+                .haveFailureMessage("Json path should start with '$'")
+    }
+
+    @Test
     fun `should select json 1st level property`() {
         val json = parser.parse("""{
             "book": "The Lord of the Rings"
