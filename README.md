@@ -18,7 +18,9 @@ Below snippet demonstrates usage of Kiwi assertions for standard type like Strin
     }
 ```
 
-Kiwi supports collections
+## Collections
+
+Kiwi supports `List`, `Set` and `Map`
 ```kotlin
     @Test
     fun `should combine operator in infix chain`() {
@@ -28,7 +30,39 @@ Kiwi supports collections
     }
 ```
 
-as well collections with custom types
+### Numbers
+
+as well as `Byte`, `Short`, `Int`, `Long`, `Float`, `Double` and JVM based numbers like `BigDecimal`, `BigNumber`  
+```kotlin
+    @Test
+    fun `should check if numer is prime`() {
+        val number = 7
+
+        number.should
+                .bePositive()
+                .beGreaterThan(1)
+                .match { number -> (2 until number).all { number % it != 0} }
+    }
+```
+
+### Dates
+
+`LocalDate` and `LocalDateTime`
+```kotlin
+    @Test
+    fun `should guarantee date has expected numer of days`() {
+        val date = LocalDateTime.of(2020, 11, 14, 1, 1)
+
+        date.should
+               .beInLeapYear()
+               .beBefore(date.plusDays(1))
+    }
+```
+
+### Custom type
+
+... even custom types are supported
+
 ```kotlin
     data class Animal(val name: String, val weight: Int, val mammal: Boolean) {
        fun heavy(): Boolean = weight > 10
@@ -55,6 +89,29 @@ as well collections with custom types
     }
 ```
 
+### JsonPath
+
+If you need json path Kiwi will work too. See `Roadmap & Future` below for more details 
+
+```kotlin
+    @Test
+    fun `should select json paths for json string`() {
+        val json = """{
+            "kiwi": "kotlin assertion library",
+            "github": {
+                "developers": ["john", "ben"]
+            }
+        }"""
+
+        json.should
+                .haveJsonPath("$.kiwi")
+                .haveJsonPath("$.kiwi", """"kotlin assertion library"""")
+                .haveJsonPath("$..developers", """["john", "ben"]""")
+    }
+```
+
+### Mix of the operators 
+Last but not least you can mix all together 
 Different types of operators e.g. `Collection`, `String`, `Numbers` can be used fluently
 
 ```kotlin
@@ -65,7 +122,8 @@ Different types of operators e.g. `Collection`, `String`, `Numbers` can be used 
 
         animals.should
                 .contain(hedgehog)                              // Collection operator
-                .last().name.should                             // extract
+                .last().name                                    // extract
+                .should                             
                 .match(Regex("[a-z]+"))                         // String operator
     }
 ```
