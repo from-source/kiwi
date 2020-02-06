@@ -1,5 +1,8 @@
 package io.fromsource.kiwi.core.string
 
+import io.from.source.kiwi.json.Json
+import io.from.source.kiwi.json.JsonParser
+import io.from.source.kiwi.jsonpath.JsonPath
 import io.fromsource.kiwi.core.BeAny
 import io.fromsource.kiwi.core.BeComparable
 import io.fromsource.kiwi.core.BeEqual
@@ -120,6 +123,22 @@ class StringShould(private val actual: String) :
     infix fun beEqualIgnoringCase(expected: String): StringShould {
         val message = "'$actual' should be equal ignoring case to '$expected'"
         assert(actual.equals(expected, true)) { message }
+        return this
+    }
+
+    infix fun haveJsonPath(path: String): StringShould {
+        val message = "$actual does not contain '$path'"
+        val json = JsonParser().parse(actual)
+        val selected = JsonPath.evaluate(json, path)
+        assert(selected.isNotEmpty()) { message }
+        return this
+    }
+
+    fun haveJsonPath(path: String, expected: String): StringShould {
+        val message = "$actual does not contain '$path'"
+        val json = JsonParser().parse(actual)
+        val selected = JsonPath.evaluate(json, path).map { it }
+        assert(selected.contains(Json.parse(expected))) { message }
         return this
     }
 }

@@ -34,6 +34,8 @@ kotlin {
         commonMain {
             dependencies {
                 implementation kotlin('stdlib-common')
+                implementation project(':kiwi-json-path')
+                implementation project(':kiwi-json')
             }
         }
         commonTest {

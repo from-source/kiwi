@@ -303,4 +303,32 @@ class StringShouldTest {
     fun `should guarantee string is equal ignoring case`() {
         "kiwi".should beEqualIgnoringCase "KIWI"
     }
+
+    @Test
+    fun `should select json paths for json string`() {
+        val json = """{
+            "kiwi": "kotlin assertion library",
+            "developers": ["dev 1", "dev 2"]
+        }"""
+
+        json.should
+                .haveJsonPath("$.kiwi")
+                .haveJsonPath("$.kiwi", """"kotlin assertion library"""")
+                .haveJsonPath("$..developers", """["dev 1", "dev 2"]""")
+    }
+
+    @Test
+    fun `should fail when expected json path does not exist`() {
+        val json = """{
+            "kiwi": "kotlin assertion library",
+            "developers": ["dev 1", "dev 2"]
+        }"""
+
+        runCatching {
+            json.should
+                    .haveJsonPath("$.does-not-exist")
+        }.should
+                .beFailure(AssertionError::class)
+                .haveFailureMessage("$json does not contain '$.does-not-exist'")
+    }
 }
