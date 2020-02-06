@@ -50,11 +50,12 @@ as well as `Byte`, `Short`, `Int`, `Long`, `Float`, `Double` and JVM based numbe
 `LocalDate` and `LocalDateTime`
 ```kotlin
     @Test
-    fun `should guarantee date has expected numer of days`() {
-        val date = LocalDateTime.of(2020, 11, 14, 1, 1)
+    fun `should check if date meets some conditions`() {
+        val date = LocalDate.of(2020, 11, 14)
 
         date.should
                .beInLeapYear()
+               .beInQ4()
                .beBefore(date.plusDays(1))
     }
 ```
