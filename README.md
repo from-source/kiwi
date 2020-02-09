@@ -8,7 +8,7 @@
 
 *Kiwi* is multiplatform projects written in pure Kotlin. Except testing it does not use external dependencies
 
-## Kiwi, Hello World!
+### Kiwi, Hello World!
 
 Below snippet demonstrates usage of Kiwi assertions for standard type like String
 ```kotlin
@@ -18,7 +18,7 @@ Below snippet demonstrates usage of Kiwi assertions for standard type like Strin
     }
 ```
 
-## Collections
+### Collections
 
 Kiwi supports `List`, `Set` and `Map`
 ```kotlin
@@ -137,12 +137,11 @@ $ cd kiwi/
 $ ./gradlew clean build
 ```
 
-
 ## Roadmap & Future 
 
 ### JsonPath evaluation - in progress
 
-Take a look at the `JsonPathAcceptanceTest` to see which json path selectors have been introduced
+Take a look at the [JsonPathAcceptanceTest](https://github.com/from-source/kiwi/blob/master/kiwi-json-path/src/commonTest/kotlin/io.from.source.kiwi.jsonpath/JsonPathAcceptanceTest.kt) to see which json path selectors are available
 
 ```kotlin
     @Test
@@ -185,3 +184,11 @@ Take a look at the `JsonPathAcceptanceTest` to see which json path selectors hav
 ```
 
 ### Support for more Kotlin types
+
+
+
+### Sponsorship
+Thank you JetBrains to sponsor the project
+<a href="https://www.jetbrains.com/?from=kiwi">
+    <img src="https://github.com/from-source/kiwi/blob/master/img/jetbrains-variant-2.png">
+</a>
