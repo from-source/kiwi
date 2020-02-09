@@ -190,5 +190,5 @@ Take a look at the [JsonPathAcceptanceTest](https://github.com/from-source/kiwi/
 ### Sponsorship
 Thank you JetBrains to sponsor the project
 <a href="https://www.jetbrains.com/?from=kiwi">
-    <img src="https://github.com/from-source/kiwi/blob/master/img/jetbrains-variant-2.png">
+    <img height="100" width="100" src="https://github.com/from-source/kiwi/blob/master/img/jetbrains-variant-2.png">
 </a>
