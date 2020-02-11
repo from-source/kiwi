@@ -8,6 +8,8 @@ object JsonPath {
     private const val root = "$"
     private const val recursive = ".."
     private const val child = "."
+    private const val startArray = '['
+    private const val closeArray = ']'
 
     fun evaluate(json: Json, path: String): List<Json> {
         val head = path.head()
@@ -28,8 +30,17 @@ object JsonPath {
                 evaluate(result, path.drop(recursive.length))
             }
             path.startsWith(child) -> evaluate(elements, path.drop(child.length))
+            path.startsWith(startArray) -> {
+                val between = path.between(startArray, closeArray)
+                val index = between.toInt()
+                val result = elements
+                        .filterIsInstance<JsonArray>()
+                        .filter { it.values().size > index }
+                        .map { it.values()[index] }
+                evaluate(result, path.drop(between.length + 2))
+            }
             else -> {
-                val selector = path.split(child).filter { it.isNotBlank() }.head()
+                val selector = path.split(child).filter { it.isNotBlank() }.head().takeWhile { it != startArray }
                 val result = elements.map { select(it, selector) }.filterNotNull()
                 evaluate(result, path.drop(selector.length))
             }
@@ -56,6 +67,7 @@ object JsonPath {
     }
 }
 
+private fun String.between(prefix: Char, suffix: Char) = this.substring(this.indexOfFirst { it == prefix } + 1, this.indexOfFirst { it == suffix })
 private fun <E> List<E>.tail(): List<E> = if (this.isEmpty()) throw RuntimeException("Empty list") else this.drop(1)
 private fun <E> List<E>.head(): E = this.first()
 

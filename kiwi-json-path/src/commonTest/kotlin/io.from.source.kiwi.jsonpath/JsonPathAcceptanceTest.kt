@@ -76,7 +76,6 @@ class JsonPathAcceptanceTest {
     }
 
     @Test
-    @Ignore
     fun `should select all elements with given key`() {
         json.evaluatePath("$.store..details").should be listOf(
                 JsonObject(mapOf("name" to JsonString("Books & Books"))),
@@ -84,7 +83,6 @@ class JsonPathAcceptanceTest {
     }
 
     @Test
-    @Ignore
     fun `should select single element from array by index`() {
         json.evaluatePath("$..books[0]").should be listOf(JsonObject(mapOf(
                 "category" to JsonString("science"),

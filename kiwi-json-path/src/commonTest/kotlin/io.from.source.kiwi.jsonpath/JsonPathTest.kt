@@ -41,6 +41,16 @@ class JsonPathTest {
     }
 
     @Test
+    fun `should not select element if path does not exist`() {
+        val json = parser.parse("""{
+            "book": "The Lord of the Rings"
+        }""")
+
+        json.evaluatePath("$.nothing").should
+                .beEmpty()
+    }
+
+    @Test
     fun `should select json n level property`() {
         val json = parser.parse("""{
             "book": {
@@ -128,6 +138,24 @@ class JsonPathTest {
     }
 
     @Test
+    fun `should not find recursively all elements when it does not exist`() {
+        val json = parser.parse("""{
+            "new": {
+                "book": {
+                    "title": "The Lord of the Rings"
+                }
+            },
+            "used": {
+                "book": "Solaris",
+                "details": {}
+            }
+        }""")
+
+        json.evaluatePath("$..nothing").should
+                .beEmpty()
+    }
+
+    @Test
     fun `should find recursively firstly and next by name`() {
         val json = parser.parse("""{
             "new": {
@@ -145,5 +173,44 @@ class JsonPathTest {
                 .contain(
                         JsonString("The Lord of the Rings"))
                 .haveSize(1)
+    }
+
+    @Test
+    fun `should select array by index`() {
+        val json = parser.parse("""[
+            "Solaris",
+            "The Lord of the Rings",
+            "The Black Swan"
+        ]""")
+
+        json.evaluatePath("$.[0]").should
+                .contain(JsonString("Solaris"))
+                .haveSize(1)
+    }
+
+    @Test
+    fun `should select array by object name and index`() {
+        val json = parser.parse("""{
+            "read": [
+                "Solaris",
+                "The Lord of the Rings",
+                "The Black Swan"
+            ]}""")
+
+        json.evaluatePath("$.read[0]").should
+                .contain(JsonString("Solaris"))
+                .haveSize(1)
+    }
+
+    @Test
+    fun `should not select element if array does not have index`() {
+        val json = parser.parse("""[
+            "Solaris",
+            "The Lord of the Rings",
+            "The Black Swan"
+        ]""")
+
+        json.evaluatePath("$.read[3]").should
+                .beEmpty()
     }
 }
