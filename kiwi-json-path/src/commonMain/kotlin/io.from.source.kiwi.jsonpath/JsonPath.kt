@@ -46,14 +46,12 @@ object JsonPath {
     private fun evaluateArray(selector: String, elements: List<Json>): List<Json> {
         val arrays = elements.filterIsInstance<JsonArray>()
         return when {
-            selector.isInt() -> arrays.filter { array -> array.size() > selector.toInt() }.map { array -> array.values()[selector.toInt()] }
-            selector.split(",").filter { it.isNotBlank() }.map { it.trim() }.all { it.isInt() } -> {
-                val numbers = selector.split(",").filter { it.isNotBlank() }.map { it.trim() }
-                numbers.flatMap { evaluateArray(it, elements) }
-            }
+            isSingleIndex(selector) -> arrays.filter { array -> array.size() > selector.toInt() }.map { array -> array.values()[selector.toInt()] }
+            isMultipleIndexes(selector) -> indexes(selector).flatMap { index -> evaluateArray(index, elements) }
             else -> emptyList()
         }
     }
+
 
     private fun select(json: Json, selector: String): Json? {
         return when (json) {
@@ -73,6 +71,12 @@ object JsonPath {
             else -> selected
         }
     }
+
+    private fun isMultipleIndexes(selector: String): Boolean = selector.split(",").filter { it.isNotBlank() }.map { it.trim() }.all { isSingleIndex(it) }
+
+    private fun isSingleIndex(selector: String): Boolean = selector.toIntOrNull()?.let { true } ?: false
+
+    private fun indexes(selector: String): List<String> = selector.split(",").filter { it.isNotBlank() }.map { it.trim() }
 }
 
 private fun String.between(prefix: Char, suffix: Char) = this.substring(this.indexOfFirst { it == prefix } + 1, this.indexOfFirst { it == suffix })
@@ -81,5 +85,3 @@ private fun <E> List<E>.head(): E = this.first()
 
 private fun String.tail(): String = if (this.isEmpty()) throw RuntimeException("Empty string") else this.drop(1)
 private fun String.head(): String = this.take(1)
-
-private fun String.isInt(): Boolean = this.toIntOrNull()?.let { true } ?: false
