@@ -108,6 +108,7 @@ If you need json path Kiwi will work too. See `Roadmap & Future` below for more 
                 .haveJsonPath("$.kiwi")
                 .haveJsonPath("$.kiwi", """"kotlin assertion library"""")
                 .haveJsonPath("$..developers", """["john", "ben"]""")
+                .haveJsonPath("$..developers[0]", """"john"""")
     }
 ```
 
