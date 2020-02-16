@@ -31,19 +31,23 @@ object JsonPath {
             }
             path.startsWith(child) -> evaluate(elements, path.drop(child.length))
             path.startsWith(startArray) -> {
-                val between = path.between(startArray, closeArray)
-                val index = between.toInt()
-                val result = elements
-                        .filterIsInstance<JsonArray>()
-                        .filter { it.values().size > index }
-                        .map { it.values()[index] }
-                evaluate(result, path.drop(between.length + 2))
+                val selector = path.between(startArray, closeArray)
+                val result = evaluateArray(selector, elements)
+                evaluate(result, path.drop(selector.length + 2))
             }
             else -> {
                 val selector = path.split(child).filter { it.isNotBlank() }.head().takeWhile { it != startArray }
-                val result = elements.map { select(it, selector) }.filterNotNull()
+                val result = elements.mapNotNull { json -> select(json, selector) }
                 evaluate(result, path.drop(selector.length))
             }
+        }
+    }
+
+    private fun evaluateArray(selector: String, elements: List<Json>): List<Json> {
+        val arrays = elements.filterIsInstance<JsonArray>()
+        return when {
+            selector.isInt() -> arrays.filter { array -> array.size() > selector.toInt() }.map { array -> array.values()[selector.toInt()] }
+            else -> emptyList()
         }
     }
 
@@ -73,3 +77,5 @@ private fun <E> List<E>.head(): E = this.first()
 
 private fun String.tail(): String = if (this.isEmpty()) throw RuntimeException("Empty string") else this.drop(1)
 private fun String.head(): String = this.take(1)
+
+private fun String.isInt(): Boolean = this.toIntOrNull()?.let { true } ?: false

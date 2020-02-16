@@ -29,6 +29,8 @@ data class JsonArray(private val value: List<Json> = arrayListOf()) : Json() {
     override fun toString(): String = value.toString()
 
     fun values(): List<Json> = value
+
+    fun size(): Int = value.size
 }
 
 data class JsonString(val value: String) : Json() {

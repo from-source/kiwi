@@ -45,4 +45,11 @@ class JsonArrayTest {
 
         json.values().should be listOf(JsonBoolean(false), JsonString("some"))
     }
+
+    @Test
+    fun `should return size of array`() {
+        val json = JsonArray(listOf(JsonBoolean(false), JsonString("some")))
+
+        json.size().should be json.values().size
+    }
 }
