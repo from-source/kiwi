@@ -189,7 +189,7 @@ class JsonPathTest {
     }
 
     @Test
-    fun `should select array by object name and index`() {
+    fun `should select array by name and index`() {
         val json = parser.parse("""{
             "read": [
                 "Solaris",
@@ -212,5 +212,46 @@ class JsonPathTest {
 
         json.evaluatePath("$.read[3]").should
                 .beEmpty()
+    }
+
+    @Test
+    fun `should select array by name and multiple indexes`() {
+        val json = parser.parse("""{
+            "read": [
+                "Solaris",
+                "The Lord of the Rings",
+                "The Black Swan"
+            ]}""")
+
+        json.evaluatePath("$.read[0,2]").should
+                .contain(JsonString("Solaris"))
+                .contain(JsonString("The Black Swan"))
+                .haveSize(2)
+    }
+
+    @Test
+    fun `should return selected elements in index order`() {
+        val json = parser.parse("""{
+            "read": [
+                "Solaris",
+                "The Lord of the Rings",
+                "The Black Swan"
+            ]}""")
+
+        json.evaluatePath("$.read[2,0]").should
+                .be(listOf(JsonString("The Black Swan"), JsonString("Solaris")))
+    }
+
+    @Test
+    fun `should ignore whitespaces when selecting array`() {
+        val json = parser.parse("""{
+            "read": [
+                "Solaris",
+                "The Lord of the Rings",
+                "The Black Swan"
+            ]}""")
+
+        json.evaluatePath("$.read[2, 0]").should
+                .be(listOf(JsonString("The Black Swan"), JsonString("Solaris")))
     }
 }

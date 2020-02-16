@@ -103,7 +103,6 @@ class JsonPathAcceptanceTest {
     }
 
     @Test
-    @Ignore
     fun `should select multiple elements by index`() {
         json.evaluatePath("$..books[0,4]").should be listOf(
                 JsonObject(mapOf(

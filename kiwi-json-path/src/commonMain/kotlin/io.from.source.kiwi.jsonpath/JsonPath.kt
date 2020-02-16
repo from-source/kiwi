@@ -47,6 +47,10 @@ object JsonPath {
         val arrays = elements.filterIsInstance<JsonArray>()
         return when {
             selector.isInt() -> arrays.filter { array -> array.size() > selector.toInt() }.map { array -> array.values()[selector.toInt()] }
+            selector.split(",").filter { it.isNotBlank() }.map { it.trim() }.all { it.isInt() } -> {
+                val numbers = selector.split(",").filter { it.isNotBlank() }.map { it.trim() }
+                numbers.flatMap { evaluateArray(it, elements) }
+            }
             else -> emptyList()
         }
     }
