@@ -10,6 +10,7 @@ object JsonPath {
     private const val child = "."
     private const val startArray = '['
     private const val closeArray = ']'
+    private const val slice = ':'
 
     fun evaluate(json: Json, path: String): List<Json> {
         val head = path.head()
@@ -48,6 +49,10 @@ object JsonPath {
         return when {
             isSingleIndex(selector) -> arrays.filter { array -> array.size() > selector.toInt() }.map { array -> array.values()[selector.toInt()] }
             isMultipleIndexes(selector) -> indexes(selector).flatMap { index -> evaluateArray(index, elements) }
+            isSlice(selector) -> {
+                val last = selector.tail().toInt() - 1
+                (0..last).map { it.toString() }.flatMap { index -> evaluateArray(index, elements) }
+            }
             else -> emptyList()
         }
     }
@@ -72,11 +77,17 @@ object JsonPath {
         }
     }
 
-    private fun isMultipleIndexes(selector: String): Boolean = selector.split(",").filter { it.isNotBlank() }.map { it.trim() }.all { isSingleIndex(it) }
+    private fun isMultipleIndexes(selector: String): Boolean =
+            selector.split(",").filter { it.isNotBlank() }.map { it.trim() }.all { isSingleIndex(it) }
 
-    private fun isSingleIndex(selector: String): Boolean = selector.toIntOrNull()?.let { true } ?: false
+    private fun isSingleIndex(selector: String): Boolean =
+            selector.toIntOrNull()?.let { true } ?: false
 
-    private fun indexes(selector: String): List<String> = selector.split(",").filter { it.isNotBlank() }.map { it.trim() }
+    private fun isSlice(selector: String): Boolean =
+            selector.startsWith(slice) && isSingleIndex(selector.tail())
+
+    private fun indexes(selector: String): List<String> =
+            selector.split(",").filter { it.isNotBlank() }.map { it.trim() }
 }
 
 private fun String.between(prefix: Char, suffix: Char) = this.substring(this.indexOfFirst { it == prefix } + 1, this.indexOfFirst { it == suffix })

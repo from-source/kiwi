@@ -254,4 +254,30 @@ class JsonPathTest {
         json.evaluatePath("$.read[2, 0]").should
                 .be(listOf(JsonString("The Black Swan"), JsonString("Solaris")))
     }
+
+    @Test
+    fun `should select elements in array by range selector`() {
+        val json = parser.parse("""{
+            "read": [
+                "Solaris",
+                "The Lord of the Rings",
+                "The Black Swan"
+            ]}""")
+
+        json.evaluatePath("$.read[:2]").should
+                .be(listOf(JsonString("Solaris"), JsonString("The Lord of the Rings")))
+    }
+
+    @Test
+    fun `should select elements in array by range operator when range selector array size`() {
+        val json = parser.parse("""{
+            "read": [
+                "Solaris",
+                "The Lord of the Rings",
+                "The Black Swan"
+            ]}""")
+
+        json.evaluatePath("$.read[:4]").should
+                .be(listOf(JsonString("Solaris"), JsonString("The Lord of the Rings"), JsonString("The Black Swan")))
+    }
 }
