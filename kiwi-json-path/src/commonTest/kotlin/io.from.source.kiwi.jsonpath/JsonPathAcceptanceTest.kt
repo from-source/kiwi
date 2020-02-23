@@ -135,6 +135,17 @@ class JsonPathAcceptanceTest {
     }
 
     @Test
+    fun `should select all elements in array`() {
+        json.evaluatePath("$..books[*].author").should be listOf(
+                JsonString("Douglas Hofstadter"),
+                JsonString("Christophe Galfard"),
+                JsonString("Nassim Nicholas Taleb"),
+                JsonString("Stanislaw Lem"),
+                JsonString("J. R. R. Tolkien")
+        )
+    }
+
+    @Test
     @Ignore
     fun `should filter elements that have key`() {
         json.evaluatePath("$..books[?(@.details)]").should be listOf(JsonObject(mapOf(

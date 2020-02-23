@@ -280,4 +280,30 @@ class JsonPathTest {
         json.evaluatePath("$.read[:4]").should
                 .be(listOf(JsonString("Solaris"), JsonString("The Lord of the Rings"), JsonString("The Black Swan")))
     }
+
+    @Test
+    fun `should select all elements in array`() {
+        val json = parser.parse("""{
+            "read": [
+                "Solaris",
+                "The Lord of the Rings",
+                "The Black Swan"
+            ]}""")
+
+        json.evaluatePath("$.read[*]").should
+                .be(listOf(JsonString("Solaris"), JsonString("The Lord of the Rings"), JsonString("The Black Swan")))
+    }
+
+    @Test
+    fun `should ignore whitespaces when selecting all elements in array`() {
+        val json = parser.parse("""{
+            "read": [
+                "Solaris",
+                "The Lord of the Rings",
+                "The Black Swan"
+            ]}""")
+
+        json.evaluatePath("$.read[ * ]").should
+                .be(listOf(JsonString("Solaris"), JsonString("The Lord of the Rings"), JsonString("The Black Swan")))
+    }
 }

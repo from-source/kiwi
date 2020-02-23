@@ -11,6 +11,7 @@ object JsonPath {
     private const val startArray = '['
     private const val closeArray = ']'
     private const val slice = ':'
+    private const val all = '*'
 
     fun evaluate(json: Json, path: String): List<Json> {
         val head = path.head()
@@ -53,6 +54,7 @@ object JsonPath {
                 val last = selector.tail().toInt() - 1
                 (0..last).map { it.toString() }.flatMap { index -> evaluateArray(index, elements) }
             }
+            all(selector) -> arrays.flatMap { array -> array.values() }
             else -> emptyList()
         }
     }
@@ -85,6 +87,9 @@ object JsonPath {
 
     private fun isSlice(selector: String): Boolean =
             selector.startsWith(slice) && isSingleIndex(selector.tail())
+
+    private fun all(selector: String): Boolean =
+            all.toString() == selector.trim()
 
     private fun indexes(selector: String): List<String> =
             selector.split(",").filter { it.isNotBlank() }.map { it.trim() }
