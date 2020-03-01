@@ -5,7 +5,7 @@ repositories {
     mavenCentral()
 }
 
-group = "io.fromsource"
+group = "org.fromsource"
 
 apply plugin: 'maven-publish'
 apply plugin: "maven"
