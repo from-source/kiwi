@@ -1,8 +1,8 @@
 package io.from.source.kiwi.jsonpath
 
-import io.from.source.kiwi.json.Json
-import io.from.source.kiwi.json.JsonArray
-import io.from.source.kiwi.json.JsonObject
+import io.fromsource.kiwi.json.Json
+import io.fromsource.kiwi.json.JsonArray
+import io.fromsource.kiwi.json.JsonObject
 
 object JsonPath {
     private const val root = "$"

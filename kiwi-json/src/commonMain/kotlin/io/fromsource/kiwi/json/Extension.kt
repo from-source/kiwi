@@ -1,4 +1,4 @@
-package io.from.source.kiwi.json
+package io.fromsource.kiwi.json
 
 internal const val TRUE = true.toString()
 internal const val FALSE = false.toString()

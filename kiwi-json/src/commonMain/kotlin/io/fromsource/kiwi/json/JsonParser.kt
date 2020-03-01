@@ -1,4 +1,4 @@
-package io.from.source.kiwi.json
+package io.fromsource.kiwi.json
 
 class JsonParser {
     fun parse(value: String): Json {

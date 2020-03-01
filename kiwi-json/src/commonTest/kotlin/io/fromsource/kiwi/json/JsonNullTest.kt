@@ -1,4 +1,4 @@
-package io.from.source.kiwi.json
+package io.fromsource.kiwi.json
 
 import io.fromsource.kiwi.core.should
 import kotlin.test.Test

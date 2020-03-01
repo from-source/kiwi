@@ -1,8 +1,8 @@
 package io.from.source.kiwi.jsonpath
 
-import io.from.source.kiwi.json.JsonObject
-import io.from.source.kiwi.json.JsonParser
-import io.from.source.kiwi.json.JsonString
+import io.fromsource.kiwi.json.JsonObject
+import io.fromsource.kiwi.json.JsonParser
+import io.fromsource.kiwi.json.JsonString
 import io.fromsource.kiwi.core.should
 import kotlin.test.Test
 

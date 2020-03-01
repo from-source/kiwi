@@ -1,4 +1,4 @@
-package io.from.source.kiwi.json
+package io.fromsource.kiwi.json
 
 sealed class Json {
     companion object {
