@@ -2,7 +2,7 @@ package io.fromsource.kiwi.core.string
 
 import io.fromsource.kiwi.json.Json
 import io.fromsource.kiwi.json.JsonParser
-import io.from.source.kiwi.jsonpath.JsonPath
+import io.fromsource.kiwi.jsonpath.JsonPath
 import io.fromsource.kiwi.core.BeAny
 import io.fromsource.kiwi.core.BeComparable
 import io.fromsource.kiwi.core.BeEqual

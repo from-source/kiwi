@@ -1,4 +1,4 @@
-package io.from.source.kiwi.jsonpath
+package io.fromsource.kiwi.jsonpath
 
 import io.fromsource.kiwi.json.Json
 import io.fromsource.kiwi.json.JsonArray
