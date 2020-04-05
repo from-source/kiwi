@@ -8,6 +8,20 @@
 
 *Kiwi* is multiplatform projects written in pure Kotlin. Except testing it does not use external dependencies
 
+### Release
+Kiwi is available in `SNAPSHOT` repository for now 
+```
+repositories {
+    maven {
+        url "https://oss.sonatype.org/content/repositories/snapshots"
+    }
+}
+
+dependencies {
+    testImplementation 'org.fromsource:kiwi-core-jvm:0.0.2-SNAPSHOT'
+}
+```
+
 ### Kiwi, Hello World!
 
 Below snippet demonstrates usage of Kiwi assertions for standard type like String
