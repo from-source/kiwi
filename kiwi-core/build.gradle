@@ -63,8 +63,8 @@ publishing {
     repositories {
         maven {
             credentials {
-                username project.username
-                password project.passwords
+                username "$mavenUser"
+                password "$mavenPassword"
             }
             if (project.version.endsWith("-SNAPSHOT")) {
                 url = uri("https://oss.sonatype.org/content/repositories/snapshots")
