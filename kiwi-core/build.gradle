@@ -58,3 +58,19 @@ kotlin {
         }
     }
 }
+
+publishing {
+    repositories {
+        maven {
+            credentials {
+                username project.username
+                password project.passwords
+            }
+            if (project.version.endsWith("-SNAPSHOT")) {
+                url = uri("https://oss.sonatype.org/content/repositories/snapshots")
+            } else {
+                url = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2")
+            }
+        }
+    }
+}
