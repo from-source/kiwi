@@ -106,7 +106,7 @@ as well as `Byte`, `Short`, `Int`, `Long`, `Float`, `Double` and JVM based numbe
 
 ### JsonPath
 
-If you need json path Kiwi will work too. See `Roadmap & Future` below for more details 
+If you need json path Kiwi will work too. See [Roadmap & Future](#roadmap--future) for more details 
 
 ```kotlin
     @Test
