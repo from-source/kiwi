@@ -2,9 +2,9 @@
 
 # Kiwi: Fluent assertions for Kotlin projects
 
-[![Build Status](https://travis-ci.com/from-source/kiwi.svg?branch=master)](https://travis-ci.com/from-source/kiwi)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/from-source/kiwi/blob/master/LICENSE.md)
-
+[![Build Status](https://travis-ci.com/from-source/kiwi.svg?branch=master)](https://travis-ci.com/from-source/kiwi)
+[![Awesome Kotlin Badge](https://kotlin.link/awesome-kotlin.svg)](https://github.com/KotlinBy/awesome-kotlin)
 
 *Kiwi* is multiplatform projects written in pure Kotlin. Except testing it does not use external dependencies
 
