@@ -11,7 +11,7 @@ class ExtensionTest {
                 .split('a', 0)
                 .should
                 .haveFirstEqualTo("This is a sentence".toCharList())
-                .haveSecondBeEqual("".toCharList())
+                .haveSecondEqualTo("".toCharList())
     }
 
     @Test
@@ -20,16 +20,16 @@ class ExtensionTest {
                 .split('-', 1)
                 .should
                 .haveFirstEqualTo("This is a sentence".toCharList())
-                .haveSecondBeEqual("".toCharList())
+                .haveSecondEqualTo("".toCharList())
     }
 
     @Test
-    fun `should return partially splitted list when limit is not reached`() {
+    fun `should return partially split list when limit is not reached`() {
         "This is a sentence".toCharList()
                 .split('-', 0)
                 .should
                 .haveFirstEqualTo("This is a sentence".toCharList())
-                .haveSecondBeEqual("".toCharList())
+                .haveSecondEqualTo("".toCharList())
     }
 
     @Test
@@ -38,7 +38,7 @@ class ExtensionTest {
                 .split('a', 1)
                 .should
                 .haveFirstEqualTo("This is a".toCharList())
-                .haveSecondBeEqual(" sentence".toCharList())
+                .haveSecondEqualTo(" sentence".toCharList())
     }
 
     @Test
@@ -47,7 +47,7 @@ class ExtensionTest {
                 .split('"', 2)
                 .should
                 .haveFirstEqualTo(""" "key"""".toCharList())
-                .haveSecondBeEqual(""": "value" """.toCharList())
+                .haveSecondEqualTo(""": "value" """.toCharList())
     }
 
     @Test
@@ -56,7 +56,7 @@ class ExtensionTest {
                 .split('"', 2)
                 .should
                 .haveFirstEqualTo(""" "\"key\""""".toCharList())
-                .haveSecondBeEqual(""" : "value" """.toCharList())
+                .haveSecondEqualTo(""" : "value" """.toCharList())
     }
 
     @Test
@@ -65,6 +65,6 @@ class ExtensionTest {
                 .split('"', 2)
                 .should
                 .haveFirstEqualTo(""" "\\"""".toCharList())
-                .haveSecondBeEqual(" } ".toCharList())
+                .haveSecondEqualTo(" } ".toCharList())
     }
 }

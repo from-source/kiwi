@@ -1,8 +1,7 @@
 package org.fromsource.kiwi.core
 
 class PairShould<A, B>(val actual: Pair<A, B>) :
-        BeAny<Pair<A, B>, PairShould<A, B>>,
-        BeEqual<Pair<A, B>, PairShould<A, B>> {
+        BeAny<Pair<A, B>, PairShould<A, B>> {
 
     override fun actual(): Pair<A, B> = actual
 
@@ -12,7 +11,7 @@ class PairShould<A, B>(val actual: Pair<A, B>) :
         return this
     }
 
-    fun haveSecondBeEqual(expected: B): PairShould<A, B> {
+    fun haveSecondEqualTo(expected: B): PairShould<A, B> {
         val message = "$actual should have second element equal to $expected"
         assert(actual.second == expected) { message }
         return this

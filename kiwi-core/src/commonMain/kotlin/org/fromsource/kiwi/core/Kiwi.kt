@@ -29,9 +29,10 @@ val Long.should get() = LongShould(this)
 val Float.should get() = FloatShould(this)
 val Double.should get() = DoubleShould(this)
 val Boolean.should get() = BooleanShould(this)
-val String.should get()= StringShould(this)
-val <T> Result<T>.should: ResultShould<T> get()= ResultShould(this)
-val <A, B> Pair<A, B>.should: PairShould<A, B> get()= PairShould(this)
+val String.should get() = StringShould(this)
+val <T> Result<T>.should: ResultShould<T> get() = ResultShould(this)
+val <A, B> Pair<A, B>.should: PairShould<A, B> get() = PairShould(this)
+val <A, B, C> Triple<A, B, C>.should: TripleShould<A, B, C> get() = TripleShould(this)
 
 val IntRange.should: IntRangeShould
     get() = IntRangeShould(this)
@@ -46,5 +47,5 @@ internal val UInt._should get() = UIntShould(this)
 internal val ULong._should get() = ULongShould(this)
 
 fun assert(condition: Boolean, lazyMessage: () -> String) {
-    if(!condition) throw AssertionError(lazyMessage())
+    if (!condition) throw AssertionError(lazyMessage())
 }
