@@ -119,7 +119,6 @@ class JsonPathAcceptanceTest {
     }
 
     @Test
-    @Ignore
     fun `should select multiple elements by colon`() {
         json.evaluatePath("$..books[:2]").should be listOf(
                 JsonObject(mapOf(
@@ -128,7 +127,7 @@ class JsonPathAcceptanceTest {
                         "title" to JsonString("I Am a Strange Loop"),
                         "price" to JsonNumber(8.95))),
                 JsonObject(mapOf(
-                        "category" to JsonString("fiction"),
+                        "category" to JsonString("science"),
                         "author" to JsonString("Christophe Galfard"),
                         "title" to JsonString("Universe in Your Hand"),
                         "price" to JsonNumber(12.99))))
