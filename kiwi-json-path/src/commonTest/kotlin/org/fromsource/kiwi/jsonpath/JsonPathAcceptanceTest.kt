@@ -1,10 +1,10 @@
 package org.fromsource.kiwi.jsonpath
 
+import org.fromsource.kiwi.core.should
 import org.fromsource.kiwi.json.JsonNumber
 import org.fromsource.kiwi.json.JsonObject
 import org.fromsource.kiwi.json.JsonParser
 import org.fromsource.kiwi.json.JsonString
-import org.fromsource.kiwi.core.should
 import kotlin.test.Ignore
 import kotlin.test.Test
 
@@ -92,7 +92,6 @@ class JsonPathAcceptanceTest {
     }
 
     @Test
-    @Ignore
     fun `should select last element from array`() {
         json.evaluatePath("$..books[:-1]").should be listOf(JsonObject(mapOf(
                 "category" to JsonString("fiction"),

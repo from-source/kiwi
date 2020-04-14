@@ -30,14 +30,14 @@ class SelectorTest {
     fun `should create forward slice selector`() {
         val selector = Selector.create(":2")
 
-        selector.should beEqual Slice(":2")
+        selector.should beEqual ForwardSlice(":2")
     }
 
     @Test
     fun `should create backward slice selector`() {
         val selector = Selector.create(":-2")
 
-        selector.should beEqual Slice(":-2")
+        selector.should beEqual BackwardSlice(":-2")
     }
 
     @Test
@@ -62,8 +62,15 @@ class SelectorTest {
     }
 
     @Test
+    fun `should return single indexes slice selector`() {
+        val slice = ForwardSlice(":2")
+
+        slice.indexes().should beEqual listOf(SingleIndex(0), SingleIndex(1))
+    }
+
+    @Test
     fun `should return single index selector slice selector`() {
-        val slice = Slice(":2")
+        val slice = ForwardSlice(":2")
 
         slice.indexes().should beEqual listOf(SingleIndex(0), SingleIndex(1))
     }

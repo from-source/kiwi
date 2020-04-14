@@ -10,7 +10,8 @@ sealed class Selector {
             return when {
                 isSingleIndex(selector) -> SingleIndex(selector.trim().toInt())
                 isMultipleIndexes(selector) -> MultipleIndex(indexes(selector))
-                isSlice(selector) -> Slice(selector)
+                isForwardSlice(selector) -> ForwardSlice(selector)
+                isBackwardSlice(selector) -> BackwardSlice(selector)
                 all(selector) -> All
                 else -> NoOp
             }
@@ -25,8 +26,17 @@ sealed class Selector {
         private fun isSingleIndex(selector: String): Boolean =
                 selector.trim().toIntOrNull()?.let { true } ?: false
 
-        private fun isSlice(selector: String): Boolean =
-                selector.startsWith(slice) && isSingleIndex(selector.tail())
+        private fun isPositiveIndex(selector: String): Boolean =
+                selector.trim().tail().toIntOrNull()?.let { it >= 0 } ?: false
+
+        private fun isNegativeIndex(selector: String): Boolean =
+                selector.trim().tail().toIntOrNull()?.let { it < 0 } ?: false
+
+        private fun isForwardSlice(selector: String): Boolean =
+                selector.startsWith(slice) && isPositiveIndex(selector)
+
+        private fun isBackwardSlice(selector: String): Boolean =
+                selector.startsWith(slice) && isNegativeIndex(selector)
 
         private fun all(selector: String): Boolean =
                 all.toString() == selector.trim()
@@ -41,10 +51,16 @@ data class MultipleIndex(private val indexes: List<Int>) : Selector() {
     fun indexes(): List<SingleIndex> = indexes.map { SingleIndex(it) }
 }
 
-data class Slice(private val expression: String) : Selector() {
+data class ForwardSlice(private val expression: String) : Selector() {
     fun indexes(): List<SingleIndex> {
         val last = expression.tail().toInt() - 1
         return (0..last).map { SingleIndex(it) }
+    }
+}
+
+data class BackwardSlice(private val expression: String) : Selector() {
+    fun start(length: Int): Int {
+        return maxOf(length + expression.tail().toInt(), 0)
     }
 }
 

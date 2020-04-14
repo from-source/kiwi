@@ -48,8 +48,9 @@ object JsonPath {
         val arrays = elements.filterIsInstance<JsonArray>()
         return when (selector) {
             is SingleIndex -> arrays.filter { array -> array.size() > selector.value() }.map { array -> array.values()[selector.value()] }
-            is MultipleIndex -> selector.indexes().flatMap { index -> evaluateArray(index, elements) }
-            is Slice -> selector.indexes().flatMap { index -> evaluateArray(index, elements) }
+            is MultipleIndex -> selector.indexes().flatMap { index -> evaluateArray(index, arrays) }
+            is ForwardSlice -> selector.indexes().flatMap { index -> evaluateArray(index, arrays) }
+            is BackwardSlice -> arrays.flatMap { array -> array.values().filterIndexed { index, _ -> index >= selector.start(array.size()) } }
             is All -> arrays.flatMap { array -> array.values() }
             is NoOp -> emptyList()
         }

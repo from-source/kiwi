@@ -1,9 +1,9 @@
 package org.fromsource.kiwi.jsonpath
 
+import org.fromsource.kiwi.core.should
 import org.fromsource.kiwi.json.JsonObject
 import org.fromsource.kiwi.json.JsonParser
 import org.fromsource.kiwi.json.JsonString
-import org.fromsource.kiwi.core.should
 import kotlin.test.Test
 
 class JsonPathTest {
@@ -266,6 +266,32 @@ class JsonPathTest {
 
         json.evaluatePath("$.read[:2]").should
                 .be(listOf(JsonString("Solaris"), JsonString("The Lord of the Rings")))
+    }
+
+    @Test
+    fun `should select elements in array by backward range selector`() {
+        val json = parser.parse("""{
+            "read": [
+                "Solaris",
+                "The Lord of the Rings",
+                "The Black Swan"
+            ]}""")
+
+        json.evaluatePath("$.read[:-2]").should
+                .be(listOf(JsonString("The Lord of the Rings"), JsonString("The Black Swan")))
+    }
+
+    @Test
+    fun `should select elements in array by backward range selector when index exceeded its range`() {
+        val json = parser.parse("""{
+            "read": [
+                "Solaris",
+                "The Lord of the Rings",
+                "The Black Swan"
+            ]}""")
+
+        json.evaluatePath("$.read[:-4]").should
+                .be(listOf(JsonString("Solaris"), JsonString("The Lord of the Rings"), JsonString("The Black Swan")))
     }
 
     @Test
