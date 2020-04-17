@@ -14,6 +14,7 @@ import org.fromsource.kiwi.core.number.UByteShould
 import org.fromsource.kiwi.core.number.UIntShould
 import org.fromsource.kiwi.core.number.ULongShould
 import org.fromsource.kiwi.core.number.UShortShould
+import org.fromsource.kiwi.core.range.CharRangeShould
 import org.fromsource.kiwi.core.range.IntRangeShould
 import org.fromsource.kiwi.core.string.StringShould
 
@@ -36,6 +37,9 @@ val <A, B, C> Triple<A, B, C>.should: TripleShould<A, B, C> get() = TripleShould
 
 val IntRange.should: IntRangeShould
     get() = IntRangeShould(this)
+
+val CharRange.should: CharRangeShould
+    get() = CharRangeShould(this)
 
 /**
  * Temporary rename should to _should for unsigned types

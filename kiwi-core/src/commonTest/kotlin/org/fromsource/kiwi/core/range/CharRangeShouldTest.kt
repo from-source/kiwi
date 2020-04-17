@@ -3,178 +3,178 @@ package org.fromsource.kiwi.core.range
 import org.fromsource.kiwi.core.should
 import kotlin.test.Test
 
-class IntRangeShouldTest {
+class CharRangeShouldTest {
 
     @Test
     fun `should fail when ranges are not equal`() {
         runCatching {
-            (1..10).should beEqual (1..9)
+            ('a'..'c').should beEqual ('a'..'b')
         }.should
                 .beFailure(AssertionError::class)
-                .haveFailureMessage("1..10 should == 1..9")
+                .haveFailureMessage("a..c should == a..b")
     }
 
     @Test
     fun `should guarantee ranges are equal`() {
-        (1..10).should beEqual (1..10)
+        ('a'..'c').should beEqual ('a'..'c')
     }
 
     @Test
     fun `should fail when ranges are equal`() {
         runCatching {
-            (1..10).should notBeEqual (1..10)
+            ('a'..'c').should notBeEqual ('a'..'c')
         }.should
                 .beFailure(AssertionError::class)
-                .haveFailureMessage("1..10 should != 1..10")
+                .haveFailureMessage("a..c should != a..c")
     }
 
     @Test
     fun `should guarantee ranges are not equal`() {
-        (1..10).should notBeEqual (1..9)
+        ('a'..'c').should notBeEqual ('a'..'d')
     }
 
     @Test
     fun `should fail when range does not match condition`() {
         runCatching {
-            (1..10).should match { it.isEmpty() }
+            ('a'..'c').should match { it.isEmpty() }
         }.should
                 .beFailure(AssertionError::class)
     }
 
     @Test
     fun `should guarantee range matches condition`() {
-        (1..10).should match { !it.isEmpty() }
+        ('a'..'c').should match { !it.isEmpty() }
     }
 
     @Test
     fun `should fail when range matches condition`() {
         runCatching {
-            (1..10).should notMatch { it.first == 1 }
+            ('a'..'c').should notMatch { it.first == 'a' }
         }.should
                 .beFailure(AssertionError::class)
     }
 
     @Test
     fun `should guarantee range does not match condition`() {
-        (1..10).should notMatch { it.first == 10 }
+        ('a'..'c').should notMatch { it.first == 'd' }
     }
 
     @Test
     fun `should fail when range does not start with`() {
         runCatching {
-            (1..10).should startWith 2
+            ('a'..'c').should startWith 'b'
         }.should
                 .beFailure(AssertionError::class)
-                .haveFailureMessage("1..10 should start with 2")
+                .haveFailureMessage("a..c should start with b")
     }
 
     @Test
     fun `should guarantee range starts with`() {
-        (1..10).should startWith 1
+        ('a'..'c').should startWith 'a'
     }
 
     @Test
     fun `should fail when range starts with`() {
         runCatching {
-            (1..10).should notStartWith 1
+            ('a'..'c').should notStartWith 'a'
         }.should
                 .beFailure(AssertionError::class)
-                .haveFailureMessage("1..10 should not start with 1")
+                .haveFailureMessage("a..c should not start with a")
     }
 
     @Test
     fun `should guarantee range does not starts with`() {
-        (1..10).should notStartWith 2
+        ('a'..'c').should notStartWith 'b'
     }
 
     @Test
     fun `should fail when range does not end with`() {
         runCatching {
-            (1..10).should endWith 9
+            ('a'..'c').should endWith 'b'
         }.should
                 .beFailure(AssertionError::class)
-                .haveFailureMessage("1..10 should end with 9")
+                .haveFailureMessage("a..c should end with b")
     }
 
     @Test
     fun `should guarantee range ends with`() {
-        (1..10).should endWith 10
+        ('a'..'c').should endWith 'c'
     }
 
     @Test
     fun `should fail when range end with`() {
         runCatching {
-            (1..10).should notEndWith 10
+            ('a'..'c').should notEndWith 'c'
         }.should
                 .beFailure(AssertionError::class)
-                .haveFailureMessage("1..10 should not end with 10")
+                .haveFailureMessage("a..c should not end with c")
     }
 
     @Test
     fun `should guarantee range does not end with`() {
-        (1..10).should notEndWith 9
+        ('a'..'c').should notEndWith 'b'
     }
 
     @Test
     fun `should fail when range does not contain`() {
         runCatching {
-            (1..10).should contain 11
+            ('a'..'c').should contain 'd'
         }.should
                 .beFailure(AssertionError::class)
-                .haveFailureMessage("1..10 should contain 11")
+                .haveFailureMessage("a..c should contain d")
     }
 
     @Test
     fun `should guarantee range contains`() {
-        (1..10).should contain 8
+        ('a'..'c').should contain 'b'
     }
 
     @Test
     fun `should fail when range contains`() {
         runCatching {
-            (1..10).should notContain 8
+            ('a'..'c').should notContain 'b'
         }.should
                 .beFailure(AssertionError::class)
-                .haveFailureMessage("1..10 should not contain 8")
+                .haveFailureMessage("a..c should not contain b")
     }
 
     @Test
     fun `should guarantee range does not contain`() {
-        (1..10).should notContain 11
+        ('a'..'c').should notContain 'd'
     }
 
     @Test
     fun `should fail when range is empty`() {
         runCatching {
-            (1..10).should.beEmpty()
+            ('a'..'c').should.beEmpty()
         }.should
                 .beFailure(AssertionError::class)
-                .haveFailureMessage("1..10 should be empty")
+                .haveFailureMessage("a..c should be empty")
     }
 
     @Test
     fun `should guarantee range is empty`() {
-        IntRange.EMPTY.should.beEmpty()
+        CharRange.EMPTY.should.beEmpty()
     }
 
     @Test
     fun `should fail when range is not empty`() {
         runCatching {
-            IntRange.EMPTY.should.notBeEmpty()
+            CharRange.EMPTY.should.notBeEmpty()
         }.should
                 .beFailure(AssertionError::class)
-                .haveFailureMessage("1..0 should not be empty")
+                .haveFailureMessage("${CharRange.EMPTY} should not be empty")
     }
 
     @Test
     fun `should guarantee range is not empty`() {
-        (1..10).should.notBeEmpty()
+        ('a'..'c').should.notBeEmpty()
     }
 
     @Test
     fun `should combine assertions`() {
-        (1..10).should
+        ('a'..'c').should
                 .notBeEmpty()
-                .contain(1)
+                .contain('b')
     }
 }
