@@ -1,6 +1,7 @@
 package org.fromsource.kiwi.jsonpath
 
 import org.fromsource.kiwi.core.should
+import org.fromsource.kiwi.json.JsonNumber
 import org.fromsource.kiwi.json.JsonObject
 import org.fromsource.kiwi.json.JsonParser
 import org.fromsource.kiwi.json.JsonString
@@ -331,5 +332,25 @@ class JsonPathTest {
 
         json.evaluatePath("$.read[ * ]").should
                 .be(listOf(JsonString("Solaris"), JsonString("The Lord of the Rings"), JsonString("The Black Swan")))
+    }
+
+    @Test
+    fun `should not select elements for empty json because non is non`() {
+        val json = parser.parse("""{}""")
+
+        json.evaluatePath("$.*").should
+                .beEmpty()
+    }
+
+    @Test
+    fun `should select all values by star opertor for root element of json`() {
+        val json = parser.parse("""{
+            "title": "Solaris",
+            "author": "Lem",
+            "rating": 10
+        }""")
+
+        json.evaluatePath("$.*").should
+                .be(listOf(JsonString("Solaris"), JsonString("Lem"), JsonNumber(10L)))
     }
 }

@@ -10,6 +10,7 @@ object JsonPath {
     private const val child = "."
     private const val startArray = '['
     private const val closeArray = ']'
+    private const val star = "*"
 
     fun evaluate(json: Json, path: String): List<Json> {
         val head = path.head()
@@ -29,7 +30,7 @@ object JsonPath {
                 val result = elements.flatMap { recursive(it, emptyList()) }
                 evaluate(result, path.drop(recursive.length))
             }
-            path.startsWith(child) -> evaluate(elements, path.drop(child.length))
+            path.startsWith(child) -> evaluateChild(elements, path.drop(child.length))
             path.startsWith(startArray) -> {
                 val expression = path.between(startArray, closeArray)
                 val selector = Selector.create(expression)
@@ -41,6 +42,19 @@ object JsonPath {
                 val result = elements.mapNotNull { json -> select(json, selector) }
                 evaluate(result, path.drop(selector.length))
             }
+        }
+    }
+
+    private fun evaluateChild(elements: List<Json>, path: String): List<Json> {
+        if (path.isBlank()) {
+            return elements
+        }
+        return when {
+            path.startsWith(star) -> {
+                val values = elements.filterIsInstance<JsonObject>().flatMap { it.values() }
+                evaluate(values, path.drop(star.length))
+            }
+            else -> evaluate(elements, path)
         }
     }
 
