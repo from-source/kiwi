@@ -156,7 +156,7 @@ $ ./gradlew clean build
 
 ### JsonPath evaluation - in progress
 
-Take a look at the [JsonPathAcceptanceTest](https://github.com/from-source/kiwi/blob/master/kiwi-json-path/src/commonTest/kotlin/io.from.source.kiwi.jsonpath/JsonPathAcceptanceTest.kt) to see which json path selectors are available
+Take a look at the [JsonPathAcceptanceTest](https://github.com/from-source/kiwi/blob/master/kiwi-json-path/src/commonTest/kotlin/org/fromsource/kiwi/jsonpath/JsonPathAcceptanceTest.kt) to see which json path selectors are available
 
 ```kotlin
     @Test
