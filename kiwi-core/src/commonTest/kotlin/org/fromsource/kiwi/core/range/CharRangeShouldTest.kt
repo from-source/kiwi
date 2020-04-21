@@ -172,6 +172,21 @@ class CharRangeShouldTest {
     }
 
     @Test
+    fun `should guarantee range overlaps`() {
+        ('a'..'d').should.overlap(('a'..'c'))
+        ('a'..'d').should.overlap(('b'..'d'))
+    }
+
+    @Test
+    fun `should fail when range does not overlap`() {
+        runCatching {
+            ('a'..'d').should.overlap(('e'..'f'))
+        }.should
+                .beFailure(AssertionError::class)
+                .haveFailureMessage("a..d should overlap e..f")
+    }
+
+    @Test
     fun `should combine assertions`() {
         ('a'..'c').should
                 .notBeEmpty()

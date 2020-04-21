@@ -54,4 +54,10 @@ class IntRangeShould(private val actual: IntRange) : BeAny<IntRange, IntRangeSho
         assert(!actual.isEmpty()) { message }
         return this
     }
+
+    fun overlap(expected: IntRange): IntRangeShould {
+        val message = "${actual()} should overlap $expected"
+        assert(actual.intersect(expected).isNotEmpty()) { message }
+        return this
+    }
 }

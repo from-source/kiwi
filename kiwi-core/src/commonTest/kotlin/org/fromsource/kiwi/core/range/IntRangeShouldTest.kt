@@ -172,6 +172,21 @@ class IntRangeShouldTest {
     }
 
     @Test
+    fun `should guarantee range overlaps`() {
+        (1..4).should.overlap((1..3))
+        (1..4).should.overlap((2..5))
+    }
+
+    @Test
+    fun `should fail when range does not overlap`() {
+        runCatching {
+            (1..4).should.overlap((5..6))
+        }.should
+                .beFailure(AssertionError::class)
+                .haveFailureMessage("1..4 should overlap 5..6")
+    }
+
+    @Test
     fun `should combine assertions`() {
         (1..10).should
                 .notBeEmpty()
