@@ -55,4 +55,10 @@ class CharRangeShould(private val actual: CharRange) : BeAny<CharRange, CharRang
         return this
     }
 
+    fun overlap(expected: CharRange): CharRangeShould {
+        val message = "${actual()} should overlap $expected"
+        assert(actual.intersect(expected).isNotEmpty()) { message }
+        return this
+    }
+
 }
